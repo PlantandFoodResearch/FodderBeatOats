@@ -426,6 +426,157 @@ date of Experiment 4 is assumed here.]]></MemoText>
         <TipToAppear>0</TipToAppear>
         <ApexNum>0</ApexNum>
       </Structure>
+      <GenericOrgan>
+        <Name>StorageRoot</Name>
+        <Constant>
+          <Name>StructuralFraction</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.95</FixedValue>
+        </Constant>
+        <Constant>
+          <Name>SenescenceRate</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0</FixedValue>
+          <Units>/d</Units>
+        </Constant>
+        <Constant>
+          <Name>MaximumNConc</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.03</FixedValue>
+        </Constant>
+        <Constant>
+          <Name>MinimumNConc</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.005</FixedValue>
+        </Constant>
+        <Constant>
+          <Name>NReallocationFactor</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.05</FixedValue>
+        </Constant>
+        <PhaseBasedSwitch>
+          <Name>NitrogenDemandSwitch</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <Start>Germination</Start>
+          <End>Maturity</End>
+        </PhaseBasedSwitch>
+        <Constant>
+          <Name>NRetranslocationFactor</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.05</FixedValue>
+        </Constant>
+        <Constant>
+          <Name>DMRetranslocationFactor</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.05</FixedValue>
+        </Constant>
+        <Biomass>
+          <Name>Live</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+        </Biomass>
+        <Biomass>
+          <Name>Dead</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+        </Biomass>
+        <Constant>
+          <Name>DMSinkCapacity</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>1</FixedValue>
+        </Constant>
+        <PartitionFractionDemandFunction>
+          <Name>DMDemandFunction</Name>
+          <LinearInterpolationFunction>
+            <Name>PartitionFraction</Name>
+            <XYPairs>
+              <Name>XYPairs</Name>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <X>
+                <double>1</double>
+                <double>6</double>
+                <double>15</double>
+                <double>30</double>
+                <double>51</double>
+              </X>
+              <Y>
+                <double>0.1</double>
+                <double>0.35</double>
+                <double>0.7</double>
+                <double>0.8</double>
+                <double>0.8</double>
+              </Y>
+            </XYPairs>
+            <Memo>
+              <Name>Memo</Name>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <MemoText><![CDATA[Allocation determined by node number - partitioning coefficients have been determined using the sowing date October data]]></MemoText>
+            </Memo>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <XProperty>[Structure].LeafTipsAppeared</XProperty>
+          </LinearInterpolationFunction>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+        </PartitionFractionDemandFunction>
+        <Constant>
+          <Name>InitialWtFunction</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0</FixedValue>
+          <Units>g/m^2</Units>
+        </Constant>
+        <Constant>
+          <Name>DetachmentRateFunction</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0</FixedValue>
+          <Units>/d</Units>
+        </Constant>
+        <Constant>
+          <Name>MaintenanceRespirationFunction</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0</FixedValue>
+          <Units>0-1</Units>
+        </Constant>
+        <Constant>
+          <Name>DMConversionEfficiency</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>1</FixedValue>
+          <Units>0-1</Units>
+        </Constant>
+        <BiomassRemoval>
+          <Name>BiomassRemovalDefaults</Name>
+          <OrganBiomassRemovalType>
+            <Name>Harvest</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <FractionLiveToRemove>0.5</FractionLiveToRemove>
+            <FractionDeadToRemove>0</FractionDeadToRemove>
+            <FractionLiveToResidue>0.1</FractionLiveToResidue>
+            <FractionDeadToResidue>0</FractionDeadToResidue>
+          </OrganBiomassRemovalType>
+          <OrganBiomassRemovalType>
+            <Name>Cut</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <FractionLiveToRemove>0.8</FractionLiveToRemove>
+            <FractionDeadToRemove>0</FractionDeadToRemove>
+            <FractionLiveToResidue>0</FractionLiveToResidue>
+            <FractionDeadToResidue>0</FractionDeadToResidue>
+          </OrganBiomassRemovalType>
+          <OrganBiomassRemovalType>
+            <Name>Prune</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <FractionLiveToRemove>0</FractionLiveToRemove>
+            <FractionDeadToRemove>0</FractionDeadToRemove>
+            <FractionLiveToResidue>0.6</FractionLiveToResidue>
+            <FractionDeadToResidue>0</FractionDeadToResidue>
+          </OrganBiomassRemovalType>
+          <OrganBiomassRemovalType>
+            <Name>Graze</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <FractionLiveToRemove>0.6</FractionLiveToRemove>
+            <FractionDeadToRemove>0</FractionDeadToRemove>
+            <FractionLiveToResidue>0.2</FractionLiveToResidue>
+            <FractionDeadToResidue>0</FractionDeadToResidue>
+          </OrganBiomassRemovalType>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+        </BiomassRemoval>
+        <IncludeInDocumentation>true</IncludeInDocumentation>
+      </GenericOrgan>
       <Leaf>
         <Name>Leaf</Name>
         <LeafCohort>
@@ -681,8 +832,8 @@ date of Experiment 4 is assumed here.]]></MemoText>
                 <double>500</double>
                 <double>500</double>
                 <double>500</double>
-                <double>400</double>
-                <double>300</double>
+                <double>500</double>
+                <double>500</double>
                 <double>200</double>
               </Y>
             </XYPairs>
@@ -744,7 +895,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
                   <double>300</double>
                   <double>300</double>
                   <double>300</double>
-                  <double>200</double>
+                  <double>300</double>
                   <double>100</double>
                   <double>80</double>
                 </Y>
@@ -867,7 +1018,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
           <Constant>
             <Name>NRetranslocationFactor</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FixedValue>0.01</FixedValue>
+            <FixedValue>0</FixedValue>
           </Constant>
           <Constant>
             <Name>DMRetranslocationFactor</Name>
@@ -1277,157 +1428,6 @@ date of Experiment 4 is assumed here.]]></MemoText>
         <ZoneInitialDM />
       </Root>
       <GenericOrgan>
-        <Name>StorageRoot</Name>
-        <Constant>
-          <Name>StructuralFraction</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.95</FixedValue>
-        </Constant>
-        <Constant>
-          <Name>SenescenceRate</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0</FixedValue>
-          <Units>/d</Units>
-        </Constant>
-        <Constant>
-          <Name>MaximumNConc</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.03</FixedValue>
-        </Constant>
-        <Constant>
-          <Name>MinimumNConc</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.005</FixedValue>
-        </Constant>
-        <Constant>
-          <Name>NReallocationFactor</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.05</FixedValue>
-        </Constant>
-        <PhaseBasedSwitch>
-          <Name>NitrogenDemandSwitch</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <Start>Germination</Start>
-          <End>Maturity</End>
-        </PhaseBasedSwitch>
-        <Constant>
-          <Name>NRetranslocationFactor</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.05</FixedValue>
-        </Constant>
-        <Constant>
-          <Name>DMRetranslocationFactor</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.05</FixedValue>
-        </Constant>
-        <Biomass>
-          <Name>Live</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-        </Biomass>
-        <Biomass>
-          <Name>Dead</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-        </Biomass>
-        <Constant>
-          <Name>DMSinkCapacity</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>1</FixedValue>
-        </Constant>
-        <PartitionFractionDemandFunction>
-          <Name>DMDemandFunction</Name>
-          <LinearInterpolationFunction>
-            <Name>PartitionFraction</Name>
-            <XYPairs>
-              <Name>XYPairs</Name>
-              <IncludeInDocumentation>true</IncludeInDocumentation>
-              <X>
-                <double>1</double>
-                <double>6</double>
-                <double>15</double>
-                <double>30</double>
-                <double>51</double>
-              </X>
-              <Y>
-                <double>0.1</double>
-                <double>0.35</double>
-                <double>0.7</double>
-                <double>0.8</double>
-                <double>0.8</double>
-              </Y>
-            </XYPairs>
-            <Memo>
-              <Name>Memo</Name>
-              <IncludeInDocumentation>true</IncludeInDocumentation>
-              <MemoText><![CDATA[Allocation determined by node number - partitioning coefficients have been determined using the sowing date October data]]></MemoText>
-            </Memo>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <XProperty>[Structure].LeafTipsAppeared</XProperty>
-          </LinearInterpolationFunction>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-        </PartitionFractionDemandFunction>
-        <Constant>
-          <Name>InitialWtFunction</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0</FixedValue>
-          <Units>g/m^2</Units>
-        </Constant>
-        <Constant>
-          <Name>DetachmentRateFunction</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0</FixedValue>
-          <Units>/d</Units>
-        </Constant>
-        <Constant>
-          <Name>MaintenanceRespirationFunction</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0</FixedValue>
-          <Units>0-1</Units>
-        </Constant>
-        <Constant>
-          <Name>DMConversionEfficiency</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>1</FixedValue>
-          <Units>0-1</Units>
-        </Constant>
-        <BiomassRemoval>
-          <Name>BiomassRemovalDefaults</Name>
-          <OrganBiomassRemovalType>
-            <Name>Harvest</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FractionLiveToRemove>0.5</FractionLiveToRemove>
-            <FractionDeadToRemove>0</FractionDeadToRemove>
-            <FractionLiveToResidue>0.1</FractionLiveToResidue>
-            <FractionDeadToResidue>0</FractionDeadToResidue>
-          </OrganBiomassRemovalType>
-          <OrganBiomassRemovalType>
-            <Name>Cut</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FractionLiveToRemove>0.8</FractionLiveToRemove>
-            <FractionDeadToRemove>0</FractionDeadToRemove>
-            <FractionLiveToResidue>0</FractionLiveToResidue>
-            <FractionDeadToResidue>0</FractionDeadToResidue>
-          </OrganBiomassRemovalType>
-          <OrganBiomassRemovalType>
-            <Name>Prune</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FractionLiveToRemove>0</FractionLiveToRemove>
-            <FractionDeadToRemove>0</FractionDeadToRemove>
-            <FractionLiveToResidue>0.6</FractionLiveToResidue>
-            <FractionDeadToResidue>0</FractionDeadToResidue>
-          </OrganBiomassRemovalType>
-          <OrganBiomassRemovalType>
-            <Name>Graze</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FractionLiveToRemove>0.6</FractionLiveToRemove>
-            <FractionDeadToRemove>0</FractionDeadToRemove>
-            <FractionLiveToResidue>0.2</FractionLiveToResidue>
-            <FractionDeadToResidue>0</FractionDeadToResidue>
-          </OrganBiomassRemovalType>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-        </BiomassRemoval>
-        <IncludeInDocumentation>true</IncludeInDocumentation>
-      </GenericOrgan>
-      <GenericOrgan>
         <Name>Petiole</Name>
         <Constant>
           <Name>StructuralFraction</Name>
@@ -1469,7 +1469,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
           <IncludeInDocumentation>true</IncludeInDocumentation>
         </Biomass>
         <PartitionFractionDemandFunction>
-          <Name>DMDemandFunction</Name>
+          <Name>DMDemandFunctionPartition</Name>
           <LinearInterpolationFunction>
             <Name>PartitionFraction</Name>
             <XYPairs>
@@ -1575,6 +1575,38 @@ date of Experiment 4 is assumed here.]]></MemoText>
           </OrganBiomassRemovalType>
           <IncludeInDocumentation>true</IncludeInDocumentation>
         </BiomassRemoval>
+        <MaximumFunction>
+          <Name>DMDemandFunction</Name>
+          <Constant>
+            <Name>Zero</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <FixedValue>0</FixedValue>
+          </Constant>
+          <MultiplyFunction>
+            <Name>MultiplyFunction</Name>
+            <SubtractFunction>
+              <Name>SubtractFunction</Name>
+              <VariableReference>
+                <Name>leafWt</Name>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <VariableName>[Leaf].Live.Wt</VariableName>
+              </VariableReference>
+              <VariableReference>
+                <Name>PetioleWt</Name>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <VariableName>[Petiolef].Live.Wt</VariableName>
+              </VariableReference>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+            </SubtractFunction>
+            <Constant>
+              <Name>Constant</Name>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <FixedValue>0.01</FixedValue>
+            </Constant>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+          </MultiplyFunction>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+        </MaximumFunction>
         <IncludeInDocumentation>true</IncludeInDocumentation>
       </GenericOrgan>
       <CompositeBiomass>
@@ -5236,6 +5268,7 @@ The Ear composite biomass object includes the Live and dead pools of all organs 
           <Command>[Phenology].VrnSensitivity.FixedValue = 7</Command>
           <Command>[Phenology].PpSensitivity.FixedValue = 3</Command>
           <Command>[Structure].MaxLN.FixedValue = 15</Command>
+          <Command>[Structure].BasePhyllochron.FixedValue = 70</Command>
         </Cultivar>
         <IncludeInDocumentation>true</IncludeInDocumentation>
       </CultivarFolder>
@@ -5296,6 +5329,7 @@ The Ear composite biomass object includes the Live and dead pools of all organs 
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <Specifications>
             <string>[Fert]</string>
+            <string>[StateFactors].Script.NitFactor = 0</string>
           </Specifications>
         </Factor>
         <Factor>
@@ -5319,6 +5353,7 @@ The Ear composite biomass object includes the Live and dead pools of all organs 
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <Specifications>
             <string>[Fert]</string>
+            <string>[StateFactors].Script.NitFactor = 50</string>
           </Specifications>
         </Factor>
         <Factor>
@@ -5342,6 +5377,7 @@ The Ear composite biomass object includes the Live and dead pools of all organs 
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <Specifications>
             <string>[Fert]</string>
+            <string>[StateFactors].Script.NitFactor = 300</string>
           </Specifications>
         </Factor>
         <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -5368,109 +5404,86 @@ In Statefactors have donethe irrigations for
             </Memo>
             <IncludeInDocumentation>true</IncludeInDocumentation>
             <Operation>
-              <Date>2016-10-01</Date>
-              <Action>[Irrigation].Apply(5);</Action>
+              <Date>2016-09-02</Date>
+              <Action>[Irrigation].Apply(25);</Action>
             </Operation>
             <Operation>
-              <Date>2016-10-09</Date>
-              <Action>[Irrigation].Apply(10);</Action>
+              <Date>2016-10-25</Date>
+              <Action>[Irrigation].Apply(05);</Action>
             </Operation>
             <Operation>
-              <Date>2016-10-16</Date>
-              <Action>[Irrigation].Apply(15);</Action>
+              <Date>2016-10-28</Date>
+              <Action>[Irrigation].Apply(05);</Action>
             </Operation>
             <Operation>
-              <Date>2016-10-22</Date>
-              <Action>[Irrigation].Apply(15);</Action>
+              <Date>2016-11-17</Date>
+              <Action>[Irrigation].Apply(0);</Action>
             </Operation>
             <Operation>
-              <Date>2016-10-29</Date>
+              <Date>2016-11-23</Date>
               <Action>[Irrigation].Apply(30);</Action>
             </Operation>
             <Operation>
-              <Date>2016-11-03</Date>
-              <Action>[Irrigation].Apply(10);</Action>
-            </Operation>
-            <Operation>
-              <Date>2016-11-06</Date>
-              <Action>[Irrigation].Apply(12.2);</Action>
-            </Operation>
-            <Operation>
-              <Date>2016-11-12</Date>
-              <Action>[Irrigation].Apply(13);</Action>
-            </Operation>
-            <Operation>
-              <Date>2016-11-19</Date>
-              <Action>[Irrigation].Apply(24);</Action>
-            </Operation>
-            <Operation>
-              <Date>2016-11-26</Date>
-              <Action>[Irrigation].Apply(39);</Action>
-            </Operation>
-            <Operation>
-              <Date>2016-12-03</Date>
-              <Action>[Irrigation].Apply(40);</Action>
-            </Operation>
-            <Operation>
-              <Date>2016-12-10</Date>
-              <Action>[Irrigation].Apply(40);</Action>
-            </Operation>
-            <Operation>
-              <Date>2016-12-17</Date>
+              <Date>2016-11-30</Date>
               <Action>[Irrigation].Apply(30);</Action>
             </Operation>
             <Operation>
-              <Date>2016-12-24</Date>
+              <Date>2016-12-07</Date>
+              <Action>[Irrigation].Apply(25);</Action>
+            </Operation>
+            <Operation>
+              <Date>2016-12-21</Date>
+              <Action>[Irrigation].Apply(25);</Action>
+            </Operation>
+            <Operation>
+              <Date>2016-12-29</Date>
+              <Action>[Irrigation].Apply(30);</Action>
+            </Operation>
+            <Operation>
+              <Date>2017-01-04</Date>
+              <Action>[Irrigation].Apply(40);</Action>
+            </Operation>
+            <Operation>
+              <Date>2017-01-11</Date>
+              <Action>[Irrigation].Apply(33);</Action>
+            </Operation>
+            <Operation>
+              <Date>2017-01-18</Date>
+              <Action>[Irrigation].Apply(25);</Action>
+            </Operation>
+            <Operation>
+              <Date>2017-02-08</Date>
+              <Action>[Irrigation].Apply(33);</Action>
+            </Operation>
+            <Operation>
+              <Date>2017-02-15</Date>
               <Action>[Irrigation].Apply(35);</Action>
             </Operation>
             <Operation>
-              <Date>2017-01-03</Date>
-              <Action>[Irrigation].Apply(35);</Action>
+              <Date>2017-02-22</Date>
+              <Action>[Irrigation].Apply(29);</Action>
             </Operation>
             <Operation>
-              <Date>2017-01-10</Date>
-              <Action>[Irrigation].Apply(35);</Action>
+              <Date>2017-03-08</Date>
+              <Action>[Irrigation].Apply(34);</Action>
             </Operation>
             <Operation>
-              <Date>2017-01-17</Date>
-              <Action>[Irrigation].Apply(35);</Action>
+              <Date>2017-03-22</Date>
+              <Action>[Irrigation].Apply(50);</Action>
             </Operation>
             <Operation>
-              <Date>2017-01-24</Date>
-              <Action>[Irrigation].Apply(35);</Action>
+              <Date>2017-04-12</Date>
+              <Action>[Irrigation].Apply(31);</Action>
             </Operation>
             <Operation>
-              <Date>2017-01-31</Date>
-              <Action>[Irrigation].Apply(35);</Action>
-            </Operation>
-            <Operation>
-              <Date>2017-02-07</Date>
-              <Action>[Irrigation].Apply(35);</Action>
-            </Operation>
-            <Operation>
-              <Date>2017-02-10</Date>
-              <Action>[Irrigation].Apply(35);</Action>
-            </Operation>
-            <Operation>
-              <Date>2017-02-17</Date>
-              <Action>[Irrigation].Apply(35);</Action>
-            </Operation>
-            <Operation>
-              <Date>2017-02-24</Date>
-              <Action>[Irrigation].Apply(35);</Action>
-            </Operation>
-            <Operation>
-              <Date>2017-03-01</Date>
-              <Action>[Irrigation].Apply(35);</Action>
-            </Operation>
-            <Operation>
-              <Date>2017-03-10</Date>
-              <Action>[Irrigation].Apply(35);</Action>
+              <Date>2017-04-27</Date>
+              <Action>[Irrigation].Apply(19);</Action>
             </Operation>
           </Operations>
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <Specifications>
             <string>[Irrig]</string>
+            <string>[StateFactors].Script.IrrFactor = true</string>
           </Specifications>
         </Factor>
         <Factor>
@@ -5501,6 +5514,7 @@ Data indcates water applied but no notes of it RFZ]]></MemoText>
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <Specifications>
             <string>[Irrig]</string>
+            <string>[StateFactors].Script.IrrFactor = false</string>
           </Specifications>
         </Factor>
         <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -5547,7 +5561,7 @@ Data indcates water applied but no notes of it RFZ]]></MemoText>
             </Operation>
             <Operation>
               <Date>2017-07-05</Date>
-              <Action>[Oats].Sow(population:300, cultivar:"Drummond", depth:15, rowSpacing:45)</Action>
+              <Action>[Oats].Sow(population:300, cultivar:"Milton1", depth:15, rowSpacing:45)</Action>
             </Operation>
           </Operations>
           <Operations>
@@ -6350,6 +6364,274 @@ namespace Models
             <string>[Clock].DoReport</string>
           </EventNames>
         </Report>
+        <Manager>
+          <Name>StateFactors</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <Script>
+            <NitFactor>0</NitFactor>
+            <IrrFactor>False</IrrFactor>
+          </Script>
+          <Code><![CDATA[using System;
+using Models.Core;
+using System.Collections.Generic;
+using System.Text;
+using Models.Soils;
+using Models.PMF;
+using Models;
+using System.Xml.Serialization;
+using APSIM.Shared.Utilities;
+
+namespace Models
+{
+	[Serializable] 
+	public class Script : Model
+	{
+		[Link] Clock Clock;
+		[Link] Irrigation Irrigation;
+		[Link] Fertiliser Fert;
+		[Link] Soil ThisSoil;
+		[Description("Amount of Irrgation be applied 0/1")]
+		public bool IrrFactor { get; set; }
+		[Description("Amount of fertiliser to be applied (kg/ha)")]
+		public double NitFactor { get; set; }
+		
+          
+		private void SetSoilLayers()
+		{
+			/*
+            Not used yrt use whenmore detailed info is known
+            */
+			int i = 0;
+			if ((IrrFactor == false) && (NitFactor == 0))
+			{
+				if (ThisSoil.Thickness.Length != 7)
+				{
+					throw new Exception("Soil layer exception");
+				}
+			 
+				ThisSoil.LL15[0] = 0.06;
+				ThisSoil.LL15[1] = 0.06;
+				ThisSoil.LL15[2] = 0.08;
+				ThisSoil.LL15[3] = 0.14;
+				ThisSoil.LL15[4] = 0.16;
+				ThisSoil.LL15[5] = 0.16;
+				ThisSoil.LL15[6] = 0.11;
+				ThisSoil.DUL[0] = 0.34;
+				ThisSoil.DUL[1] = 0.3;
+				ThisSoil.DUL[2] = 0.28;
+				ThisSoil.DUL[3] = 0.3;
+				ThisSoil.DUL[4] = 0.3;
+				ThisSoil.DUL[5] = 0.30;
+				ThisSoil.DUL[6] = 0.3;
+				ThisSoil.SAT[0] = 0.4;
+				ThisSoil.SAT[1] = 0.4;
+				ThisSoil.SAT[2] = 0.4;
+				ThisSoil.SAT[3] = 0.4;
+				ThisSoil.SAT[4] = 0.4;
+				ThisSoil.SAT[5] = 0.4;
+				ThisSoil.SAT[6] = 0.4;
+				ThisSoil.SoilWater.Reset();
+			}   
+			if ((IrrFactor == false) && (NitFactor == 50))
+			{
+				if (ThisSoil.Thickness.Length != 7)
+				{
+					throw new Exception("Soil layer exception");
+				}
+			 
+				ThisSoil.LL15[0] = 0.07;
+				ThisSoil.LL15[1] = 0.12;
+				ThisSoil.LL15[2] = 0.17;
+				ThisSoil.LL15[3] = 0.20;
+				ThisSoil.LL15[4] = 0.26;
+				ThisSoil.LL15[5] = 0.32;
+				ThisSoil.LL15[6] = 0.30;
+				ThisSoil.DUL[0] = 0.30;
+				ThisSoil.DUL[1] = 0.26;
+				ThisSoil.DUL[2] = 0.29;
+				ThisSoil.DUL[3] = 0.25;
+				ThisSoil.DUL[4] = 0.29;
+				ThisSoil.DUL[5] = 0.34;
+				ThisSoil.DUL[6] = 0.30;
+				ThisSoil.SAT[0] = 0.34;
+				ThisSoil.SAT[1] = 0.34;
+				ThisSoil.SAT[2] = 0.34;
+				ThisSoil.SAT[3] = 0.34;
+				ThisSoil.SAT[4] = 0.34;
+				ThisSoil.SAT[5] = 0.34;
+				ThisSoil.SAT[6] = 0.34;
+				ThisSoil.SoilWater.Reset();
+			}   
+			if ((IrrFactor == false) && (NitFactor == 50))
+			{
+				if (ThisSoil.Thickness.Length != 7)
+				{
+					throw new Exception("Soil layer exception");
+				}
+			 
+				ThisSoil.LL15[0] = 0.06;
+				ThisSoil.LL15[1] = 0.11;
+				ThisSoil.LL15[2] = 0.21;
+				ThisSoil.LL15[3] = 0.18;
+				ThisSoil.LL15[4] = 0.23;
+				ThisSoil.LL15[5] = 0.30;
+				ThisSoil.LL15[6] = 0.26;
+				ThisSoil.DUL[0] = 0.25;
+				ThisSoil.DUL[1] = 0.26;
+				ThisSoil.DUL[2] = 0.30;
+				ThisSoil.DUL[3] = 0.27;
+				ThisSoil.DUL[4] = 0.34;
+				ThisSoil.DUL[5] = 0.27;
+				ThisSoil.DUL[6] = 0.30;
+				ThisSoil.SAT[0] = 0.34;
+				ThisSoil.SAT[1] = 0.34;
+				ThisSoil.SAT[2] = 0.34;
+				ThisSoil.SAT[3] = 0.34;
+				ThisSoil.SAT[4] = 0.34;
+				ThisSoil.SAT[5] = 0.34;
+				ThisSoil.SAT[6] = 0.34;
+				ThisSoil.SoilWater.Reset();
+			}   
+			if ((IrrFactor == true) && (NitFactor == 0))
+			{
+				if (ThisSoil.Thickness.Length != 7)
+				{
+					throw new Exception("Soil layer exception");
+				}
+			 
+				ThisSoil.LL15[0] = 0.13;
+				ThisSoil.LL15[1] = 0.21;
+				ThisSoil.LL15[2] = 0.25;
+				ThisSoil.LL15[3] = 0.19;
+				ThisSoil.LL15[4] = 0.29;
+				ThisSoil.LL15[5] = 0.32;
+				ThisSoil.LL15[6] = 0.34;
+				ThisSoil.DUL[0] = 0.31;
+				ThisSoil.DUL[1] = 0.28;
+				ThisSoil.DUL[2] = 0.30;
+				ThisSoil.DUL[3] = 0.28;
+				ThisSoil.DUL[4] = 0.29;
+				ThisSoil.DUL[5] = 0.34;
+				ThisSoil.DUL[6] = 0.30;
+				ThisSoil.SAT[0] = 0.34;
+				ThisSoil.SAT[1] = 0.34;
+				ThisSoil.SAT[2] = 0.34;
+				ThisSoil.SAT[3] = 0.34;
+				ThisSoil.SAT[4] = 0.34;
+				ThisSoil.SAT[5] = 0.34;
+				ThisSoil.SAT[6] = 0.34;
+				ThisSoil.SoilWater.Reset();
+			}   
+			if ((IrrFactor == true) && (NitFactor == 50))
+			{
+				if (ThisSoil.Thickness.Length != 7)
+				{
+					throw new Exception("Soil layer exception");
+				}
+			 
+				ThisSoil.LL15[0] = 0.14;
+				ThisSoil.LL15[1] = 0.21;
+				ThisSoil.LL15[2] = 0.27;
+				ThisSoil.LL15[3] = 0.27;
+				ThisSoil.LL15[4] = 0.27;
+				ThisSoil.LL15[5] = 0.32;
+				ThisSoil.LL15[6] = 0.30;
+				ThisSoil.DUL[0] = 0.31;
+				ThisSoil.DUL[1] = 0.28;
+				ThisSoil.DUL[2] = 0.30;
+				ThisSoil.DUL[3] = 0.28;
+				ThisSoil.DUL[4] = 0.29;
+				ThisSoil.DUL[5] = 0.34;
+				ThisSoil.DUL[6] = 0.30;
+				ThisSoil.SAT[0] = 0.34;
+				ThisSoil.SAT[1] = 0.34;
+				ThisSoil.SAT[2] = 0.34;
+				ThisSoil.SAT[3] = 0.34;
+				ThisSoil.SAT[4] = 0.34;
+				ThisSoil.SAT[5] = 0.34;
+				ThisSoil.SAT[6] = 0.34;
+				ThisSoil.SoilWater.Reset();
+			}
+			if ((IrrFactor == true) && (NitFactor == 250))
+			{
+				if (ThisSoil.Thickness.Length != 7)
+				{
+					throw new Exception("Soil layer exception");
+				}
+			 
+				ThisSoil.LL15[0] = 0.12;
+				ThisSoil.LL15[1] = 0.18;
+				ThisSoil.LL15[2] = 0.17;
+				ThisSoil.LL15[3] = 0.20;
+				ThisSoil.LL15[4] = 0.27;
+				ThisSoil.LL15[5] = 0.27;
+				ThisSoil.LL15[6] = 0.21;
+				ThisSoil.DUL[0] = 0.31;
+				ThisSoil.DUL[1] = 0.28;
+				ThisSoil.DUL[2] = 0.30;
+				ThisSoil.DUL[3] = 0.28;
+				ThisSoil.DUL[4] = 0.29;
+				ThisSoil.DUL[5] = 0.34;
+				ThisSoil.DUL[6] = 0.30;
+				ThisSoil.SAT[0] = 0.34;
+				ThisSoil.SAT[1] = 0.34;
+				ThisSoil.SAT[2] = 0.34;
+				ThisSoil.SAT[3] = 0.34;
+				ThisSoil.SAT[4] = 0.34;
+				ThisSoil.SAT[5] = 0.34;
+				ThisSoil.SAT[6] = 0.34;
+				ThisSoil.SoilWater.Reset();
+			}
+		}
+
+		[EventSubscribe("Commencing")]
+		private void OnSimulationCommencing(object sender, EventArgs e)
+		{
+			//	SetSoilLayers();
+		}
+		
+		[EventSubscribe("DoManagement")]
+		private void OnDoManagement(object sender, EventArgs e)
+		{
+			//Specific irrgations
+			
+			//Fodderbeet
+			
+			if ((IrrFactor == true) && (NitFactor == 300))
+			{
+				if ((DateUtilities.CompareDates("1-Feb", Clock.Today) == 0))
+					Irrigation.Apply(40);
+				if ((DateUtilities.CompareDates("1-Mar", Clock.Today) == 0))
+					Irrigation.Apply(36);
+			}
+	    
+			//Oats
+			if (Clock.Today.Year == 2017)
+			if ((DateUtilities.CompareDates("5-Jul", Clock.Today) == 0))
+			if (IrrFactor == true)
+			{
+				if (NitFactor == 0)
+					Fert.Apply(40, Models.Fertiliser.Types.NO3N, 10);
+				if (NitFactor == 50)
+					Fert.Apply(85, Models.Fertiliser.Types.NO3N, 10);
+				if (NitFactor == 300)
+					Fert.Apply(270, Models.Fertiliser.Types.NO3N, 10);
+			   
+			}
+			 
+			
+			
+		}
+	}
+		
+		
+}
+	
+
+
+	  
+]]></Code>
+        </Manager>
         <IncludeInDocumentation>true</IncludeInDocumentation>
         <Area>1</Area>
         <Slope>0</Slope>
@@ -7158,10 +7440,7 @@ namespace Models
         <Interval>NaN</Interval>
       </Axis>
       <LegendPosition>TopLeft</LegendPosition>
-      <DisabledSeries>
-        <string>0Full: Pred</string>
-        <string>50Full: Pred</string>
-      </DisabledSeries>
+      <DisabledSeries />
     </Graph>
     <Graph>
       <Name>FB_AboveGroundN</Name>
@@ -7382,8 +7661,50 @@ namespace Models
       <LegendPosition>TopLeft</LegendPosition>
       <DisabledSeries />
     </Graph>
+    <Graph>
+      <Name>LAI1</Name>
+      <Series>
+        <Name>Pred</Name>
+        <IncludeInDocumentation>true</IncludeInDocumentation>
+        <Type>Scatter</Type>
+        <XAxis>Bottom</XAxis>
+        <YAxis>Left</YAxis>
+        <ColourArgb>-16777216</ColourArgb>
+        <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+        <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+        <FactorIndexToVaryLines>0</FactorIndexToVaryLines>
+        <Marker>None</Marker>
+        <MarkerSize>Normal</MarkerSize>
+        <Line>Solid</Line>
+        <LineThickness>Normal</LineThickness>
+        <TableName>DailyReport</TableName>
+        <XFieldName>Clock.Today</XFieldName>
+        <YFieldName>FodderBeet.Structure.LeafTipsAppeared</YFieldName>
+        <ShowInLegend>true</ShowInLegend>
+        <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+        <Cumulative>false</Cumulative>
+        <CumulativeX>false</CumulativeX>
+      </Series>
+      <IncludeInDocumentation>true</IncludeInDocumentation>
+      <Axis>
+        <Type>Bottom</Type>
+        <Inverted>false</Inverted>
+        <Minimum>NaN</Minimum>
+        <Maximum>NaN</Maximum>
+        <Interval>NaN</Interval>
+      </Axis>
+      <Axis>
+        <Type>Left</Type>
+        <Inverted>false</Inverted>
+        <Minimum>NaN</Minimum>
+        <Maximum>NaN</Maximum>
+        <Interval>NaN</Interval>
+      </Axis>
+      <LegendPosition>TopLeft</LegendPosition>
+      <DisabledSeries />
+    </Graph>
     <IncludeInDocumentation>true</IncludeInDocumentation>
   </Experiment>
   <IncludeInDocumentation>true</IncludeInDocumentation>
-  <ExplorerWidth>409</ExplorerWidth>
+  <ExplorerWidth>420</ExplorerWidth>
 </Simulations>
