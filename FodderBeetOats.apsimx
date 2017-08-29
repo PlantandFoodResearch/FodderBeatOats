@@ -10,6 +10,13 @@ The New Zealand Institute for Plant & Food Research Limited, Private Bag 4704, C
 
 Developed using wheat as a starting point.]]></MemoText>
   </Memo>
+  <Memo>
+    <Name>FIXME</Name>
+    <IncludeInDocumentation>true</IncludeInDocumentation>
+    <MemoText><![CDATA[Issues to be resulved:
+
+(1) Soil temperature does not respond to canopy cover ... data show temperature difference in N and water treatments but simulations are identical. What's impact on N mineralisation? (eit 30 Aug 2017)]]></MemoText>
+  </Memo>
   <Replacements>
     <Name>Replacements</Name>
     <Plant>
@@ -6746,8 +6753,8 @@ namespace Models
         <XAxis>Bottom</XAxis>
         <YAxis>Left</YAxis>
         <ColourArgb>-16777216</ColourArgb>
-        <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
-        <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+        <FactorIndexToVaryColours>1</FactorIndexToVaryColours>
+        <FactorIndexToVaryMarkers>0</FactorIndexToVaryMarkers>
         <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
         <Marker>None</Marker>
         <MarkerSize>Normal</MarkerSize>
@@ -6762,22 +6769,22 @@ namespace Models
         <CumulativeX>false</CumulativeX>
       </Series>
       <Series>
-        <Name>Pred1</Name>
+        <Name>Obs</Name>
         <IncludeInDocumentation>true</IncludeInDocumentation>
         <Type>Scatter</Type>
         <XAxis>Bottom</XAxis>
         <YAxis>Right</YAxis>
         <ColourArgb>-16777216</ColourArgb>
-        <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
-        <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
-        <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+        <FactorIndexToVaryColours>1</FactorIndexToVaryColours>
+        <FactorIndexToVaryMarkers>0</FactorIndexToVaryMarkers>
+        <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
         <Marker>None</Marker>
         <MarkerSize>Normal</MarkerSize>
-        <Line>Solid</Line>
+        <Line>None</Line>
         <LineThickness>Normal</LineThickness>
-        <TableName>DailyReport</TableName>
+        <TableName>OBS</TableName>
         <XFieldName>Clock.Today</XFieldName>
-        <YFieldName>Oats.AboveGround.Wt</YFieldName>
+        <YFieldName>FodderBeet.AboveGroundLive.Wt</YFieldName>
         <ShowInLegend>true</ShowInLegend>
         <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
         <Cumulative>false</Cumulative>
