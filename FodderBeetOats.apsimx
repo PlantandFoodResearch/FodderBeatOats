@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Simulations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9">
+<Simulations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="12">
   <Name>Simulations</Name>
   <Memo>
     <Name>Introduction</Name>
@@ -660,7 +660,7 @@ A function is used to provide maturity date as days after sowing(DAS).]]></MemoT
           <VariableName>[Phenology].ThermalTime.Value()</VariableName>
         </VariableReference>
         <MultiplyFunction>
-          <Name>MainStemNodeAppearanceRate</Name>
+          <Name>Phyllochron</Name>
           <Memo>
             <Name>Rational</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -1001,7 +1001,7 @@ A function is used to provide maturity date as days after sowing(DAS).]]></MemoT
           <VariableReference>
             <Name>Phyllochron</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
-            <VariableName>[Structure].MainStemNodeAppearanceRate.Value()</VariableName>
+            <VariableName>[Structure].Phyllochron.Value()</VariableName>
           </VariableReference>
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <NumberOfDays>300</NumberOfDays>
@@ -1014,7 +1014,7 @@ A function is used to provide maturity date as days after sowing(DAS).]]></MemoT
             <VariableReference>
               <Name>FinalLeafNumber</Name>
               <IncludeInDocumentation>true</IncludeInDocumentation>
-              <VariableName>[Structure].MainStemFinalNodeNumber.Value()</VariableName>
+              <VariableName>[Structure].FinalLeafNumber.Value()</VariableName>
             </VariableReference>
             <Constant>
               <Name>Intercept</Name>
@@ -1099,7 +1099,7 @@ A function is used to provide maturity date as days after sowing(DAS).]]></MemoT
           <IncludeInDocumentation>true</IncludeInDocumentation>
         </PhaseLookup>
         <MinimumFunction>
-          <Name>MainStemFinalNodeNumber</Name>
+          <Name>FinalLeafNumber</Name>
           <Memo>
             <Name>Memo</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -1235,7 +1235,7 @@ TSLN = FLN*0.995 - 1.95 ]]></MemoText>
               <VariableReference>
                 <Name>FLN</Name>
                 <IncludeInDocumentation>true</IncludeInDocumentation>
-                <VariableName>[Structure].MainStemFinalNodeNumber.Value()</VariableName>
+                <VariableName>[Structure].FinalLeafNumber.Value()</VariableName>
               </VariableReference>
               <Constant>
                 <Name>PS</Name>
@@ -1887,10 +1887,10 @@ N conc values are from Zhao et al 2009
           <PotentialMetabolicDMAllocation>0</PotentialMetabolicDMAllocation>
           <MetabolicNReallocated>0</MetabolicNReallocated>
           <MetabolicWtReallocated>0</MetabolicWtReallocated>
-          <NonStructuralNReallocated>0</NonStructuralNReallocated>
-          <NonStructuralWtReallocated>0</NonStructuralWtReallocated>
+          <StorageNReallocated>0</StorageNReallocated>
+          <StorageWtReallocated>0</StorageWtReallocated>
           <MetabolicNRetranslocated>0</MetabolicNRetranslocated>
-          <NonStructuralNRetrasnlocated>0</NonStructuralNRetrasnlocated>
+          <StorageNRetrasnlocated>0</StorageNRetrasnlocated>
           <DMRetranslocated>0</DMRetranslocated>
           <MetabolicNAllocation>0</MetabolicNAllocation>
           <StructuralDMAllocation>0</StructuralDMAllocation>
@@ -1915,10 +1915,10 @@ N conc values are from Zhao et al 2009
           <PotentialMetabolicDMAllocation>0</PotentialMetabolicDMAllocation>
           <MetabolicNReallocated>0</MetabolicNReallocated>
           <MetabolicWtReallocated>0</MetabolicWtReallocated>
-          <NonStructuralNReallocated>0</NonStructuralNReallocated>
-          <NonStructuralWtReallocated>0</NonStructuralWtReallocated>
+          <StorageNReallocated>0</StorageNReallocated>
+          <StorageWtReallocated>0</StorageWtReallocated>
           <MetabolicNRetranslocated>0</MetabolicNRetranslocated>
-          <NonStructuralNRetrasnlocated>0</NonStructuralNRetrasnlocated>
+          <StorageNRetrasnlocated>0</StorageNRetrasnlocated>
           <DMRetranslocated>0</DMRetranslocated>
           <MetabolicNAllocation>0</MetabolicNAllocation>
           <StructuralDMAllocation>0</StructuralDMAllocation>
@@ -2126,7 +2126,7 @@ N conc values are from Zhao et al 2009
             <VariableReference>
               <Name>Phyllochron</Name>
               <IncludeInDocumentation>true</IncludeInDocumentation>
-              <VariableName>[Structure].MainStemNodeAppearanceRate.Value()</VariableName>
+              <VariableName>[Structure].Phyllochron.Value()</VariableName>
             </VariableReference>
             <IncludeInDocumentation>true</IncludeInDocumentation>
           </MultiplyFunction>
@@ -2139,7 +2139,7 @@ N conc values are from Zhao et al 2009
                 <VariableReference>
                   <Name>Phyllochron</Name>
                   <IncludeInDocumentation>true</IncludeInDocumentation>
-                  <VariableName>[Structure].MainStemNodeAppearanceRate.Value()</VariableName>
+                  <VariableName>[Structure].Phyllochron.Value()</VariableName>
                 </VariableReference>
                 <LinearInterpolationFunction>
                   <Name>AgeFactor</Name>
@@ -2236,7 +2236,7 @@ N conc values are from Zhao et al 2009
             <VariableReference>
               <Name>Phyllochron</Name>
               <IncludeInDocumentation>true</IncludeInDocumentation>
-              <VariableName>[Structure].MainStemNodeAppearanceRate.Value()</VariableName>
+              <VariableName>[Structure].Phyllochron.Value()</VariableName>
             </VariableReference>
             <LinearInterpolationFunction>
               <Name>AgeFactor</Name>
@@ -2336,7 +2336,7 @@ N conc values are from Zhao et al 2009
             <VariableReference>
               <Name>Phyllochron</Name>
               <IncludeInDocumentation>true</IncludeInDocumentation>
-              <VariableName>[Structure].MainStemNodeAppearanceRate.Value()</VariableName>
+              <VariableName>[Structure].Phyllochron.Value()</VariableName>
             </VariableReference>
             <LinearInterpolationFunction>
               <Name>LinearInterpolationFunction</Name>
@@ -2584,7 +2584,7 @@ N conc values are from Zhao et al 2009
             <FixedValue>0</FixedValue>
           </Constant>
           <Constant>
-            <Name>NonStructuralFraction</Name>
+            <Name>StorageFraction</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
             <FixedValue>0.5</FixedValue>
           </Constant>
@@ -3087,6 +3087,16 @@ N conc values are from Zhao et al 2009
           <FixedValue>1</FixedValue>
           <Units>0-1</Units>
         </Constant>
+        <Constant>
+          <Name>DMReallocationFactor</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0</FixedValue>
+        </Constant>
+        <VariableReference>
+          <Name>CriticalNConc</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <VariableName>[Spike].MinimumNConc.Value()</VariableName>
+        </VariableReference>
         <IncludeInDocumentation>true</IncludeInDocumentation>
       </GenericOrgan>
       <GenericOrgan>
@@ -3415,7 +3425,7 @@ N conc values are from Zhao et al 2009
           <VariableReference>
             <Name>WSC</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
-            <VariableName>[Stem].Live.NonStructuralWt</VariableName>
+            <VariableName>[Stem].Live.StorageWt</VariableName>
           </VariableReference>
           <VariableReference>
             <Name>StemWt</Name>
@@ -3448,6 +3458,16 @@ N conc values are from Zhao et al 2009
           <FixedValue>1</FixedValue>
           <Units>0-1</Units>
         </Constant>
+        <Constant>
+          <Name>DMReallocationFactor</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0</FixedValue>
+        </Constant>
+        <VariableReference>
+          <Name>CriticalNConc</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <VariableName>[Stem].MinimumNConc.Value()</VariableName>
+        </VariableReference>
         <IncludeInDocumentation>true</IncludeInDocumentation>
       </GenericOrgan>
       <CompositeBiomass>
@@ -3940,7 +3960,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
             <VariableReference>
               <Name>Phyllochron</Name>
               <IncludeInDocumentation>true</IncludeInDocumentation>
-              <VariableName>[Structure].MainStemNodeAppearanceRate.Phyllochron.Value()</VariableName>
+              <VariableName>[Structure].Phyllochron.Phyllochron.Value()</VariableName>
             </VariableReference>
             <Constant>
               <Name>PrimordiaPerMainstemNode</Name>
@@ -3959,7 +3979,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
           <End>Maturity</End>
         </PhaseLookupValue>
         <PhaseLookupValue>
-          <Name>MainStemNodeAppearanceRate</Name>
+          <Name>Phyllochron</Name>
           <LinearInterpolationFunction>
             <Name>Phyllochron</Name>
             <XYPairs>
@@ -3990,7 +4010,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
           <End>Maturity</End>
         </PhaseLookupValue>
         <Constant>
-          <Name>MainStemFinalNodeNumber</Name>
+          <Name>FinalLeafNumber</Name>
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <FixedValue>80</FixedValue>
         </Constant>
@@ -4040,10 +4060,10 @@ date of Experiment 4 is assumed here.]]></MemoText>
           <PotentialMetabolicDMAllocation>0</PotentialMetabolicDMAllocation>
           <MetabolicNReallocated>0</MetabolicNReallocated>
           <MetabolicWtReallocated>0</MetabolicWtReallocated>
-          <NonStructuralNReallocated>0</NonStructuralNReallocated>
-          <NonStructuralWtReallocated>0</NonStructuralWtReallocated>
+          <StorageNReallocated>0</StorageNReallocated>
+          <StorageWtReallocated>0</StorageWtReallocated>
           <MetabolicNRetranslocated>0</MetabolicNRetranslocated>
-          <NonStructuralNRetrasnlocated>0</NonStructuralNRetrasnlocated>
+          <StorageNRetrasnlocated>0</StorageNRetrasnlocated>
           <DMRetranslocated>0</DMRetranslocated>
           <MetabolicNAllocation>0</MetabolicNAllocation>
           <StructuralDMAllocation>0</StructuralDMAllocation>
@@ -4476,7 +4496,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
             <FixedValue>0.95</FixedValue>
           </Constant>
           <Constant>
-            <Name>NonStructuralFraction</Name>
+            <Name>StorageFraction</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
             <FixedValue>0.2</FixedValue>
           </Constant>
@@ -5042,6 +5062,16 @@ date of Experiment 4 is assumed here.]]></MemoText>
           </OrganBiomassRemovalType>
           <IncludeInDocumentation>true</IncludeInDocumentation>
         </BiomassRemoval>
+        <Constant>
+          <Name>DMReallocationFactor</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0</FixedValue>
+        </Constant>
+        <VariableReference>
+          <Name>CriticalNConc</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <VariableName>[StorageRoot].MinimumNConc.Value()</VariableName>
+        </VariableReference>
         <IncludeInDocumentation>true</IncludeInDocumentation>
       </GenericOrgan>
       <GenericOrgan>
@@ -5192,6 +5222,11 @@ date of Experiment 4 is assumed here.]]></MemoText>
           </OrganBiomassRemovalType>
           <IncludeInDocumentation>true</IncludeInDocumentation>
         </BiomassRemoval>
+        <VariableReference>
+          <Name>CriticalNConc</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <VariableName>[Petiole].MinimumNConc.Value()</VariableName>
+        </VariableReference>
         <IncludeInDocumentation>true</IncludeInDocumentation>
       </GenericOrgan>
       <CompositeBiomass>
@@ -5287,6 +5322,14 @@ date of Experiment 4 is assumed here.]]></MemoText>
       <FileName>VWC_APSIM.xlsx</FileName>
       <SheetNames>
         <string>VWC_OBS</string>
+      </SheetNames>
+    </ExcelInput>
+    <ExcelInput>
+      <Name>SoilTemp</Name>
+      <IncludeInDocumentation>true</IncludeInDocumentation>
+      <FileName>MeanSoilTemp.xlsx</FileName>
+      <SheetNames>
+        <string>MeanTemp</string>
       </SheetNames>
     </ExcelInput>
     <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -5854,40 +5897,6 @@ namespace Models
                 <double>1</double>
               </XF>
             </SoilCrop>
-            <SoilCrop>
-              <Name>FB</Name>
-              <IncludeInDocumentation>true</IncludeInDocumentation>
-              <LL>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-              </LL>
-              <KL>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-              </KL>
-              <XF>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-              </XF>
-            </SoilCrop>
             <IncludeInDocumentation>true</IncludeInDocumentation>
             <Thickness>
               <double>150</double>
@@ -6291,12 +6300,12 @@ namespace Models
             <string>[FodderBeet].StorageRoot.N</string>
             <string>[FodderBeet].StorageRoot.NConc</string>
             <string>[FodderBeet].StorageRoot.Wt</string>
-            <string>[FodderBeet].StorageRoot.Live.NonStructuralWt</string>
+            <string>[FodderBeet].StorageRoot.Live.StorageWt</string>
             <string>[FodderBeet].Petiole.N</string>
             <string>[FodderBeet].Petiole.NConc</string>
             <string>[FodderBeet].Petiole.Wt</string>
             <string>[FodderBeet].Petiole.PercentWSC</string>
-            <string>[FodderBeet].Petiole.Live.NonStructuralWt</string>
+            <string>[FodderBeet].Petiole.Live.StorageWt</string>
             <string>[FodderBeet].SowingData.Cultivar</string>
             <string>[FodderBeet].Structure.Height</string>
             <string>[FodderBeet].Structure.LeafTipsAppeared</string>
@@ -6370,12 +6379,12 @@ namespace Models
             <string>[Oats].Spike.N</string>
             <string>[Oats].Spike.NConc</string>
             <string>[Oats].Spike.Wt</string>
-            <string>[Oats].Spike.Live.NonStructuralWt</string>
+            <string>[Oats].Spike.Live.StorageWt</string>
             <string>[Oats].Stem.N</string>
             <string>[Oats].Stem.NConc</string>
             <string>[Oats].Stem.Wt</string>
             <string>[Oats].Stem.PercentWSC</string>
-            <string>[Oats].Stem.Live.NonStructuralWt</string>
+            <string>[Oats].Stem.Live.StorageWt</string>
             <string>[Oats].StemPlusSpike.Wt</string>
             <string>[Oats].StemPlusSpike.N</string>
             <string>[Oats].SowingData.Cultivar</string>
@@ -6383,8 +6392,8 @@ namespace Models
             <string>[Oats].Structure.HaunStage.Value()</string>
             <string>[Oats].Structure.Height</string>
             <string>[Oats].Structure.LeafTipsAppeared</string>
-            <string>[Oats].Structure.MainStemFinalNodeNumber.Value()</string>
-            <string>[Oats].Structure.MainStemFinalNodeNumber.ValueToHold.PhotoPLeaves.Value()</string>
+            <string>[Oats].Structure.FinalLeafNumber.Value()</string>
+            <string>[Oats].Structure.FinalLeafNumber.ValueToHold.PhotoPLeaves.Value()</string>
             <string>[Oats].Structure.MainStemPopn</string>
             <string>[Oats].Structure.MeanTillerGrowthRate.Value()</string>
             <string>[Oats].Structure.TotalStemPopn</string>
@@ -9540,6 +9549,1010 @@ namespace Models
         <DisabledSeries />
       </Graph>
       <IncludeInDocumentation>true</IncludeInDocumentation>
+      <ShowPageOfGraphs>true</ShowPageOfGraphs>
+    </Folder>
+    <Folder>
+      <Name>SoilTempIrr</Name>
+      <Graph>
+        <Name>Layer1</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(1)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer1</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Nil: Pred</string>
+          <string>50Nil: Pred</string>
+          <string>300Nil: Pred</string>
+          <string>0Nil: Obs</string>
+          <string>50Nil: Obs</string>
+          <string>300Nil: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer2</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(2)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer2</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Nil: Pred</string>
+          <string>50Nil: Pred</string>
+          <string>300Nil: Pred</string>
+          <string>0Nil: Obs</string>
+          <string>50Nil: Obs</string>
+          <string>300Nil: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer3</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(3)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer3</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Nil: Pred</string>
+          <string>50Nil: Pred</string>
+          <string>300Nil: Pred</string>
+          <string>0Nil: Obs</string>
+          <string>50Nil: Obs</string>
+          <string>300Nil: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer4</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(4)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer4</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Nil: Pred</string>
+          <string>50Nil: Pred</string>
+          <string>300Nil: Pred</string>
+          <string>0Nil: Obs</string>
+          <string>50Nil: Obs</string>
+          <string>300Nil: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer5</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(5)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer5</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Nil: Pred</string>
+          <string>50Nil: Pred</string>
+          <string>300Nil: Pred</string>
+          <string>0Nil: Obs</string>
+          <string>50Nil: Obs</string>
+          <string>300Nil: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer6</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(6)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer6</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Nil: Pred</string>
+          <string>50Nil: Pred</string>
+          <string>300Nil: Pred</string>
+          <string>0Nil: Obs</string>
+          <string>50Nil: Obs</string>
+          <string>300Nil: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer7</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(7)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer7</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Nil: Pred</string>
+          <string>50Nil: Pred</string>
+          <string>300Nil: Pred</string>
+          <string>0Nil: Obs</string>
+          <string>50Nil: Obs</string>
+          <string>300Nil: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <IncludeInDocumentation>false</IncludeInDocumentation>
+      <ShowPageOfGraphs>true</ShowPageOfGraphs>
+    </Folder>
+    <Folder>
+      <Name>SoilTempDry</Name>
+      <Graph>
+        <Name>Layer1</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(1)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer1</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Full: Pred</string>
+          <string>50Full: Pred</string>
+          <string>300Full: Pred</string>
+          <string>0Full: Obs</string>
+          <string>50Full: Obs</string>
+          <string>300Full: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer2</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(2)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer2</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Full: Pred</string>
+          <string>50Full: Pred</string>
+          <string>300Full: Pred</string>
+          <string>0Full: Obs</string>
+          <string>50Full: Obs</string>
+          <string>300Full: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer3</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(3)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer3</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Full: Pred</string>
+          <string>50Full: Pred</string>
+          <string>300Full: Pred</string>
+          <string>0Full: Obs</string>
+          <string>50Full: Obs</string>
+          <string>300Full: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer4</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(4)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer4</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Full: Pred</string>
+          <string>50Full: Pred</string>
+          <string>300Full: Pred</string>
+          <string>0Full: Obs</string>
+          <string>50Full: Obs</string>
+          <string>300Full: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer5</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(5)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer5</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Full: Pred</string>
+          <string>50Full: Pred</string>
+          <string>300Full: Pred</string>
+          <string>0Full: Obs</string>
+          <string>50Full: Obs</string>
+          <string>300Full: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer6</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(6)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer6</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Full: Pred</string>
+          <string>50Full: Pred</string>
+          <string>300Full: Pred</string>
+          <string>0Full: Obs</string>
+          <string>50Full: Obs</string>
+          <string>300Full: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <Graph>
+        <Name>Layer7</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>FRNLReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Soil.Temperature(7)</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>false</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>MeanTemp</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Layer7</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>false</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>0Full: Pred</string>
+          <string>50Full: Pred</string>
+          <string>300Full: Pred</string>
+          <string>0Full: Obs</string>
+          <string>50Full: Obs</string>
+          <string>300Full: Obs</string>
+        </DisabledSeries>
+      </Graph>
+      <IncludeInDocumentation>false</IncludeInDocumentation>
       <ShowPageOfGraphs>true</ShowPageOfGraphs>
     </Folder>
     <IncludeInDocumentation>true</IncludeInDocumentation>
