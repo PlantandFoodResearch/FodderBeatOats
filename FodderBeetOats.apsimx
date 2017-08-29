@@ -6695,21 +6695,28 @@ namespace Models
             <string>[FodderBeet].Petiole.Live.Wt*10 </string>
             <string>[FodderBeet].StorageRoot.Live.Wt*10 </string>
             <string />
-            <string>[Oats].Root.Live.Wt*10 </string>
             <string>[Oats].Leaf.Live.Wt*10</string>
             <string>[Oats].Stem.Live.Wt*10 </string>
+            <string>[Oats].Root.Live.Wt*10 </string>
+            <string>[Oats].Spike.Live.Wt*10</string>
+            <string>[Oats].Grain.Live.Wt*10 </string>
             <string />
             <string>[FodderBeet].Root.NConc</string>
             <string>[FodderBeet].Leaf.NConc</string>
             <string>[FodderBeet].Petiole.NConc</string>
             <string>[FodderBeet].Stem.NConc</string>
             <string />
-            <string>[Oats].Root.NConc</string>
             <string>[Oats].Leaf.NConc</string>
-            <string>[Oats].Stem.NConc</string>
+            <string>[Oats].Stem.NConc </string>
+            <string>[Oats].Root.NConc </string>
+            <string>[Oats].Spike.NConc</string>
+            <string>[Oats].Grain.NConc</string>
             <string />
             <string>[FodderBeet].Leaf.LAI</string>
             <string>[FodderBeet].Leaf.CoverTotal</string>
+            <string />
+            <string>[Oats].Leaf.LAI</string>
+            <string>[Oats].Leaf.CoverTotal</string>
             <string />
             <string>[Soil].SoilWater.SW</string>
             <string>[Soil].Temperature</string>
@@ -6717,7 +6724,8 @@ namespace Models
             <string />
             <string>([Soil].SoilWater.LeachNO3 + [Soil].SoilWater.LeachNH4) as NLeached</string>
             <string>[Soil].SoilWater.Drainage</string>
-            <string>([Soil].SoilNitrogen.MineralisedN[1]) as MineralizedN</string>
+            <string>[Soil].SoilNitrogen.MineralisedN</string>
+            <string> sum([Soil].SoilNitrogen.MineralisedN) as ProfileMineralisedN</string>
           </VariableNames>
           <EventNames>
             <string>[Clock].DoReport</string>
@@ -8484,9 +8492,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -8555,11 +8560,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>50Full: Obs</string>
-          <string>300Full: Obs</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -8628,9 +8628,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -8699,9 +8696,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -8770,9 +8764,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -8841,9 +8832,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -8912,9 +8900,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -8988,9 +8973,6 @@ namespace Models
           <string>0Full: Pred</string>
           <string>50Full: Pred</string>
           <string>300Full: Pred</string>
-          <string>0Full: Obs</string>
-          <string>50Full: Obs</string>
-          <string>300Full: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -9059,9 +9041,6 @@ namespace Models
           <string>0Full: Pred</string>
           <string>50Full: Pred</string>
           <string>300Full: Pred</string>
-          <string>0Full: Obs</string>
-          <string>50Full: Obs</string>
-          <string>300Full: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -9130,9 +9109,6 @@ namespace Models
           <string>0Full: Pred</string>
           <string>50Full: Pred</string>
           <string>300Full: Pred</string>
-          <string>0Full: Obs</string>
-          <string>50Full: Obs</string>
-          <string>300Full: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -9201,9 +9177,6 @@ namespace Models
           <string>0Full: Pred</string>
           <string>50Full: Pred</string>
           <string>300Full: Pred</string>
-          <string>0Full: Obs</string>
-          <string>50Full: Obs</string>
-          <string>300Full: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -9272,9 +9245,6 @@ namespace Models
           <string>0Full: Pred</string>
           <string>50Full: Pred</string>
           <string>300Full: Pred</string>
-          <string>0Full: Obs</string>
-          <string>50Full: Obs</string>
-          <string>300Full: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -9343,9 +9313,6 @@ namespace Models
           <string>0Full: Pred</string>
           <string>50Full: Pred</string>
           <string>300Full: Pred</string>
-          <string>0Full: Obs</string>
-          <string>50Full: Obs</string>
-          <string>300Full: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -9414,9 +9381,6 @@ namespace Models
           <string>0Full: Pred</string>
           <string>50Full: Pred</string>
           <string>300Full: Pred</string>
-          <string>0Full: Obs</string>
-          <string>50Full: Obs</string>
-          <string>300Full: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -9647,9 +9611,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -9718,9 +9679,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -9789,9 +9747,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -9860,9 +9815,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -9931,9 +9883,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -10002,9 +9951,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -10073,9 +10019,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <IncludeInDocumentation>false</IncludeInDocumentation>
