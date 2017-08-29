@@ -6716,16 +6716,23 @@ namespace Models
           <VariableNames>
             <string>[Clock].Today</string>
             <string />
-            <string>[FodderBeet].Root.Live.Wt*10 as FodderBeetRootBiomass</string>
-            <string>[FodderBeet].Leaf.Live.Wt*10 as FodderBeetLeafBiomass</string>
-            <string>[FodderBeet].Petiole.Live.Wt*10 as FodderBeetPetioleBiomass</string>
-            <string>[FodderBeet].StorageRoot.Live.Wt*10 as FodderBeetBulbBiomass</string>
+            <string>[FodderBeet].Root.Live.Wt*10 </string>
+            <string>[FodderBeet].Leaf.Live.Wt*10 </string>
+            <string>[FodderBeet].Petiole.Live.Wt*10 </string>
+            <string>[FodderBeet].StorageRoot.Live.Wt*10 </string>
             <string />
+            <string>[Oats].Root.Live.Wt*10 </string>
+            <string>[Oats].Leaf.Live.Wt*10</string>
+            <string>[Oats].Stem.Live.Wt*10 </string>
             <string />
             <string>[FodderBeet].Root.NConc</string>
             <string>[FodderBeet].Leaf.NConc</string>
             <string>[FodderBeet].Petiole.NConc</string>
             <string>[FodderBeet].Stem.NConc</string>
+            <string />
+            <string>[Oats].Root.NConc</string>
+            <string>[Oats].Leaf.NConc</string>
+            <string>[Oats].Stem.NConc</string>
             <string />
             <string>[FodderBeet].Leaf.LAI</string>
             <string>[FodderBeet].Leaf.CoverTotal</string>
@@ -6733,7 +6740,6 @@ namespace Models
             <string>[Soil].SoilWater.SW</string>
             <string>[Soil].Temperature</string>
             <string>[Soil].SoilNitrogen.mineral_n</string>
-            <string />
             <string />
             <string>([Soil].SoilWater.LeachNO3 + [Soil].SoilWater.LeachNH4) as NLeached</string>
             <string>[Soil].SoilWater.Drainage</string>
@@ -9509,6 +9515,28 @@ namespace Models
           <TableName>DailyReport</TableName>
           <XFieldName>Clock.Today</XFieldName>
           <YFieldName>FodderBeet.Structure.LeafTipsAppeared</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Pred1</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>0</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>DailyReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>Oats.Structure.LeafTipsAppeared</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
