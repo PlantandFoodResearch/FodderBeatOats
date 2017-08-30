@@ -34,11 +34,9 @@ nameAddressOfFile <- paste0(obsF, "/FoddeBeetBiomass.xlsx")
 obsData <- obsDataRaw %>% mutate(Date = ymd(Date))
 
 # Sort out factors
-obsData$Nit <- as.factor(obsData$Nit)
-obsData$Irr <- as.factor(obsData$Irr)
-obsData$Plot <- as.factor(obsData$Plot)
-obsData$Rep <- as.factor(obsData$Rep)
-
+factorindex <- c("Nit","Irr","Plot","Rep")
+obsData[,factorindex] <- as.data.frame(sapply(obsData[,factorindex],as.factor))
+#work well if using index <- c(2:3,4,5...)
 ```
 
 ## Check the data
