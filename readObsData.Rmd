@@ -35,7 +35,7 @@ obsData <- obsDataRaw %>% mutate(Date = ymd(Date))
 
 # Sort out factors
 factorindex <- c("Nit","Irr","Plot","Rep")
-info1[,factorindex] <- as.data.frame(sapply(info1[,factorindex],as.factor))
+obsData[,factorindex] <- as.data.frame(sapply(obsData[,factorindex],as.factor))
 #work well if using index <- c(2:3,4,5...)
 ```
 
