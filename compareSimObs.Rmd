@@ -1,0 +1,78 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(dplyr) # data analysis
+library(ggplot2)
+library(lubridate) # taking care of dates
+library (hydroGOF) # library with heaps of functions that do stats we need
+library(xtable)
+library(knitr)
+library(tidyr)
+library(RSQLite)
+library(here)
+```
+
+```{r}
+rootPath <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"
+```
+
+
+
+
+# read simulated data
+```{r}
+simData <- read.csv(paste0(rootPath,"/SimulatedDataWorked.csv"), header = TRUE)
+str(simData)
+```
+
+## Tidy up sim data
+
+```{r}
+simData_work <- simData %>%
+  mutate(Nit=factor(Nit), Date=ymd_hms(Date)) %>%
+  dplyr::select(-Zone,-SimulationID,-SimName) %>%
+  tidyr::gather("VarName","SimValue",Stage_FB:N_leach_prof) %>%
+  mutate(VarName = factor(VarName))
+
+summary(simData_work)
+```
+
+# read observed data
+```{r}
+obsData <- read.csv(paste0(rootPath,"/ObservedDataWorked.csv"), header = TRUE)
+str(obsData)
+```
+
+## Prepare merge variables
+
+## Tidy up
+
+- formats
+
+Average observed data
+```{r}
+obsData_av <- obsData %>%
+  mutate(Nit=factor(Nit), Date=ymd(Date)) %>%
+  dplyr::select(-Plot,-Rep) %>%
+  group_by(Date,Irr,Nit) %>%
+  summarise_all(funs(mean)) %>%
+  tidyr::gather("VarName","ObsValue",Leaf_DM_FB:LAI_FB) %>%
+  mutate(VarName = factor(VarName))
+
+summary(obsData_av)
+```
+
+# merge datasets
+
+- By date and variable
+```{r}
+## FIXME: Not merging yet - need similar formatting of dates
+
+mergedDF <- data.frame() # empty data frame to do stuff
+mergedDF <- merge(obsData_av, simData_work, by=c("Date","Irr","Nit","VarName"))
+
+summary(mergedDF)
+```

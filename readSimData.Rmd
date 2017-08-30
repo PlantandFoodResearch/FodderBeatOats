@@ -109,6 +109,6 @@ myDb %>%
 ## Save simulated data
 
 ```{r}
-write.csv(myDb, paste0(db.address,"/SimulatedDataWorked.csv"), row.names = FALSE)
+write.csv(myDb, paste0(db.address,"/SimulatedDataWorked.csv"), row.names = FALSE) 
 ```
 
