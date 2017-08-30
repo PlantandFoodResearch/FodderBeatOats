@@ -6331,44 +6331,52 @@ namespace Models
           <ExperimentFactorNames />
           <ExperimentFactorValues />
           <VariableNames>
-            <string>[Clock].Today</string>
+            <string>[Clock].Today as Date</string>
             <string />
-            <string>[FodderBeet].Root.Live.Wt*10 </string>
-            <string>[FodderBeet].Leaf.Live.Wt*10 </string>
-            <string>[FodderBeet].Petiole.Live.Wt*10 </string>
-            <string>[FodderBeet].StorageRoot.Live.Wt*10 </string>
+            <string>[FodderBeet].Phenology.Stage as Stage_FB</string>
+            <string>[Oats].Phenology.Stage as Stage_Oat</string>
             <string />
-            <string>[Oats].Leaf.Live.Wt*10</string>
-            <string>[Oats].Stem.Live.Wt*10 </string>
-            <string>[Oats].Root.Live.Wt*10 </string>
-            <string>[Oats].Spike.Live.Wt*10</string>
-            <string>[Oats].Grain.Live.Wt*10 </string>
+            <string>[FodderBeet].Leaf.Live.Wt*10 as Leaf_DM_FB</string>
+            <string>[FodderBeet].Petiole.Live.Wt*10 as Petiole_DM_FB</string>
+            <string>[FodderBeet].Root.Live.Wt*10 as Root_DM_FB</string>
             <string />
-            <string>[FodderBeet].Root.NConc</string>
-            <string>[FodderBeet].Leaf.NConc</string>
-            <string>[FodderBeet].Petiole.NConc</string>
-            <string>[FodderBeet].Stem.NConc</string>
+            <string>[FodderBeet].StorageRoot.Live.Wt*10 as Bulb_DM_FB</string>
             <string />
-            <string>[Oats].Leaf.NConc</string>
-            <string>[Oats].Stem.NConc </string>
-            <string>[Oats].Root.NConc </string>
-            <string>[Oats].Spike.NConc</string>
-            <string>[Oats].Grain.NConc</string>
+            <string>[Oats].Leaf.Live.Wt*10 as Leaf_DM_Oat</string>
+            <string>[Oats].Stem.Live.Wt*10 as Stem_DM_Oat</string>
+            <string>[Oats].Spike.Live.Wt*10 as Spike_DM_Oat</string>
+            <string>[Oats].Grain.Live.Wt*10 as Grain_DM_Oat</string>
+            <string>[Oats].Root.Live.Wt*10 as Root_DM_Oat</string>
             <string />
-            <string>[FodderBeet].Leaf.LAI</string>
-            <string>[FodderBeet].Leaf.CoverTotal</string>
+            <string>[FodderBeet].Leaf.NConc as Leaf_N_Perc_FB</string>
+            <string>[FodderBeet].Petiole.NConc as Petiole_N_Perc_FB</string>
+            <string>[FodderBeet].Root.NConc as Root_N_Perc_FB</string>
+            <string>[FodderBeet].StorageRoot.NConc as Bulb_N_Perc_FB</string>
             <string />
-            <string>[Oats].Leaf.LAI</string>
-            <string>[Oats].Leaf.CoverTotal</string>
+            <string>[Oats].Leaf.NConc as Leaf_N_Perc_Oat</string>
+            <string>[Oats].Stem.NConc as Stem_N_Perc_Oat</string>
+            <string>[Oats].Spike.NConc as Spike_N_Perc_Oat</string>
+            <string>[Oats].Grain.NConc as Grain_N_Perc_Oat</string>
+            <string>[Oats].Root.NConc as Root_N_Perc_Oat </string>
             <string />
-            <string>[Soil].SoilWater.SW</string>
-            <string>[Soil].Temperature</string>
-            <string>[Soil].SoilNitrogen.mineral_n</string>
+            <string>[FodderBeet].Leaf.LAI as LAI_FB</string>
+            <string>[FodderBeet].Leaf.CoverTotal as RadInt_FB</string>
             <string />
-            <string>([Soil].SoilWater.LeachNO3 + [Soil].SoilWater.LeachNH4) as NLeached</string>
-            <string>[Soil].SoilWater.Drainage</string>
-            <string>[Soil].SoilNitrogen.MineralisedN</string>
-            <string> sum([Soil].SoilNitrogen.MineralisedN) as ProfileMineralisedN</string>
+            <string>[Oats].Leaf.LAI as LAI_Oat</string>
+            <string>[Oats].Leaf.CoverTotal as RadInt_Oat</string>
+            <string />
+            <string>([FodderBeet].Leaf.Transpiration + [Soil].SoilWater.Es + [MicroClimate].interception) as ETact_FB</string>
+            <string>([FodderBeet].Leaf.Transpiration + [Soil].SoilWater.Es + [MicroClimate].interception) as ETact_Oat</string>
+            <string />
+            <string>[Soil].Temperature as SoilTemp</string>
+            <string />
+            <string>[Soil].SoilWater.SW as SW</string>
+            <string>[Soil].SoilWater.Drainage as Drainage</string>
+            <string />
+            <string>sum([Soil].SoilNitrogen.MineralisedN) as N_min_prof</string>
+            <string>sum([Soil].SoilNitrogen.Denitrification) as N_din_prof</string>
+            <string />
+            <string>([Soil].SoilWater.LeachNO3 + [Soil].SoilWater.LeachNH4) as N_leach_prof</string>
           </VariableNames>
           <EventNames>
             <string>[Clock].DoReport</string>
@@ -6779,6 +6787,70 @@ namespace Models
       <IncludeInDocumentation>true</IncludeInDocumentation>
     </Simulation>
     <Graph>
+      <Name>Phenology</Name>
+      <Series>
+        <Name>Pred</Name>
+        <IncludeInDocumentation>true</IncludeInDocumentation>
+        <Type>Scatter</Type>
+        <XAxis>Bottom</XAxis>
+        <YAxis>Left</YAxis>
+        <ColourArgb>-16777216</ColourArgb>
+        <FactorIndexToVaryColours>1</FactorIndexToVaryColours>
+        <FactorIndexToVaryMarkers>0</FactorIndexToVaryMarkers>
+        <FactorIndexToVaryLines>0</FactorIndexToVaryLines>
+        <Marker>None</Marker>
+        <MarkerSize>Normal</MarkerSize>
+        <Line>Solid</Line>
+        <LineThickness>Normal</LineThickness>
+        <TableName>FRNLReport</TableName>
+        <XFieldName>Clock.Today</XFieldName>
+        <YFieldName>FodderBeet.Phenology.Stage</YFieldName>
+        <ShowInLegend>true</ShowInLegend>
+        <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+        <Cumulative>false</Cumulative>
+        <CumulativeX>false</CumulativeX>
+      </Series>
+      <Series>
+        <Name>Pred1</Name>
+        <IncludeInDocumentation>true</IncludeInDocumentation>
+        <Type>Scatter</Type>
+        <XAxis>Bottom</XAxis>
+        <YAxis>Left</YAxis>
+        <ColourArgb>-16777216</ColourArgb>
+        <FactorIndexToVaryColours>1</FactorIndexToVaryColours>
+        <FactorIndexToVaryMarkers>0</FactorIndexToVaryMarkers>
+        <FactorIndexToVaryLines>0</FactorIndexToVaryLines>
+        <Marker>None</Marker>
+        <MarkerSize>Normal</MarkerSize>
+        <Line>Solid</Line>
+        <LineThickness>Normal</LineThickness>
+        <TableName>FRNLReport</TableName>
+        <XFieldName>Clock.Today</XFieldName>
+        <YFieldName>Oats.Phenology.Stage</YFieldName>
+        <ShowInLegend>true</ShowInLegend>
+        <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+        <Cumulative>false</Cumulative>
+        <CumulativeX>false</CumulativeX>
+      </Series>
+      <IncludeInDocumentation>true</IncludeInDocumentation>
+      <Axis>
+        <Type>Bottom</Type>
+        <Inverted>false</Inverted>
+        <Minimum>NaN</Minimum>
+        <Maximum>NaN</Maximum>
+        <Interval>NaN</Interval>
+      </Axis>
+      <Axis>
+        <Type>Left</Type>
+        <Inverted>false</Inverted>
+        <Minimum>NaN</Minimum>
+        <Maximum>NaN</Maximum>
+        <Interval>NaN</Interval>
+      </Axis>
+      <LegendPosition>TopLeft</LegendPosition>
+      <DisabledSeries />
+    </Graph>
+    <Graph>
       <Name>AboveGroundWt</Name>
       <Series>
         <Name>Pred</Name>
@@ -6789,7 +6861,7 @@ namespace Models
         <ColourArgb>-16777216</ColourArgb>
         <FactorIndexToVaryColours>1</FactorIndexToVaryColours>
         <FactorIndexToVaryMarkers>0</FactorIndexToVaryMarkers>
-        <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+        <FactorIndexToVaryLines>0</FactorIndexToVaryLines>
         <Marker>None</Marker>
         <MarkerSize>Normal</MarkerSize>
         <Line>Solid</Line>
@@ -6819,6 +6891,28 @@ namespace Models
         <TableName>OBS</TableName>
         <XFieldName>Clock.Today</XFieldName>
         <YFieldName>FodderBeet.AboveGroundLive.Wt</YFieldName>
+        <ShowInLegend>true</ShowInLegend>
+        <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+        <Cumulative>false</Cumulative>
+        <CumulativeX>false</CumulativeX>
+      </Series>
+      <Series>
+        <Name>Pred1</Name>
+        <IncludeInDocumentation>true</IncludeInDocumentation>
+        <Type>Scatter</Type>
+        <XAxis>Bottom</XAxis>
+        <YAxis>Left</YAxis>
+        <ColourArgb>-16777216</ColourArgb>
+        <FactorIndexToVaryColours>1</FactorIndexToVaryColours>
+        <FactorIndexToVaryMarkers>0</FactorIndexToVaryMarkers>
+        <FactorIndexToVaryLines>0</FactorIndexToVaryLines>
+        <Marker>None</Marker>
+        <MarkerSize>Normal</MarkerSize>
+        <Line>Solid</Line>
+        <LineThickness>Normal</LineThickness>
+        <TableName>DailyReport</TableName>
+        <XFieldName>Clock.Today</XFieldName>
+        <YFieldName>Oats.AboveGroundLive.Wt</YFieldName>
         <ShowInLegend>true</ShowInLegend>
         <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
         <Cumulative>false</Cumulative>
@@ -6890,6 +6984,28 @@ namespace Models
         <TableName>OBS</TableName>
         <XFieldName>Clock.Today</XFieldName>
         <YFieldName>FodderBeet.Leaf.LAI</YFieldName>
+        <ShowInLegend>true</ShowInLegend>
+        <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+        <Cumulative>false</Cumulative>
+        <CumulativeX>false</CumulativeX>
+      </Series>
+      <Series>
+        <Name>Pred1</Name>
+        <IncludeInDocumentation>true</IncludeInDocumentation>
+        <Type>Scatter</Type>
+        <XAxis>Bottom</XAxis>
+        <YAxis>Left</YAxis>
+        <ColourArgb>-16777216</ColourArgb>
+        <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+        <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+        <FactorIndexToVaryLines>0</FactorIndexToVaryLines>
+        <Marker>None</Marker>
+        <MarkerSize>Normal</MarkerSize>
+        <Line>Solid</Line>
+        <LineThickness>Normal</LineThickness>
+        <TableName>DailyReport</TableName>
+        <XFieldName>Clock.Today</XFieldName>
+        <YFieldName>Oats.Leaf.LAI</YFieldName>
         <ShowInLegend>true</ShowInLegend>
         <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
         <Cumulative>false</Cumulative>
