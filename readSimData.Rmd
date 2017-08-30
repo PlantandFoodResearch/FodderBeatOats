@@ -1,0 +1,114 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r, warning=FALSE}
+library(RSQLite) # taking care of databases
+library(lubridate) # taking care of dates
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+```
+
+## Load simulated
+
+- this will read simulated data from ApsimX database file
+
+```{r}
+# create function to read data (Justin's script from CSIRO)
+# this func reads databases now
+GetApsimNGTable <- function(dbLoc, table) 
+{
+  connection <- dbConnect(SQLite(), dbname = dbLoc, flags = SQLITE_RW)
+  table <- dbReadTable(connection, table, row.names=NULL)
+  dbDisconnect(connection)
+  return(table)
+}
+```
+
+# load address of db
+```{r}
+db.address <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"
+db.name <- "/FodderBeetOats.db"
+db.full.path <- paste0(db.address,db.name)
+```
+
+# check what's inside db
+```{r}
+con <- dbConnect(SQLite(), dbname = db.full.path, flags = SQLITE_RW)
+alltables <- dbListTables(con)
+alltables
+```
+
+# Read db and make df
+
+```{r}
+
+# set table to be retrieved
+tableName <- "FRNLReport" # 
+
+# load table into an object
+myDbTable <- GetApsimNGTable(db.full.path,tableName)
+
+# make it a dataframe
+df <- as.data.frame(myDbTable)
+
+# change date to corerct format 
+df$Date <- ymd_hms(df$Date)
+
+# Sort out factors
+df$Nit <- as.factor(df$Nit)
+df$Irr <- as.factor(df$Irr)
+
+# get rid of points in column names
+colnames(df) <- gsub("\\.", "", colnames(df))
+colnames(df)
+```
+
+# explore the df
+```{r}
+str(df)
+```
+
+```{r}
+head(df)
+```
+
+```{r}
+summary(df)
+```
+
+
+```{r}
+
+
+# get sim names (different table in db)
+simNameDf <- as.data.frame (GetApsimNGTable(db.full.path,"Simulations"))
+
+# merge names
+myDb <- merge(df, simNameDf, by.x= c("SimulationID"), by.y= c("ID")) 
+
+# Sort out simulation name as factor
+myDb$SimName <- factor(myDb$Name)
+myDb$Name <- NULL
+
+summary(myDb)
+```
+## Quick check
+
+```{r}
+myDb %>%
+#  select_if(grepl("DM"), names(.))) %>% # FIXME: was trying to summ all biomass variables
+  ggplot(aes(x=Date,y=(Leaf_DM_FB+Leaf_DM_Oat),colour=Irr, linetype=Nit)) +
+  geom_line() +
+  ylab("kg/ha")
+  
+```
+
+## Save simulated data
+
+```{r}
+write.csv(myDb, paste0(db.address,"/SimulatedDataWorked.csv"), row.names = FALSE)
+```
+
