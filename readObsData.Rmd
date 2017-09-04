@@ -1,0 +1,71 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+```{r, warning = FALSE}
+library(lubridate)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(readxl)
+```
+
+```{r}
+# dir address (check if still used)
+upDir <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"
+
+# dir address
+obsF <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"
+
+nameAddressOfFile <- paste0(obsF, "/FoddeBeetBiomass.xlsx")
+
+#obsDataRaw <- read.table(nameAddressOfFile, header = TRUE)
+
+ obsDataRaw <- read_xlsx(nameAddressOfFile, sheet = "DataReady", col_names = TRUE)
+ 
+ summary(obsDataRaw)
+
+```
+## Tidy up data
+```{r}
+# dates
+obsData <- obsDataRaw %>% mutate(Date = ymd(Date))
+
+# Sort out factors
+factorindex <- c("Nit","Irr","Plot","Rep")
+obsData[,factorindex] <- as.data.frame(sapply(obsData[,factorindex],as.factor))
+#work well if using index <- c(2:3,4,5...)
+```
+
+## Check the data
+
+```{r}
+str(obsData)
+```
+
+
+```{r}
+head(obsData)
+```
+
+```{r}
+summary(obsData)
+```
+graph
+```{r, fig.width = 12}
+obsData %>%
+  ggplot(aes(x=Date,y=(Leaf_DM_FB),colour=Irr, shape=Nit)) +
+  geom_point() +
+  ylab("kg/ha") +
+  facet_grid(Rep~.)
+```
+
+## Save simulated data
+
+```{r}
+write.csv(obsData, paste0(obsF,"/ObservedDataWorked.csv"), row.names = FALSE)
+```
+
+
