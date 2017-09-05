@@ -9545,17 +9545,16 @@ namespace Models
             <string>[FodderBeet].Phenology.Stage as Stage_FB</string>
             <string>[Oats].Phenology.Stage as Stage_Oat</string>
             <string />
-            <string>[FodderBeet].Leaf.Live.Wt*10 as Leaf_DM_FB</string>
-            <string>[FodderBeet].Petiole.Live.Wt*10 as Petiole_DM_FB</string>
-            <string>[FodderBeet].Root.Live.Wt*10 as Root_DM_FB</string>
+            <string>([FodderBeet].Leaf.Live.Wt*10) as Leaf_DM_FB</string>
+            <string>([FodderBeet].Petiole.Live.Wt*10) as Petiole_DM_FB</string>
+            <string>([FodderBeet].Root.Live.Wt*10) as Root_DM_FB</string>
+            <string>([FodderBeet].StorageRoot.Live.Wt*10) as Bulb_DM_FB</string>
             <string />
-            <string>[FodderBeet].StorageRoot.Live.Wt*10 as Bulb_DM_FB</string>
-            <string />
-            <string>[Oats].Leaf.Live.Wt*10 as Leaf_DM_Oat</string>
-            <string>[Oats].Stem.Live.Wt*10 as Stem_DM_Oat</string>
-            <string>[Oats].Spike.Live.Wt*10 as Spike_DM_Oat</string>
-            <string>[Oats].Grain.Live.Wt*10 as Grain_DM_Oat</string>
-            <string>[Oats].Root.Live.Wt*10 as Root_DM_Oat</string>
+            <string>([Oats].Leaf.Live.Wt) as Leaf_DM_Oat</string>
+            <string>([Oats].Stem.Live.Wt) as Stem_DM_Oat</string>
+            <string>([Oats].Panicle.Live.Wt) as Spike_DM_Oat</string>
+            <string>([Oats].Grain.Live.Wt) as Grain_DM_Oat</string>
+            <string>([Oats].Root.Live.Wt)) as Root_DM_Oat</string>
             <string />
             <string>[FodderBeet].Leaf.NConc as Leaf_N_Perc_FB</string>
             <string>[FodderBeet].Petiole.NConc as Petiole_N_Perc_FB</string>
