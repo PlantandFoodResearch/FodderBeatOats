@@ -53,18 +53,41 @@ head(obsData)
 ```{r}
 summary(obsData)
 ```
-graph
+Graph
+
+- FIXME: Check data as ups an downs do not look 100% sensible (eit)
 ```{r, fig.width = 12}
 obsData %>%
-  ggplot(aes(x=Date,y=(Leaf_DM_FB),colour=Irr, shape=Nit)) +
-  geom_point() +
+  ggplot(aes(x=Date,y=(Leaf_DM_FB),colour=Irr, linetype=Nit,shape=Nit)) +
+  geom_point(size=2,alpha=0.5) +
+  geom_line() +
   ylab("kg/ha") +
-  facet_grid(Rep~.)
+  facet_grid(.~Rep)
 ```
 
-## Save simulated data
+```{r}
+obsData %>%
+  ggplot(aes(x=Date,y=(Leaf_N_Perc_FB),colour=Irr, linetype=Nit,shape=Nit)) +
+  geom_point(size=2,alpha=0.5) +
+  geom_line() +
+  ylab("kg/ha") +
+  facet_grid(.~Rep)
+```
+## Compare N% and biomass in a organ
+```{r}
+obsData %>%
+  ggplot(aes(x=Leaf_DM_FB,y=Leaf_N_Perc_FB,colour=Irr, shape=Nit)) +
+  geom_point(size=2,alpha=0.5) +
+#  geom_smooth(aes(linetype=Nit)) +
+  ylab("N%") +
+  xlab("kg DM/ha") +
+  facet_grid(.~Rep)
+```
+
+## Save observed data
 
 ```{r}
+head(obsData)
 write.csv(obsData, paste0(obsF,"/ObservedDataWorked.csv"), row.names = FALSE)
 ```
 

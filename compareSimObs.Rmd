@@ -43,7 +43,7 @@ summary(simData_work)
 # read observed data
 ```{r}
 obsData <- read.csv(paste0(rootPath,"/ObservedDataWorked.csv"), header = TRUE)
-str(obsData)
+
 ```
 
 ## Prepare merge variables
@@ -52,10 +52,15 @@ str(obsData)
 
 - formats
 
+
+
 Average observed data
 ```{r}
+
+
 obsData_av <- obsData %>%
-  mutate(Nit=factor(Nit), Date=ymd(Date)) %>%
+  mutate(Nit=factor(Nit)) %>%
+  mutate(Date=ymd(Date)) %>%
   dplyr::select(-Plot,-Rep) %>%
   group_by(Date,Irr,Nit) %>%
   summarise_all(funs(mean)) %>%
@@ -65,11 +70,21 @@ obsData_av <- obsData %>%
 summary(obsData_av)
 ```
 
+```{r}
+str(obsData_av)
+```
+```{r}
+str(simData_work)
+```
+
+
 # merge datasets
 
 - By date and variable
 ```{r}
 ## FIXME: Not merging yet - need similar formatting of dates
+parse_date_time(obsData_av$Date, orders="ydm")
+
 
 mergedDF <- data.frame() # empty data frame to do stuff
 mergedDF <- merge(obsData_av, simData_work, by=c("Date","Irr","Nit","VarName"))
