@@ -118,6 +118,12 @@ mergedDF %>%
 
 ## 2. Basic statistics
 
+Selection of stats indexes to use, at the moment we're following the refs:
+
+(i) Moriasi, D.N., Arnold, J.G., Van Liew, M.W., Bingner, R.L., R.D., H., Veith, T.L., 2007. Model evaluation guidelines for systematic quantification of accuracy in watershed simulations. Transactions of the ASABE 50, 885-900
+
+(ii) Gauch Jr, H.G., Hwang, J.T.G., Fick, G.W., 2003. Model evaluation by comparison of model-based predictions and measured values. Agron. J. 95, 1442-1446
+
 ```{r, include=FALSE, echo=FALSE}
 
 # Create stats function
@@ -172,18 +178,21 @@ doStats <-  function (x) {
 }
 ```
 
+Initial criteria of a very good model performance (Moriasi et al 2007 plus some guesses):
 
+This adds beyond the regression based analysis above.
 
-Our criteria of a good model performance (mock values as e.g. to discuss):
+- R2 > 75% (?)
+- RMSE of 0 (< 20% is very good?)
+- NSE of 1.0 (>0.75 is very good)
+- LC = 100% (>80% is very good?)
+- Pbias of 0 (< +-0.15 is very good; + is underestimation and - is overestimation)
+- RSR of 0 (0 to 0.5 is very good)
 
-- R2 > 75%
-- RMSE < 20%
-- NSE of 1.0
-- LC = 100%
+There's quite a bit o duplication in these (e.g. pBias and SB are very similar) but we cover well most metrics.
 
 
 ```{r, fig.width=12, results='asis',results='asis', echo=FALSE}
-
 mergedDF %>%
   group_by(VarName) %>%
   doStats()
