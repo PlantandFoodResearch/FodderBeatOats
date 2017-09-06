@@ -1,9 +1,11 @@
 ---
-title: "R Notebook"
+title: "FRNL CS 2.10"
 output: html_notebook
 ---
 
-```{r}
+# Evaluation of fodder beet + catch crop rotation (FRNL)
+
+```{r, echo=FALSE, include=FALSE}
 library(dplyr) # data analysis
 library(ggplot2)
 library(lubridate) # taking care of dates
@@ -15,48 +17,49 @@ library(RSQLite)
 library(here)
 ```
 
-```{r}
+```{r, echo=FALSE}
 rootPath <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"
 ```
 
-
-
-
+```{r, echo=FALSE, include=FALSE}
 # read simulated data
-```{r}
 simData <- read.csv(paste0(rootPath,"/SimulatedDataWorked.csv"), header = TRUE)
 str(simData)
 ```
 
-## Tidy up sim data
 
-```{r}
+```{r, echo=FALSE, include=FALSE}
+# Tidy up sim data
 simData_work <- simData %>%
-  mutate(Nit=factor(Nit), Date=ymd_hms(Date)) %>%
+  mutate(Nit=factor(Nit)) %>%
+  mutate(Date=as.Date(ymd_hms(Date))) %>%
+  mutate(Irr = factor(Irr, levels=c("Nil", "Full"), labels=c("Dry","Irrig")))  %>%
+  mutate() %>%
   dplyr::select(-Zone,-SimulationID,-SimName) %>%
   tidyr::gather("VarName","SimValue",Stage_FB:N_leach_prof) %>%
-  mutate(VarName = factor(VarName))
+  mutate(VarName = factor(VarName)) %>%
+  rowwise() %>%
+  mutate(SimValue = ifelse(grepl('_N_Perc_', VarName),SimValue*100,SimValue))
 
 summary(simData_work)
 ```
+```{r, echo=FALSE, include=FALSE}
+str(simData_work)
+```
 
+```{r, echo=FALSE, include=FALSE}
 # read observed data
-```{r}
 obsData <- read.csv(paste0(rootPath,"/ObservedDataWorked.csv"), header = TRUE)
 
 ```
 
-## Prepare merge variables
 
-## Tidy up
+```{r, echo=FALSE, include=FALSE}
+# Average observed data
 
-- formats
+# Prepare merge variables
 
-
-
-Average observed data
-```{r}
-
+# Tidy up
 
 obsData_av <- obsData %>%
   mutate(Nit=factor(Nit)) %>%
@@ -65,29 +68,109 @@ obsData_av <- obsData %>%
   group_by(Date,Irr,Nit) %>%
   summarise_all(funs(mean)) %>%
   tidyr::gather("VarName","ObsValue",Leaf_DM_FB:LAI_FB) %>%
-  mutate(VarName = factor(VarName))
+  mutate(VarName = factor(VarName))%>%
+  ungroup()
 
 summary(obsData_av)
 ```
 
-```{r}
+```{r, echo=FALSE, include=FALSE}
 str(obsData_av)
 ```
-```{r}
+```{r, echo=FALSE, include=FALSE}
 str(simData_work)
 ```
 
-
-# merge datasets
-
-- By date and variable
-```{r}
-## FIXME: Not merging yet - need similar formatting of dates
-parse_date_time(obsData_av$Date, orders="ydm")
-
-
+```{r, echo=FALSE}
 mergedDF <- data.frame() # empty data frame to do stuff
 mergedDF <- merge(obsData_av, simData_work, by=c("Date","Irr","Nit","VarName"))
 
-summary(mergedDF)
+mergedDF %>%
+gather("VarType","VarValue",ObsValue:SimValue) %>%
+mutate(VarType=factor(VarType))%>%
+spread(VarName,VarValue) %>%
+dplyr::select(-Date) %>%
+summary() 
 ```
+
+# Model evaluation
+
+## 1. Simulated x Observed graphs
+
+```{r, fig.width=12, fig.height=12, echo=FALSE}
+
+mergedDF %>%
+  ggplot(aes(x=ObsValue,y=SimValue)) +
+  geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=2) +
+  geom_abline(intercept = 0, slope = 1, size=1.5) +
+  facet_wrap(~VarName, ncol=3, scales='free')+
+  geom_smooth(method = "lm", se = TRUE,  aes(fill = Irr, linetype=Irr, colour=Irr), alpha=0.1) +
+  coord_fixed(ratio = 1) +
+  ylab("Simulated value") +
+  xlab("Measured value")
+
+
+```
+
+## 2. Basic statistics
+
+```{r, include=FALSE, echo=FALSE}
+
+# Create stats function
+gauchStats <- function(sim, meas) {
+
+  n_s <- length(sim)
+  n_m <- length(meas)
+  model <- lm(meas~sim)
+  sim_sq <- sum((sim - mean(sim))^2)
+  mes_sq <- sum((meas - mean(meas))^2)
+  r2 <- summary(model)$r.squared
+  slope <- model$coefficients[[2]]
+
+  sb <- (sum(mean(meas)) - sum(mean(sim)))^2
+  nu <- (1-slope)^2 * (sim_sq/n_s)
+  lc <- (1-r2) * (mes_sq/n_m)
+  msd <- sb+nu+lc
+
+  sb_r <- round((sb/msd)*100,1)
+  nu_r <- round((nu/msd)*100,1)
+  lc_r <- round((lc/msd)*100,1)
+
+  msd_r <- sb_r+nu_r+lc_r
+
+  # select which variables to output
+  out <- c(sb_r,nu_r,lc_r, msd_r, round(r2*100,1))
+
+  return(out)
+
+}
+```
+
+Our criteria of a good model performance:
+
+- R2 > 75%
+- RMSE < 20%
+- NSE of 1.0
+- LC = 100%
+
+```{r, fig.width=12, results='asis',results='asis', echo=FALSE}
+
+mergedDF %>%
+  group_by(VarName) %>%
+  summarise(
+    n = n(),
+    r2 = gauchStats(SimValue,ObsValue)[5],
+   #rmse = round(rmse(SimValue,ObsValue),0),
+    r_rmse = round(rmse(SimValue,ObsValue)/mean(ObsValue)*100,1),
+    nse = round(NSE(SimValue,ObsValue),2),
+    sb = gauchStats(SimValue,ObsValue)[1],
+  nu = gauchStats(SimValue,ObsValue)[2],
+  lc = gauchStats(SimValue,ObsValue)[3]
+  ) %>%
+  kable(digits=1, caption = "Table 2. Summary statistics of model evaluation")
+  
+#  kable( digits=2, format = "latex", booktabs = T)%>%
+#  kable_styling(latex_options = "striped")
+
+```
+
