@@ -5,6 +5,7 @@ output: html_notebook
 
 # Evaluation of fodder beet + catch crop rotation (FRNL)
 
+Table 1. Summary of observed and simulated data
 ```{r, echo=FALSE, include=FALSE}
 library(dplyr) # data analysis
 library(ggplot2)
@@ -97,6 +98,9 @@ summary()
 
 ## 1. Simulated x Observed graphs
 
+- Black line is x=y (1:1 line)
+- Colour lines are linear fits for dryland and irrigated crops
+
 ```{r, fig.width=12, fig.height=12, echo=FALSE}
 
 mergedDF %>%
@@ -146,31 +150,69 @@ gauchStats <- function(sim, meas) {
 }
 ```
 
-Our criteria of a good model performance:
+
+
+```{r}
+# Embed gauch stats in another function 
+
+doStats <-  function (x) {
+    library(dplyr)
+    x %>% dplyr::summarise(
+    n = n(),
+    meanObsValue = mean(ObsValue),
+    r2 = gauchStats(SimValue,ObsValue)[5],
+    rmse = rmse(SimValue,ObsValue),
+    r_rmse = rmse(SimValue,ObsValue)/mean(ObsValue)*100, # big precision to enable cretrial of selection
+    nse = NSE(SimValue,ObsValue),
+    sb = gauchStats(SimValue,ObsValue)[1],
+    nu = gauchStats(SimValue,ObsValue)[2],
+    lc = gauchStats(SimValue,ObsValue)[3],
+    rsr = rsr(SimValue,ObsValue), # Ratio of RMSE to the standard deviation of the ObsValueervations
+    pBias = pbias(SimValue,ObsValue)) # Percent Bias between sim and ObsValue, with treatment of missing values.
+}
+```
+
+
+
+Our criteria of a good model performance (mock values as e.g. to discuss):
 
 - R2 > 75%
 - RMSE < 20%
 - NSE of 1.0
 - LC = 100%
 
+
 ```{r, fig.width=12, results='asis',results='asis', echo=FALSE}
 
 mergedDF %>%
   group_by(VarName) %>%
-  summarise(
-    n = n(),
-    r2 = gauchStats(SimValue,ObsValue)[5],
-   #rmse = round(rmse(SimValue,ObsValue),0),
-    r_rmse = round(rmse(SimValue,ObsValue)/mean(ObsValue)*100,1),
-    nse = round(NSE(SimValue,ObsValue),2),
-    sb = gauchStats(SimValue,ObsValue)[1],
-  nu = gauchStats(SimValue,ObsValue)[2],
-  lc = gauchStats(SimValue,ObsValue)[3]
-  ) %>%
-  kable(digits=1, caption = "Table 2. Summary statistics of model evaluation")
-  
-#  kable( digits=2, format = "latex", booktabs = T)%>%
-#  kable_styling(latex_options = "striped")
+  doStats()
+
+```
+
+## 3. Sensibility analysis
+
+- Criteria: Are simulated values sensible in relation to real life experiences?
+
+```{r, fig.height = 8, echo=FALSE}
+simData_work %>%
+  ungroup()%>%
+  filter(VarName == "Drainage"|VarName == "N_leach_prof"|VarName == "N_min_prof") %>%
+  group_by(VarName, Irr, Nit) %>%
+  arrange(VarName, Irr, Nit,Date) %>% 
+  mutate(SimValue=cumsum(SimValue)) %>%
+  ggplot(aes(x=Date,y=SimValue)) +
+  geom_line(alpha=0.5, aes(colour=Irr,linetype=Nit)) +
+  facet_grid(VarName~.,  scales='free')
+```
+
+
+## 4. Sensitivity analysis
+
+- Placeholder for possible sensitivity analysis in APSIM-X
+- Which parameters to test?
+
+```{r}
 
 ```
 
