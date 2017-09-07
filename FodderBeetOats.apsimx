@@ -8847,26 +8847,6 @@ Data indcates water applied but no notes of it RFZ]]></MemoText>
         <Folder>
           <Name>Manager folder</Name>
           <Operations>
-            <Name>Operations</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <Operation>
-              <Date>2016-10-18</Date>
-              <Action>[FodderBeet].Sow(population:11, cultivar:"Rivage", depth:15, rowSpacing:450)</Action>
-            </Operation>
-            <Operation>
-              <Date>2017-05-30</Date>
-              <Action>[FodderBeet].Harvest()</Action>
-            </Operation>
-            <Operation>
-              <Date>2017-05-30</Date>
-              <Action>[FodderBeet].EndCrop()</Action>
-            </Operation>
-            <Operation>
-              <Date>2017-07-05</Date>
-              <Action>[Oats].Sow(population:300, cultivar:"Milton1", depth:15, rowSpacing:45)</Action>
-            </Operation>
-          </Operations>
-          <Operations>
             <Name>Irrig</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
           </Operations>
@@ -8890,6 +8870,85 @@ Data indcates water applied but no notes of it RFZ]]></MemoText>
             <Name>Testing</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
           </Operations>
+          <Manager>
+            <Name>OperationNew</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <Script>
+              <FodderBeetPlantingDate>2016-10-18</FodderBeetPlantingDate>
+              <OatsPlantingDate>2017-07-05</OatsPlantingDate>
+              <FodderBeetHarvestingDate>2017-05-30</FodderBeetHarvestingDate>
+              <OatsHarvestingDate>2017-11-01</OatsHarvestingDate>
+            </Script>
+            <Code><![CDATA[
+using System;
+using Models.Core;
+using Models.PMF;
+using APSIM.Shared.Utilities;
+using System.Xml.Serialization;
+        
+namespace Models
+{
+	[Serializable] 
+	[System.Xml.Serialization.XmlInclude(typeof(Model))]
+	public class Script : Model
+	{
+		[ScopedLinkByName] Plant FodderBeet;
+		[ScopedLinkByName] Plant Oats;
+		[Link] Clock Clock;
+		
+		[Description("FodderBeet Planting Date")]
+		public DateTime FodderBeetPlantingDate { get; set; }
+		[Description("Oat Planting Date")]
+		public DateTime OatsPlantingDate { get; set; }
+		[Description("FodderBeet Harvesting Date")]
+		public DateTime FodderBeetHarvestingDate { get; set; }
+		[Description("Oat Harvesting Date")]
+		public DateTime OatsHarvestingDate { get; set; }
+		
+		[XmlIgnore] public string CropSown { get; set; }
+		
+		[EventSubscribe("Commencing")]
+		private void OnSimulationCommencing(object sender, EventArgs e)
+		{
+			CropSown = "Fallow";
+		}
+		
+		[EventSubscribe("DoManagement")]
+		private void OnDoManagement(object sender, EventArgs e)
+		{
+			if (Clock.Today.Date == FodderBeetPlantingDate)
+			{
+				FodderBeet.Sow(population: 11, cultivar: "Rivage", depth: 15, rowSpacing: 450);
+				CropSown = "FodderBeet";
+			}
+			
+			if (Clock.Today.Date == OatsPlantingDate)
+			{
+				Oats.Sow(population: 300, cultivar: "Milton1", depth: 15, rowSpacing: 45);
+				CropSown = "Oats";
+			}
+			
+			
+			if (Clock.Today.Date == FodderBeetHarvestingDate)
+			{
+				FodderBeet.Harvest();
+				FodderBeet.EndCrop();
+				CropSown = "Fallow";
+			}
+			
+			if (Clock.Today.Date == OatsHarvestingDate)
+			{
+				Oats.Harvest();
+				Oats.EndCrop();
+				CropSown = "Fallow";
+			}
+			
+		}
+		
+	}
+}
+				]]></Code>
+          </Manager>
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <ShowPageOfGraphs>true</ShowPageOfGraphs>
         </Folder>
@@ -9541,6 +9600,8 @@ namespace Models
           <ExperimentFactorValues />
           <VariableNames>
             <string>[Clock].Today as Date</string>
+            <string />
+            <string>[OperationNew].Script.CropSown</string>
             <string />
             <string>[FodderBeet].Phenology.Stage as Stage_FB</string>
             <string>[Oats].Phenology.Stage as Stage_Oat</string>
@@ -12972,11 +13033,7 @@ namespace Models
           <Interval>NaN</Interval>
         </Axis>
         <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries>
-          <string>0Nil: Pred</string>
-          <string>50Nil: Pred</string>
-          <string>300Nil: Pred</string>
-        </DisabledSeries>
+        <DisabledSeries />
       </Graph>
       <Graph>
         <Name>Layer2</Name>
@@ -13040,11 +13097,7 @@ namespace Models
           <Interval>NaN</Interval>
         </Axis>
         <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries>
-          <string>0Nil: Pred</string>
-          <string>50Nil: Pred</string>
-          <string>300Nil: Pred</string>
-        </DisabledSeries>
+        <DisabledSeries />
       </Graph>
       <Graph>
         <Name>Layer3</Name>
@@ -13108,11 +13161,7 @@ namespace Models
           <Interval>NaN</Interval>
         </Axis>
         <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries>
-          <string>0Nil: Pred</string>
-          <string>50Nil: Pred</string>
-          <string>300Nil: Pred</string>
-        </DisabledSeries>
+        <DisabledSeries />
       </Graph>
       <Graph>
         <Name>Layer4</Name>
@@ -13176,11 +13225,7 @@ namespace Models
           <Interval>NaN</Interval>
         </Axis>
         <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries>
-          <string>0Nil: Pred</string>
-          <string>50Nil: Pred</string>
-          <string>300Nil: Pred</string>
-        </DisabledSeries>
+        <DisabledSeries />
       </Graph>
       <Graph>
         <Name>Layer5</Name>
@@ -13244,11 +13289,7 @@ namespace Models
           <Interval>NaN</Interval>
         </Axis>
         <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries>
-          <string>0Nil: Pred</string>
-          <string>50Nil: Pred</string>
-          <string>300Nil: Pred</string>
-        </DisabledSeries>
+        <DisabledSeries />
       </Graph>
       <Graph>
         <Name>Layer6</Name>
@@ -13313,9 +13354,6 @@ namespace Models
         </Axis>
         <LegendPosition>TopLeft</LegendPosition>
         <DisabledSeries>
-          <string>0Nil: Pred</string>
-          <string>50Nil: Pred</string>
-          <string>300Nil: Pred</string>
           <string>0Nil: Obs</string>
           <string>50Nil: Obs</string>
           <string>300Nil: Obs</string>
@@ -13383,11 +13421,7 @@ namespace Models
           <Interval>NaN</Interval>
         </Axis>
         <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries>
-          <string>0Nil: Pred</string>
-          <string>50Nil: Pred</string>
-          <string>300Nil: Pred</string>
-        </DisabledSeries>
+        <DisabledSeries />
       </Graph>
       <IncludeInDocumentation>false</IncludeInDocumentation>
       <ShowPageOfGraphs>true</ShowPageOfGraphs>
