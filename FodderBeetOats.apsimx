@@ -8871,7 +8871,7 @@ Data indcates water applied but no notes of it RFZ]]></MemoText>
             <IncludeInDocumentation>true</IncludeInDocumentation>
           </Operations>
           <Manager>
-            <Name>OperationNew</Name>
+            <Name>CropOper</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
             <Script>
               <FodderBeetPlantingDate>2016-10-18</FodderBeetPlantingDate>
@@ -9329,8 +9329,8 @@ namespace Models
           <Name>StateFactors</Name>
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <Script>
-            <IrrFactor>False</IrrFactor>
             <NitFactor>0</NitFactor>
+            <IrrFactor>False</IrrFactor>
           </Script>
           <Code><![CDATA[using System;
 using Models.Core;
@@ -9599,53 +9599,53 @@ namespace Models
           <ExperimentFactorNames />
           <ExperimentFactorValues />
           <VariableNames>
-            <string>[Clock].Today as Date</string>
+            <string>[Clock].Today</string>
             <string />
-            <string>[OperationNew].Script.CropSown</string>
+            <string>[CropOper].Script.CropSown</string>
             <string />
-            <string>[FodderBeet].Phenology.Stage as Stage_FB</string>
-            <string>[Oats].Phenology.Stage as Stage_Oat</string>
+            <string>[FodderBeet].Phenology.Stage </string>
+            <string>[Oats].Phenology.Stage </string>
             <string />
-            <string>([FodderBeet].Leaf.Live.Wt*10) as Leaf_DM_FB</string>
-            <string>([FodderBeet].Petiole.Live.Wt*10) as Petiole_DM_FB</string>
-            <string>([FodderBeet].Root.Live.Wt*10) as Root_DM_FB</string>
-            <string>([FodderBeet].StorageRoot.Live.Wt*10) as Bulb_DM_FB</string>
+            <string>[FodderBeet].Leaf.Live.Wt </string>
+            <string>[FodderBeet].Petiole.Live.Wt</string>
+            <string>[FodderBeet].Root.Live.Wt</string>
+            <string>[FodderBeet].StorageRoot.Live.Wt</string>
             <string />
-            <string>([Oats].Leaf.Live.Wt) as Leaf_DM_Oat</string>
-            <string>([Oats].Stem.Live.Wt) as Stem_DM_Oat</string>
-            <string>([Oats].Panicle.Live.Wt) as Spike_DM_Oat</string>
-            <string>([Oats].Grain.Live.Wt) as Grain_DM_Oat</string>
-            <string>([Oats].Root.Live.Wt)) as Root_DM_Oat</string>
+            <string>[Oats].Leaf.Live.Wt</string>
+            <string>[Oats].Stem.Live.Wt</string>
+            <string>[Oats].Panicle.Live.Wt </string>
+            <string>[Oats].Grain.Live.Wt</string>
+            <string>[Oats].Root.Live.Wt</string>
             <string />
-            <string>[FodderBeet].Leaf.NConc as Leaf_N_Perc_FB</string>
-            <string>[FodderBeet].Petiole.NConc as Petiole_N_Perc_FB</string>
-            <string>[FodderBeet].Root.NConc as Root_N_Perc_FB</string>
-            <string>[FodderBeet].StorageRoot.NConc as Bulb_N_Perc_FB</string>
+            <string>[FodderBeet].Leaf.NConc </string>
+            <string>[FodderBeet].Petiole.NConc</string>
+            <string>[FodderBeet].Root.NConc </string>
+            <string>[FodderBeet].StorageRoot.NConc </string>
             <string />
-            <string>[Oats].Leaf.NConc as Leaf_N_Perc_Oat</string>
-            <string>[Oats].Stem.NConc as Stem_N_Perc_Oat</string>
-            <string>[Oats].Spike.NConc as Spike_N_Perc_Oat</string>
-            <string>[Oats].Grain.NConc as Grain_N_Perc_Oat</string>
-            <string>[Oats].Root.NConc as Root_N_Perc_Oat </string>
+            <string>[Oats].Leaf.NConc </string>
+            <string>[Oats].Stem.NConc </string>
+            <string>[Oats].Spike.NConc </string>
+            <string>[Oats].Grain.NConc </string>
+            <string>[Oats].Root.NConc </string>
             <string />
-            <string>[FodderBeet].Leaf.LAI as LAI_FB</string>
-            <string>[FodderBeet].Leaf.CoverTotal as RadInt_FB</string>
+            <string>[FodderBeet].Leaf.LAI</string>
+            <string>[FodderBeet].Leaf.CoverTotal</string>
             <string />
-            <string>[Oats].Leaf.LAI as LAI_Oat</string>
-            <string>[Oats].Leaf.CoverTotal as RadInt_Oat</string>
+            <string>[Oats].Leaf.LAI </string>
+            <string>[Oats].Leaf.CoverTotal </string>
             <string />
-            <string>([FodderBeet].Leaf.Transpiration + [Soil].SoilWater.Es + [MicroClimate].interception) as ETact_FB</string>
-            <string>([FodderBeet].Leaf.Transpiration + [Soil].SoilWater.Es + [MicroClimate].interception) as ETact_Oat</string>
+            <string>([FodderBeet].Leaf.Transpiration + [Soil].SoilWater.Es + [MicroClimate].interception) as FodderBeet_ET</string>
+            <string>([FodderBeet].Leaf.Transpiration + [Soil].SoilWater.Es + [MicroClimate].interception) as Oats_ET</string>
             <string />
-            <string>[Soil].Temperature as SoilTemp</string>
+            <string>[Soil].Temperature </string>
             <string />
-            <string>[Soil].SoilWater.SW as SW</string>
-            <string>[Soil].SoilWater.Drainage as Drainage</string>
+            <string>[Soil].SoilWater.SW </string>
+            <string>[Soil].SoilWater.Drainage </string>
             <string />
-            <string>sum([Soil].SoilNitrogen.MineralisedN) as N_min_prof</string>
-            <string>sum([Soil].SoilNitrogen.Denitrification) as N_din_prof</string>
+            <string>sum([Soil].SoilNitrogen.MineralisedN) </string>
+            <string>sum([Soil].SoilNitrogen.Denitrification) </string>
             <string />
-            <string>([Soil].SoilWater.LeachNO3 + [Soil].SoilWater.LeachNH4) as N_leach_prof</string>
+            <string>([Soil].SoilWater.LeachNO3 + [Soil].SoilWater.LeachNH4) as N_leaching</string>
           </VariableNames>
           <EventNames>
             <string>[Clock].DoReport</string>

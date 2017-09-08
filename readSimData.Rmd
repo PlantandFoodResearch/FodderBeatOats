@@ -39,6 +39,7 @@ db.full.path <- paste0(db.address,db.name)
 con <- dbConnect(SQLite(), dbname = db.full.path, flags = SQLITE_RW)
 alltables <- dbListTables(con)
 alltables
+dbDisconnect(con)
 ```
 
 # Read db and make df
@@ -55,14 +56,16 @@ myDbTable <- GetApsimNGTable(db.full.path,tableName)
 df <- as.data.frame(myDbTable)
 
 # change date to corerct format 
-df$Date <- ymd_hms(df$Date)
+df$Clock.Today <- ymd_hms(df$Clock.Today)
+
 
 # Sort out factors
 df$Nit <- as.factor(df$Nit)
 df$Irr <- as.factor(df$Irr)
+df$CropOper.Script.CropSown <- factor(df$CropOper.Script.CropSown )
 
 # get rid of points in column names
-colnames(df) <- gsub("\\.", "", colnames(df))
+#colnames(df) <- gsub("\\.", "", colnames(df))
 colnames(df)
 ```
 
@@ -97,12 +100,14 @@ summary(myDb)
 ```
 ## Quick check
 
+- look at leaf biomass
+
 ```{r}
 myDb %>%
 #  select_if(grepl("DM"), names(.))) %>% # FIXME: was trying to summ all biomass variables
-  ggplot(aes(x=Date,y=(Leaf_DM_FB+Leaf_DM_Oat),colour=Irr, linetype=Nit)) +
+  ggplot(aes(x=Clock.Today,y=(FodderBeet.Leaf.Live.Wt+Oats.Leaf.Live.Wt),colour=Irr, linetype=Nit)) +
   geom_line() +
-  ylab("kg/ha")
+  ylab("g/m2")
   
 ```
 

@@ -22,75 +22,79 @@ library(here)
 rootPath <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"
 ```
 
-```{r, echo=FALSE, include=FALSE}
+```{r, echo=FALSE}
 # read simulated data
 simData <- read.csv(paste0(rootPath,"/SimulatedDataWorked.csv"), header = TRUE)
 str(simData)
 ```
 
 
-```{r, echo=FALSE, include=FALSE}
+```{r, echo=FALSE}
+
+# Define factors
+factorindex <- c("Nit","Irr", "CropOper.Script.CropSown", "SimName")
+simData[,factorindex] <- as.data.frame(sapply(simData[,factorindex],as.factor))
+
 # Tidy up sim data
 simData_work <- simData %>%
   mutate(Nit=factor(Nit)) %>%
-  mutate(Date=as.Date(ymd_hms(Date))) %>%
+  mutate(Clock.Today=as.Date(ymd_hms(Clock.Today))) %>%
   mutate(Irr = factor(Irr, levels=c("Nil", "Full"), labels=c("Dry","Irrig")))  %>%
   mutate() %>%
   dplyr::select(-Zone,-SimulationID,-SimName) %>%
-  tidyr::gather("VarName","SimValue",Stage_FB:N_leach_prof) %>%
+  tidyr::gather("VarName","SimValue",FodderBeet.Phenology.Stage:N_leaching) %>%
   mutate(VarName = factor(VarName)) %>%
   rowwise() %>%
-  mutate(SimValue = ifelse(grepl('_N_Perc_', VarName),SimValue*100,SimValue))
+  mutate(SimValue = ifelse(grepl('.NConc', VarName),SimValue*100,SimValue))
 
 summary(simData_work)
 ```
-```{r, echo=FALSE, include=FALSE}
+
+
+```{r, echo=FALSE, include=TRUE}
 str(simData_work)
 ```
 
-```{r, echo=FALSE, include=FALSE}
+```{r, echo=FALSE, include=TRUE}
 # read observed data
 obsData <- read.csv(paste0(rootPath,"/ObservedDataWorked.csv"), header = TRUE)
-
+summary(obsData)
 ```
 
 
-```{r, echo=FALSE, include=FALSE}
-# Average observed data
-
-# Prepare merge variables
-
-# Tidy up
+```{r, echo=FALSE}
+# Average observed data to fit APSIM-X
 
 obsData_av <- obsData %>%
   mutate(Nit=factor(Nit)) %>%
-  mutate(Date=ymd(Date)) %>%
-  dplyr::select(-Plot,-Rep) %>%
-  group_by(Date,Irr,Nit) %>%
+  mutate(Clock.Today=ymd(Clock.Today)) %>%
+  dplyr::select(-Plot,-Rep,-SimulationName,-Code) %>%
+  group_by(Clock.Today,Irr,Nit) %>%
   summarise_all(funs(mean)) %>%
-  tidyr::gather("VarName","ObsValue",Leaf_DM_FB:LAI_FB) %>%
+  tidyr::gather("VarName","ObsValue",FodderBeet.Leaf.LAI:FodderBeet.StorageRoot.Nconc) %>%
   mutate(VarName = factor(VarName))%>%
   ungroup()
 
 summary(obsData_av)
 ```
 
-```{r, echo=FALSE, include=FALSE}
+```{r, echo=FALSE, include=TRUE}
 str(obsData_av)
 ```
-```{r, echo=FALSE, include=FALSE}
+
+```{r, echo=FALSE, include=TRUE}
 str(simData_work)
 ```
 
 ```{r, echo=FALSE}
 mergedDF <- data.frame() # empty data frame to do stuff
-mergedDF <- merge(obsData_av, simData_work, by=c("Date","Irr","Nit","VarName"))
+mergedDF <- merge(simData_work, obsData_av, by=c("Clock.Today","Irr","Nit","VarName"))
 
 mergedDF %>%
 gather("VarType","VarValue",ObsValue:SimValue) %>%
 mutate(VarType=factor(VarType))%>%
 spread(VarName,VarValue) %>%
-dplyr::select(-Date) %>%
+dplyr::select(-Clock.Today) %>%
 summary() 
 ```
 
@@ -107,7 +111,7 @@ mergedDF %>%
   ggplot(aes(x=ObsValue,y=SimValue)) +
   geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=2) +
   geom_abline(intercept = 0, slope = 1, size=1.5) +
-  facet_wrap(~VarName, ncol=3, scales='free')+
+  facet_wrap(CropOper.Script.CropSown~VarName, ncol=2, scales='free')+
   geom_smooth(method = "lm", se = TRUE,  aes(fill = Irr, linetype=Irr, colour=Irr), alpha=0.1) +
   coord_fixed(ratio = 1) +
   ylab("Simulated value") +
@@ -204,14 +208,21 @@ mergedDF %>%
 - Criteria: Are simulated values sensible in relation to real life experiences?
 
 ```{r, fig.height = 8, echo=FALSE}
+
+#unique(simData_work$VarName)
+
 simData_work %>%
   ungroup()%>%
-  filter(VarName == "Drainage"|VarName == "N_leach_prof"|VarName == "N_min_prof") %>%
+  filter(
+           VarName == "Soil.SoilWater.Drainage"|
+           VarName == "sum.Soil.SoilNitrogen.MineralisedN."|
+           VarName == "sum.Soil.SoilNitrogen.Denitrification."|
+           VarName == "N_leaching") %>%
   group_by(VarName, Irr, Nit) %>%
-  arrange(VarName, Irr, Nit,Date) %>% 
+  arrange(VarName, Irr, Nit,Clock.Today) %>% 
   mutate(SimValue=cumsum(SimValue)) %>%
-  ggplot(aes(x=Date,y=SimValue)) +
-  geom_line(alpha=0.5, aes(colour=Irr,linetype=Nit)) +
+  ggplot(aes(x=Clock.Today,y=SimValue)) +
+  geom_line(alpha=0.8, aes(colour=Irr,linetype=Nit)) +
   facet_grid(VarName~.,  scales='free')
 ```
 
