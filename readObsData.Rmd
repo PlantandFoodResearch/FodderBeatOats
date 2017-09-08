@@ -16,6 +16,7 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(readxl)
+library(xlsx)
 ```
 
 ```{r}
@@ -23,7 +24,6 @@ library(readxl)
 # dir address
 
 pathFolderRaw <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis"
-pathFolderWork <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"
 
 nameAddressOfFile <- paste0(pathFolderRaw, "/DataFrame_FodderBeetBiomass.xlsx")
 
@@ -102,7 +102,27 @@ obsData %>%
 
 ```{r}
 head(obsData)
-write.csv(obsData, paste0(pathFolderWork,"/ObservedDataWorked.csv"), row.names = FALSE)
+write.csv(obsData, paste0(pathFolderRaw,"/ObservedDataWorked.csv"), row.names = FALSE)
+```
+
+- For APSIM-X
+```{r}
+df <- obsData %>%
+ # mutate(Irr=factor(Irr),Nit=factor(Nit)) %>%
+  mutate(Clock.Today=as.Date(ymd(Clock.Today))) %>%
+  mutate(Clock.Today=as.character(as.Date(Clock.Today, "%Y-%m-%d"))) %>%
+  dplyr::select(-Plot,-Rep,-Nit,-Irr,-Code) %>%
+  group_by(Clock.Today,SimulationName) %>%
+  summarise_all(funs(mean)) %>%
+  mutate(SimulationName = factor(SimulationName))%>%
+  ungroup()%>%
+  as.data.frame()
+
+str(df)
+
+pathFolderWork <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats/Observed"  
+
+write.xlsx(df,paste0(pathFolderWork,"/ObservedDataWorked_APSIMX.xlsx"), sheetName="OBS2", row.names = FALSE) 
 ```
 
 

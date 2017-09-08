@@ -9610,7 +9610,7 @@ namespace Models
             <string>[FodderBeet].Petiole.Live.Wt</string>
             <string>[FodderBeet].Root.Live.Wt</string>
             <string>[FodderBeet].StorageRoot.Live.Wt</string>
-            <string />
+            <string>	</string>
             <string>[Oats].Leaf.Live.Wt</string>
             <string>[Oats].Stem.Live.Wt</string>
             <string>[Oats].Panicle.Live.Wt </string>

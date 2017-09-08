@@ -19,7 +19,7 @@ library(here)
 ```
 
 ```{r, echo=FALSE}
-rootPath <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"
+rootPath <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis"
 ```
 
 ```{r, echo=FALSE}
@@ -38,6 +38,7 @@ simData[,factorindex] <- as.data.frame(sapply(simData[,factorindex],as.factor))
 # Tidy up sim data
 simData_work <- simData %>%
   mutate(Nit=factor(Nit)) %>%
+
   mutate(Clock.Today=as.Date(ymd_hms(Clock.Today))) %>%
   mutate(Irr = factor(Irr, levels=c("Nil", "Full"), labels=c("Dry","Irrig")))  %>%
   mutate() %>%
