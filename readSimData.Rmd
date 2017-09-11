@@ -68,6 +68,7 @@ df$CropOper.Script.CropSown <- factor(df$CropOper.Script.CropSown )
 
 # get rid of points in column names
 #colnames(df) <- gsub("\\.", "", colnames(df))
+
 colnames(df)
 ```
 

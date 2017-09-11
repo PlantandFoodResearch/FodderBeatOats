@@ -42,13 +42,17 @@ simData_work <- simData %>%
   mutate(Clock.Today=as.Date(ymd_hms(Clock.Today))) %>%
   mutate(Irr = factor(Irr, levels=c("Nil", "Full"), labels=c("Dry","Irrig")))  %>%
   mutate() %>%
-  dplyr::select(-Zone,-SimulationID,-SimName) %>%
+  dplyr::select(-Zone,-SimulationID) %>%
   tidyr::gather("VarName","SimValue",FodderBeet.Phenology.Stage:N_leaching) %>%
   mutate(VarName = factor(VarName)) %>%
   rowwise() %>%
   mutate(SimValue = ifelse(grepl('.NConc', VarName),SimValue*100,SimValue))
 
 summary(simData_work)
+
+unique(simData_work$VarName)
+
+
 ```
 
 
@@ -58,48 +62,77 @@ str(simData_work)
 
 ```{r, echo=FALSE, include=TRUE}
 # read observed data
-obsData <- read.csv(paste0(rootPath,"/ObservedDataWorked.csv"), header = TRUE)
+obsData <- read.csv(paste0(rootPath,"/ObservedDataWorked_Biomass.csv"), header = TRUE)
 summary(obsData)
+
+# alternative with all data
+pathDrive_K <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis" # FIXME: Send to powerPlant or need to run APSIM-X there?
+obsData <- read.xlsx(paste0(pathDrive_K,"/Observed.xlsx"),sheetName = "OBS", header=TRUE)
+
+summary(obsData)
+
+
 ```
 
 
-```{r, echo=FALSE}
-# Average observed data to fit APSIM-X
-
+```{r}
 obsData_av <- obsData %>%
-  mutate(Nit=factor(Nit)) %>%
   mutate(Clock.Today=ymd(Clock.Today)) %>%
-  dplyr::select(-Plot,-Rep,-SimulationName,-Code) %>%
-  group_by(Clock.Today,Irr,Nit) %>%
-  summarise_all(funs(mean)) %>%
-  tidyr::gather("VarName","ObsValue",FodderBeet.Leaf.LAI:FodderBeet.StorageRoot.Nconc) %>%
-  mutate(VarName = factor(VarName))%>%
-  ungroup()
+  tidyr::gather("VarName","ObsValue",Soil.Temperature.1:Soil.SoilWater.SW.8) %>%
+  mutate(VarName = factor(VarName)) %>%
+  rename(SimName=SimulationName) %>%
+  # FIXME: Do this in the initial script - correct names of array variables for merging
+  mutate(VarName2 = ifelse(grepl('Soil.SoilWater', VarName),paste0(VarName,"."),as.character(VarName))) %>%
+  mutate(VarName3 = ifelse(grepl('Soil.Temperature', VarName2),paste0(VarName2,"."),as.character(VarName2))) %>%
+  mutate(VarName3=factor(VarName3)) %>%
+  mutate(VarName = VarName3) %>%
+  dplyr::select(-VarName2, -VarName3) # FIXME: Do it nicely later - the OR syntax did not work
 
-summary(obsData_av)
-```
 
-```{r, echo=FALSE, include=TRUE}
 
-obsData_av <- read.csv(paste0(pathMaster,"/Observed.xlsx") )
+unique(obsData_av$VarName)
 
-str(obsData_av)
+
+# substrRight <- function(x, n){
+#   substr(x, nchar(x)-n+1, nchar(x))
+# }
+# substrRight(colnames(df)[33],1)
+# 
+# colnames(df) <- gsub("\\.", "", colnames(df))
+
+
 ```
 
 ```{r, echo=FALSE, include=TRUE}
 str(simData_work)
 ```
 
+```{r}
+# Average observed data to fit APSIM-X
+
+# obsData_av <- obsData %>%
+#   mutate(Nit=factor(Nit)) %>%
+#   mutate(Clock.Today=ymd(Clock.Today)) %>%
+#   dplyr::select(-Plot,-Rep,-Code, -Irr,-Nit) %>%
+#   group_by(Clock.Today,SimulationName) %>%
+#   summarise_all(funs(mean)) %>%
+#   tidyr::gather("VarName","ObsValue",FodderBeet.Leaf.LAI:FodderBeet.AboveGround.Live.Wt) %>%
+#   mutate(VarName = factor(VarName)) %>%
+#   ungroup() %>%
+#   rename(SimName=SimulationName)
+# 
+# summary(obsData_av)
+```
+
+
+
 ```{r, echo=FALSE}
 mergedDF <- data.frame() # empty data frame to do stuff
-mergedDF <- merge(simData_work, obsData_av, by=c("Clock.Today","Irr","Nit","VarName"))
+mergedDF <- merge(simData_work, obsData_av, by=c("Clock.Today","SimName","VarName"))
 
-mergedDF %>%
-gather("VarType","VarValue",ObsValue:SimValue) %>%
-mutate(VarType=factor(VarType))%>%
-spread(VarName,VarValue) %>%
-dplyr::select(-Clock.Today) %>%
-summary() 
+# FIXME: Merging is not working, many variables left behind
+
+summary(mergedDF)
 ```
 
 # Model evaluation
@@ -109,11 +142,13 @@ summary()
 - Black line is x=y (1:1 line)
 - Colour lines are linear fits for dryland and irrigated crops
 
-```{r, fig.width=12, fig.height=12, echo=FALSE}
+```{r, fig.width=12, fig.height=22, echo=FALSE}
 
 mergedDF %>%
+  na.omit()%>%
+  filter(CropOper.Script.CropSown!="Fallow") %>%
   ggplot(aes(x=ObsValue,y=SimValue)) +
-  geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=2) +
+  geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=3) +
   geom_abline(intercept = 0, slope = 1, size=1.5) +
   facet_wrap(CropOper.Script.CropSown~VarName, ncol=2, scales='free')+
   geom_smooth(method = "lm", se = TRUE,  aes(fill = Irr, linetype=Irr, colour=Irr), alpha=0.1) +
@@ -203,10 +238,13 @@ There's quite a bit o duplication in these (e.g. pBias and SB are very similar) 
 
 ```{r, fig.width=12, results='asis',results='asis', echo=FALSE}
 
-mergedDF %>%
+statsTable <- mergedDF %>%
+  na.omit() %>%
   group_by(VarName) %>%
   doStats() %>%
   mutate(Accuracy=ifelse(r_rmse<25,"good","LOW")) 
+
+statsTable
 
 ```
 
