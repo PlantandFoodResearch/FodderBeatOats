@@ -8527,27 +8527,11 @@ The Ear composite biomass object includes the Live and dead pools of all organs 
   <DataStore>
     <Name>DataStore</Name>
     <ExcelInput>
-      <Name>RS_Obs</Name>
+      <Name>Observed</Name>
       <IncludeInDocumentation>true</IncludeInDocumentation>
-      <FileName>RSData.xlsx</FileName>
+      <FileName>Observed.xlsx</FileName>
       <SheetNames>
         <string>OBS</string>
-      </SheetNames>
-    </ExcelInput>
-    <ExcelInput>
-      <Name>VWC</Name>
-      <IncludeInDocumentation>true</IncludeInDocumentation>
-      <FileName>VWC_APSIM.xlsx</FileName>
-      <SheetNames>
-        <string>VWC_OBS</string>
-      </SheetNames>
-    </ExcelInput>
-    <ExcelInput>
-      <Name>SoilTemp</Name>
-      <IncludeInDocumentation>true</IncludeInDocumentation>
-      <FileName>MeanSoilTemp.xlsx</FileName>
-      <SheetNames>
-        <string>MeanTemp</string>
       </SheetNames>
     </ExcelInput>
     <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -9329,8 +9313,8 @@ namespace Models
           <Name>StateFactors</Name>
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <Script>
-            <NitFactor>0</NitFactor>
             <IrrFactor>False</IrrFactor>
+            <NitFactor>0</NitFactor>
           </Script>
           <Code><![CDATA[using System;
 using Models.Core;
@@ -9610,7 +9594,7 @@ namespace Models
             <string>[FodderBeet].Petiole.Live.Wt</string>
             <string>[FodderBeet].Root.Live.Wt</string>
             <string>[FodderBeet].StorageRoot.Live.Wt</string>
-            <string>	</string>
+            <string />
             <string>[Oats].Leaf.Live.Wt</string>
             <string>[Oats].Stem.Live.Wt</string>
             <string>[Oats].Panicle.Live.Wt </string>
@@ -10296,9 +10280,7 @@ namespace Models
         <Interval>NaN</Interval>
       </Axis>
       <LegendPosition>TopLeft</LegendPosition>
-      <DisabledSeries>
-        <string>300Nil: OBS</string>
-      </DisabledSeries>
+      <DisabledSeries />
     </Graph>
     <Graph>
       <Name>SW</Name>
@@ -13944,11 +13926,11 @@ namespace Models
           <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
           <Marker>None</Marker>
           <MarkerSize>Normal</MarkerSize>
-          <Line>Solid</Line>
+          <Line>Dash</Line>
           <LineThickness>Normal</LineThickness>
-          <TableName>OBS</TableName>
+          <TableName>OBS2</TableName>
           <XFieldName>Clock.Today</XFieldName>
-          <YFieldName>FodderBeet.AboveGroundLive.Wt</YFieldName>
+          <YFieldName>FodderBeet.Leaf.LAI</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -14023,14 +14005,14 @@ namespace Models
           <XAxis>Bottom</XAxis>
           <YAxis>Left</YAxis>
           <ColourArgb>-16777216</ColourArgb>
-          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
-          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryColours>1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>0</FactorIndexToVaryMarkers>
           <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
           <Marker>None</Marker>
           <MarkerSize>Normal</MarkerSize>
           <Line>Solid</Line>
           <LineThickness>Normal</LineThickness>
-          <TableName>OBS</TableName>
+          <TableName>OBS2</TableName>
           <XFieldName>Clock.Today</XFieldName>
           <YFieldName>FodderBeet.Leaf.LAI</YFieldName>
           <ShowInLegend>true</ShowInLegend>
@@ -14062,5 +14044,5 @@ namespace Models
     <IncludeInDocumentation>true</IncludeInDocumentation>
   </Experiment>
   <IncludeInDocumentation>true</IncludeInDocumentation>
-  <ExplorerWidth>363</ExplorerWidth>
+  <ExplorerWidth>321</ExplorerWidth>
 </Simulations>

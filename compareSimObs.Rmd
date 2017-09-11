@@ -16,6 +16,7 @@ library(knitr)
 library(tidyr)
 library(RSQLite)
 library(here)
+library(xlsx)
 ```
 
 ```{r, echo=FALSE}
@@ -38,7 +39,6 @@ simData[,factorindex] <- as.data.frame(sapply(simData[,factorindex],as.factor))
 # Tidy up sim data
 simData_work <- simData %>%
   mutate(Nit=factor(Nit)) %>%
-
   mutate(Clock.Today=as.Date(ymd_hms(Clock.Today))) %>%
   mutate(Irr = factor(Irr, levels=c("Nil", "Full"), labels=c("Dry","Irrig")))  %>%
   mutate() %>%
@@ -80,6 +80,9 @@ summary(obsData_av)
 ```
 
 ```{r, echo=FALSE, include=TRUE}
+
+obsData_av <- read.csv(paste0(pathMaster,"/Observed.xlsx") )
+
 str(obsData_av)
 ```
 

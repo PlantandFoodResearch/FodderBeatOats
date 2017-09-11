@@ -9,6 +9,7 @@ library(lubridate) # taking care of dates
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+library(xlsx)
 ```
 
 ## Load simulated
@@ -116,9 +117,17 @@ myDb %>%
 
 - For analysis
 ```{r}
-pathFolderWork <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis"
+pathFolderWork <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis" # FIXME: Send to powerPlant or need to run APSIM-X there?
 
 write.csv(myDb, paste0(pathFolderWork,"/SimulatedDataWorked.csv"), row.names = FALSE) 
 ```
 
+```{r}
+# save power Plant
+# pathPowerPlant <- "http://storage.powerplant.pfr.co.nz/workspace/cflmss/MultiCropRotation_APSIM_X/Fodderbeet2016_2017/"
+# 
+# write.csv(myDb, paste0(pathPowerPlant,"/SimulatedDataWorked.csv"), row.names = FALSE)
+
+# can only open URLs for reading
+```
 

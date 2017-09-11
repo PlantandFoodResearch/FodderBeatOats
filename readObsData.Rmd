@@ -102,6 +102,7 @@ obsData %>%
 
 ```{r}
 head(obsData)
+print(paste0("Save to ",pathFolderRaw))
 write.csv(obsData, paste0(pathFolderRaw,"/ObservedDataWorked.csv"), row.names = FALSE)
 ```
 
@@ -120,9 +121,9 @@ df <- obsData %>%
 
 str(df)
 
-pathFolderWork <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats/Observed"  
+pathFolderWork <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats/Observed"  # FIXME: Send to powerPlant?
 
-write.xlsx(df,paste0(pathFolderWork,"/ObservedDataWorked_APSIMX.xlsx"), sheetName="OBS2", row.names = FALSE) 
+write.xlsx(df,paste0(pathFolderWork,"/ObservedDataWorked_APSIMX.xlsx"), sheetName="OBS", row.names = FALSE) 
 ```
 
 
