@@ -191,7 +191,7 @@ Initial criteria of a very good model performance (Moriasi et al 2007 plus some 
 This adds beyond the regression based analysis above.
 
 - R2 > 75% (?)
-- RMSE of 0 (< 20% is very good?)
+- RMSE of 0 (< 25% is very good?)
 - NSE of 1.0 (>0.75 is very good)
 - LC = 100% (>80% is very good?)
 - Pbias of 0 (< +-0.15 is very good; + is underestimation and - is overestimation)
@@ -199,11 +199,14 @@ This adds beyond the regression based analysis above.
 
 There's quite a bit o duplication in these (e.g. pBias and SB are very similar) but we cover well most metrics.
 
+- For the moment, consider accurate if rRMSE is < 25%
 
 ```{r, fig.width=12, results='asis',results='asis', echo=FALSE}
+
 mergedDF %>%
   group_by(VarName) %>%
-  doStats()
+  doStats() %>%
+  mutate(Accuracy=ifelse(r_rmse<25,"good","LOW")) 
 
 ```
 
