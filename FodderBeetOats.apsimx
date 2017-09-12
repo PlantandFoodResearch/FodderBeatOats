@@ -3999,7 +3999,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
               <Y>
                 <double>100</double>
                 <double>100</double>
-                <double>50</double>
+                <double>60</double>
               </Y>
             </XYPairs>
             <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -4264,11 +4264,11 @@ date of Experiment 4 is assumed here.]]></MemoText>
               <Y>
                 <double>8000</double>
                 <double>10000</double>
-                <double>30000</double>
-                <double>30000</double>
-                <double>30000</double>
-                <double>30000</double>
-                <double>30000</double>
+                <double>50000</double>
+                <double>50000</double>
+                <double>50000</double>
+                <double>50000</double>
+                <double>50000</double>
                 <double>50000</double>
               </Y>
             </XYPairs>
@@ -4278,40 +4278,6 @@ date of Experiment 4 is assumed here.]]></MemoText>
               <MemoText><![CDATA[Data of expansion of  laminae at three leaf positions ( twelfth, sixteenth and twentieth) on six plants  from the sowing date  experiment were used to give indication of ontogenic increase in maximum leaf area. The pattern of maximum leaf area for sugar beet (Milford et al. 1985) was assumed.
 
 ]]></MemoText>
-            </Memo>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <XProperty>[Structure].LeafTipsAppeared</XProperty>
-          </LinearInterpolationFunction>
-          <LinearInterpolationFunction>
-            <Name>GrowthDuration</Name>
-            <XYPairs>
-              <Name>XYPairs</Name>
-              <IncludeInDocumentation>true</IncludeInDocumentation>
-              <X>
-                <double>1</double>
-                <double>6</double>
-                <double>11</double>
-                <double>15</double>
-                <double>21</double>
-                <double>35</double>
-                <double>45</double>
-                <double>50</double>
-              </X>
-              <Y>
-                <double>200</double>
-                <double>300</double>
-                <double>500</double>
-                <double>500</double>
-                <double>500</double>
-                <double>400</double>
-                <double>300</double>
-                <double>200</double>
-              </Y>
-            </XYPairs>
-            <Memo>
-              <Name>Memo</Name>
-              <IncludeInDocumentation>true</IncludeInDocumentation>
-              <MemoText><![CDATA[The pattern is assumed to be similar to that of maize (Teixeira et al 2011).]]></MemoText>
             </Memo>
             <IncludeInDocumentation>true</IncludeInDocumentation>
             <XProperty>[Structure].LeafTipsAppeared</XProperty>
@@ -4330,8 +4296,8 @@ date of Experiment 4 is assumed here.]]></MemoText>
                   <double>24</double>
                 </X>
                 <Y>
-                  <double>0</double>
-                  <double>0</double>
+                  <double>1</double>
+                  <double>1</double>
                   <double>1</double>
                   <double>1</double>
                 </Y>
@@ -4366,8 +4332,8 @@ date of Experiment 4 is assumed here.]]></MemoText>
                   <double>300</double>
                   <double>300</double>
                   <double>300</double>
-                  <double>200</double>
-                  <double>100</double>
+                  <double>300</double>
+                  <double>300</double>
                   <double>80</double>
                 </Y>
               </XYPairs>
@@ -4548,7 +4514,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
             <FixedValue>1</FixedValue>
           </Constant>
           <Constant>
-            <Name>CellDivisionStressConst</Name>
+            <Name>CellDivisionStress</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
             <FixedValue>1</FixedValue>
             <Units>0-1</Units>
@@ -4559,7 +4525,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
             <FixedValue>1</FixedValue>
           </Constant>
           <LinearInterpolationFunction>
-            <Name>CellDivisionStress</Name>
+            <Name>CellDivisionStressNconc</Name>
             <XYPairs>
               <Name>XYPairs</Name>
               <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -4568,13 +4534,199 @@ date of Experiment 4 is assumed here.]]></MemoText>
                 <double>0.05</double>
               </X>
               <Y>
-                <double>0</double>
+                <double>0.5</double>
                 <double>1</double>
               </Y>
             </XYPairs>
             <IncludeInDocumentation>true</IncludeInDocumentation>
             <XProperty>[Leaf].Live.NConc</XProperty>
           </LinearInterpolationFunction>
+          <LinearInterpolationFunction>
+            <Name>GrowthDuration</Name>
+            <XYPairs>
+              <Name>XYPairs</Name>
+              <Graph>
+                <Name>Graph</Name>
+                <Series>
+                  <Name>Series</Name>
+                  <IncludeInDocumentation>true</IncludeInDocumentation>
+                  <Type>Scatter</Type>
+                  <XAxis>Bottom</XAxis>
+                  <YAxis>Left</YAxis>
+                  <ColourArgb>-65536</ColourArgb>
+                  <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+                  <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+                  <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+                  <Marker>None</Marker>
+                  <MarkerSize>Normal</MarkerSize>
+                  <Line>Solid</Line>
+                  <LineThickness>Normal</LineThickness>
+                  <XFieldName>.Simulations.Replacements.FodderBeet.Leaf.CohortParameters.GrowthDuration.XYPairs.X</XFieldName>
+                  <YFieldName>.Simulations.Replacements.FodderBeet.Leaf.CohortParameters.GrowthDuration.XYPairs.Y</YFieldName>
+                  <ShowInLegend>false</ShowInLegend>
+                  <IncludeSeriesNameInLegend>false</IncludeSeriesNameInLegend>
+                  <Cumulative>false</Cumulative>
+                  <CumulativeX>false</CumulativeX>
+                </Series>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <Axis>
+                  <Type>Left</Type>
+                  <Title>Y</Title>
+                  <Inverted>false</Inverted>
+                  <Minimum>NaN</Minimum>
+                  <Maximum>NaN</Maximum>
+                  <Interval>NaN</Interval>
+                </Axis>
+                <Axis>
+                  <Type>Bottom</Type>
+                  <Title>X</Title>
+                  <Inverted>false</Inverted>
+                  <Minimum>NaN</Minimum>
+                  <Maximum>NaN</Maximum>
+                  <Interval>NaN</Interval>
+                </Axis>
+                <LegendPosition>BottomRight</LegendPosition>
+                <DisabledSeries />
+              </Graph>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <X>
+                <double>1</double>
+                <double>6</double>
+                <double>11</double>
+                <double>15</double>
+                <double>21</double>
+                <double>35</double>
+                <double>45</double>
+                <double>50</double>
+              </X>
+              <Y>
+                <double>200</double>
+                <double>300</double>
+                <double>500</double>
+                <double>500</double>
+                <double>500</double>
+                <double>400</double>
+                <double>300</double>
+                <double>200</double>
+              </Y>
+            </XYPairs>
+            <Memo>
+              <Name>Memo</Name>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <MemoText><![CDATA[The pattern is assumed to be similar to that of maize (Teixeira et al 2011).]]></MemoText>
+            </Memo>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <XProperty>[Structure].LeafTipsAppeared</XProperty>
+          </LinearInterpolationFunction>
+          <MultiplyFunction>
+            <Name>LagDuration1</Name>
+            <LinearInterpolationFunction>
+              <Name>PhotoperiodMultiplier</Name>
+              <XYPairs>
+                <Name>XYPairs</Name>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <X>
+                  <double>1</double>
+                  <double>10</double>
+                  <double>13</double>
+                  <double>24</double>
+                </X>
+                <Y>
+                  <double>0</double>
+                  <double>0</double>
+                  <double>1</double>
+                  <double>1</double>
+                </Y>
+              </XYPairs>
+              <Memo>
+                <Name>Memo</Name>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <MemoText><![CDATA[The pattern is assumed to be similar to that of maize (Teixeira et al 2011).
+]]></MemoText>
+              </Memo>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <XProperty>[Phenology].Photoperiod.Value()</XProperty>
+            </LinearInterpolationFunction>
+            <LinearInterpolationFunction>
+              <Name>LagDurationBase</Name>
+              <XYPairs>
+                <Name>XYPairs</Name>
+                <Graph>
+                  <Name>Graph</Name>
+                  <Series>
+                    <Name>Series</Name>
+                    <IncludeInDocumentation>true</IncludeInDocumentation>
+                    <Type>Scatter</Type>
+                    <XAxis>Bottom</XAxis>
+                    <YAxis>Left</YAxis>
+                    <ColourArgb>-65536</ColourArgb>
+                    <FactorIndexToVaryColours>-1</FactorIndexToVaryColours>
+                    <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+                    <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+                    <Marker>None</Marker>
+                    <MarkerSize>Normal</MarkerSize>
+                    <Line>Solid</Line>
+                    <LineThickness>Normal</LineThickness>
+                    <XFieldName>.Simulations.Replacements.FodderBeet.Leaf.CohortParameters.LagDuration.LagDurationBase.XYPairs.X</XFieldName>
+                    <YFieldName>.Simulations.Replacements.FodderBeet.Leaf.CohortParameters.LagDuration.LagDurationBase.XYPairs.Y</YFieldName>
+                    <ShowInLegend>false</ShowInLegend>
+                    <IncludeSeriesNameInLegend>false</IncludeSeriesNameInLegend>
+                    <Cumulative>false</Cumulative>
+                    <CumulativeX>false</CumulativeX>
+                  </Series>
+                  <IncludeInDocumentation>true</IncludeInDocumentation>
+                  <Axis>
+                    <Type>Left</Type>
+                    <Title>Y</Title>
+                    <Inverted>false</Inverted>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <Interval>NaN</Interval>
+                  </Axis>
+                  <Axis>
+                    <Type>Bottom</Type>
+                    <Title>X</Title>
+                    <Inverted>false</Inverted>
+                    <Minimum>NaN</Minimum>
+                    <Maximum>NaN</Maximum>
+                    <Interval>NaN</Interval>
+                  </Axis>
+                  <LegendPosition>BottomRight</LegendPosition>
+                  <DisabledSeries />
+                </Graph>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <X>
+                  <double>1</double>
+                  <double>6</double>
+                  <double>11</double>
+                  <double>15</double>
+                  <double>21</double>
+                  <double>35</double>
+                  <double>45</double>
+                  <double>50</double>
+                </X>
+                <Y>
+                  <double>100</double>
+                  <double>200</double>
+                  <double>300</double>
+                  <double>300</double>
+                  <double>300</double>
+                  <double>200</double>
+                  <double>100</double>
+                  <double>80</double>
+                </Y>
+              </XYPairs>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <XProperty>[Structure].LeafTipsAppeared</XProperty>
+            </LinearInterpolationFunction>
+            <Memo>
+              <Name>Memo</Name>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <MemoText><![CDATA[The pattern is assumed to be similar to that of maize (Teixeira et al 2011).
+]]></MemoText>
+            </Memo>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+          </MultiplyFunction>
           <IncludeInDocumentation>true</IncludeInDocumentation>
         </LeafCohortParameters>
         <MinimumFunction>
@@ -5071,7 +5223,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
         <Constant>
           <Name>DMReallocationFactor</Name>
           <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0</FixedValue>
+          <FixedValue>0.8</FixedValue>
         </Constant>
         <VariableReference>
           <Name>CriticalNConc</Name>
@@ -5122,7 +5274,7 @@ date of Experiment 4 is assumed here.]]></MemoText>
           <IncludeInDocumentation>true</IncludeInDocumentation>
         </Biomass>
         <PartitionFractionDemandFunction>
-          <Name>DMDemandFunction</Name>
+          <Name>DMDemandFunctionPart</Name>
           <LinearInterpolationFunction>
             <Name>PartitionFraction</Name>
             <XYPairs>
@@ -5233,6 +5385,38 @@ date of Experiment 4 is assumed here.]]></MemoText>
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <VariableName>[Petiole].MinimumNConc.Value()</VariableName>
         </VariableReference>
+        <MaximumFunction>
+          <Name>DMDemandFunction</Name>
+          <Constant>
+            <Name>Constant1</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <FixedValue>0</FixedValue>
+          </Constant>
+          <MultiplyFunction>
+            <Name>MultiplyFunction</Name>
+            <Constant>
+              <Name>Constant</Name>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <FixedValue>0.01</FixedValue>
+            </Constant>
+            <SubtractFunction>
+              <Name>SubtractFunction</Name>
+              <VariableReference>
+                <Name>leafwt</Name>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <VariableName>[FodderBeet].Leaf.Live.Wt</VariableName>
+              </VariableReference>
+              <VariableReference>
+                <Name>Petiolewt</Name>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <VariableName>[FodderBeet].Leaf.Petiole.Wt</VariableName>
+              </VariableReference>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+            </SubtractFunction>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+          </MultiplyFunction>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+        </MaximumFunction>
         <IncludeInDocumentation>true</IncludeInDocumentation>
       </GenericOrgan>
       <CompositeBiomass>
@@ -8534,6 +8718,14 @@ The Ear composite biomass object includes the Live and dead pools of all organs 
         <string>OBS</string>
       </SheetNames>
     </ExcelInput>
+    <ExcelInput>
+      <Name>ExcelInput</Name>
+      <IncludeInDocumentation>true</IncludeInDocumentation>
+      <FileName>LeafNo.xlsx</FileName>
+      <SheetNames>
+        <string>LeafNo</string>
+      </SheetNames>
+    </ExcelInput>
     <IncludeInDocumentation>true</IncludeInDocumentation>
     <AutoExport>false</AutoExport>
     <MaximumResultsPerPage>0</MaximumResultsPerPage>
@@ -9204,6 +9396,7 @@ namespace Models
             <string>[FodderBeet].SowingData.Cultivar</string>
             <string>[FodderBeet].Structure.Height</string>
             <string>[FodderBeet].Structure.LeafTipsAppeared</string>
+            <string>[FodderBeet].Leaf.PlantAppearedGreenLeafNo</string>
             <string>[FodderBeet].Structure.MainStemPopn</string>
             <string>[FodderBeet].Structure.TotalStemPopn</string>
             <string>[FodderBeet].Total.N</string>
@@ -9729,40 +9922,6 @@ namespace Models
                 <double>1</double>
               </XF>
             </SoilCrop>
-            <SoilCrop>
-              <Name>FB</Name>
-              <IncludeInDocumentation>true</IncludeInDocumentation>
-              <LL>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-                <double>0.15</double>
-              </LL>
-              <KL>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-                <double>0.06</double>
-              </KL>
-              <XF>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-                <double>1</double>
-              </XF>
-            </SoilCrop>
             <IncludeInDocumentation>true</IncludeInDocumentation>
             <Thickness>
               <double>150</double>
@@ -10142,30 +10301,8 @@ namespace Models
         <Line>None</Line>
         <LineThickness>Normal</LineThickness>
         <TableName>OBS</TableName>
-        <XFieldName>Clock.Today</XFieldName>
+        <XFieldName>Clock.Today()</XFieldName>
         <YFieldName>FodderBeet.AboveGroundLive.Wt</YFieldName>
-        <ShowInLegend>true</ShowInLegend>
-        <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-        <Cumulative>false</Cumulative>
-        <CumulativeX>false</CumulativeX>
-      </Series>
-      <Series>
-        <Name>Pred1</Name>
-        <IncludeInDocumentation>true</IncludeInDocumentation>
-        <Type>Scatter</Type>
-        <XAxis>Bottom</XAxis>
-        <YAxis>Left</YAxis>
-        <ColourArgb>-16777216</ColourArgb>
-        <FactorIndexToVaryColours>1</FactorIndexToVaryColours>
-        <FactorIndexToVaryMarkers>0</FactorIndexToVaryMarkers>
-        <FactorIndexToVaryLines>0</FactorIndexToVaryLines>
-        <Marker>None</Marker>
-        <MarkerSize>Normal</MarkerSize>
-        <Line>Solid</Line>
-        <LineThickness>Normal</LineThickness>
-        <TableName>DailyReport</TableName>
-        <XFieldName>Clock.Today</XFieldName>
-        <YFieldName>Oats.AboveGroundLive.Wt</YFieldName>
         <ShowInLegend>true</ShowInLegend>
         <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
         <Cumulative>false</Cumulative>
@@ -10207,7 +10344,7 @@ namespace Models
         <ColourArgb>-16777216</ColourArgb>
         <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
         <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-        <FactorIndexToVaryLines>0</FactorIndexToVaryLines>
+        <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
         <Marker>None</Marker>
         <MarkerSize>Normal</MarkerSize>
         <Line>Solid</Line>
@@ -10237,28 +10374,6 @@ namespace Models
         <TableName>OBS</TableName>
         <XFieldName>Clock.Today</XFieldName>
         <YFieldName>FodderBeet.Leaf.LAI</YFieldName>
-        <ShowInLegend>true</ShowInLegend>
-        <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
-        <Cumulative>false</Cumulative>
-        <CumulativeX>false</CumulativeX>
-      </Series>
-      <Series>
-        <Name>Pred1</Name>
-        <IncludeInDocumentation>true</IncludeInDocumentation>
-        <Type>Scatter</Type>
-        <XAxis>Bottom</XAxis>
-        <YAxis>Left</YAxis>
-        <ColourArgb>-16777216</ColourArgb>
-        <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
-        <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
-        <FactorIndexToVaryLines>0</FactorIndexToVaryLines>
-        <Marker>None</Marker>
-        <MarkerSize>Normal</MarkerSize>
-        <Line>Solid</Line>
-        <LineThickness>Normal</LineThickness>
-        <TableName>DailyReport</TableName>
-        <XFieldName>Clock.Today</XFieldName>
-        <YFieldName>Oats.Leaf.LAI</YFieldName>
         <ShowInLegend>true</ShowInLegend>
         <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
         <Cumulative>false</Cumulative>
@@ -11136,9 +11251,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -11354,9 +11466,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -11425,9 +11534,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -11470,7 +11576,7 @@ namespace Models
           <LineThickness>Normal</LineThickness>
           <TableName>OBS</TableName>
           <XFieldName>Clock.Today</XFieldName>
-          <YFieldName>FodderBeet.Petiole.Wt</YFieldName>
+          <YFieldName>FodderBeet.Petiole.Live.Wt</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -11492,14 +11598,7 @@ namespace Models
           <Interval>NaN</Interval>
         </Axis>
         <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries>
-          <string>0Nil: Series</string>
-          <string>50Nil: Series</string>
-          <string>300Nil: Series</string>
-          <string>0Nil: Series1</string>
-          <string>50Nil: Series1</string>
-          <string>300Nil: Series1</string>
-        </DisabledSeries>
+        <DisabledSeries />
       </Graph>
       <Graph>
         <Name>Bulb</Name>
@@ -11541,7 +11640,7 @@ namespace Models
           <LineThickness>Normal</LineThickness>
           <TableName>OBS</TableName>
           <XFieldName>Clock.Today</XFieldName>
-          <YFieldName>FodderBeet.StorageRoot.Wt</YFieldName>
+          <YFieldName>FodderBeet.StorageRoot.Live.Wt</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -11610,7 +11709,7 @@ namespace Models
           <LineThickness>Normal</LineThickness>
           <TableName>OBS</TableName>
           <XFieldName>Clock.Today</XFieldName>
-          <YFieldName>FodderBeet.AboveGroundLive.N</YFieldName>
+          <YFieldName>FodderBeet.Leaf.NConc</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -11636,9 +11735,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -11657,9 +11753,31 @@ namespace Models
           <MarkerSize>Normal</MarkerSize>
           <Line>Solid</Line>
           <LineThickness>Normal</LineThickness>
-          <TableName>DailyReport</TableName>
+          <TableName>FRNLReport</TableName>
           <XFieldName>Clock.Today</XFieldName>
-          <YFieldName>FodderBeet.Leaf.Live.NConc</YFieldName>
+          <YFieldName>FodderBeet.Leaf.NConc</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>obs</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>1</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>OBS</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>FodderBeet.Leaf.NConc</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -11681,11 +11799,7 @@ namespace Models
           <Interval>NaN</Interval>
         </Axis>
         <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries>
-          <string>0Nil: Pred</string>
-          <string>50Nil: Pred</string>
-          <string>300Nil: Pred</string>
-        </DisabledSeries>
+        <DisabledSeries />
       </Graph>
       <Graph>
         <Name>FB_Bulb_N</Name>
@@ -11753,9 +11867,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -11824,9 +11935,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -12947,6 +13055,72 @@ namespace Models
         </Axis>
         <LegendPosition>TopLeft</LegendPosition>
         <DisabledSeries />
+      </Graph>
+      <Graph>
+        <Name>GreenNo</Name>
+        <Series>
+          <Name>Pred</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>0</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>-1</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>0</FactorIndexToVaryLines>
+          <Marker>None</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>Solid</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>DailyReport</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>FodderBeet.Leaf.PlantAppearedGreenLeafNo</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <Series>
+          <Name>Obs</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <Type>Scatter</Type>
+          <XAxis>Bottom</XAxis>
+          <YAxis>Left</YAxis>
+          <ColourArgb>-16777216</ColourArgb>
+          <FactorIndexToVaryColours>1</FactorIndexToVaryColours>
+          <FactorIndexToVaryMarkers>0</FactorIndexToVaryMarkers>
+          <FactorIndexToVaryLines>-1</FactorIndexToVaryLines>
+          <Marker>Circle</Marker>
+          <MarkerSize>Normal</MarkerSize>
+          <Line>None</Line>
+          <LineThickness>Normal</LineThickness>
+          <TableName>LeafNo</TableName>
+          <XFieldName>Clock.Today</XFieldName>
+          <YFieldName>FodderBeet.Leaf.PlantAppearedGreenLeafNo</YFieldName>
+          <ShowInLegend>true</ShowInLegend>
+          <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
+          <Cumulative>false</Cumulative>
+          <CumulativeX>false</CumulativeX>
+        </Series>
+        <IncludeInDocumentation>true</IncludeInDocumentation>
+        <Axis>
+          <Type>Bottom</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <Axis>
+          <Type>Left</Type>
+          <Inverted>false</Inverted>
+          <Minimum>NaN</Minimum>
+          <Maximum>NaN</Maximum>
+          <Interval>NaN</Interval>
+        </Axis>
+        <LegendPosition>TopLeft</LegendPosition>
+        <DisabledSeries>
+          <string>50: Pred</string>
+        </DisabledSeries>
       </Graph>
       <IncludeInDocumentation>true</IncludeInDocumentation>
       <ShowPageOfGraphs>true</ShowPageOfGraphs>
