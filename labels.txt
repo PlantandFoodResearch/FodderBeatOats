@@ -1,0 +1,7 @@
+SimulationName	Nit	Irr
+RS_RotationNit0IrrFull	0	Full
+RS_RotationNit50IrrFull	50	Full
+RS_RotationNit300IrrFull	300	Full
+RS_RotationNit0IrrNil	0	Nil
+RS_RotationNit50IrrNil	50	Nil
+RS_RotationNit300IrrNil	300	Nil
