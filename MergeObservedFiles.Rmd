@@ -88,16 +88,16 @@ summary(df)
 ```
 For the git repo in local
 ```{r}
-pathMaster <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"  
+pathLocal <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"  
 
-write.xlsx(df,paste0(pathMaster,"/Observed.xlsx"), sheetName="OBS", row.names = FALSE, showNA=FALSE) 
+write.xlsx(df,paste0(pathLocal,"/Observed.xlsx"), sheetName="OBS", row.names = FALSE, showNA=FALSE) 
 ```
 
 For sharing with others via K drive
 ```{r}
 # FIXME: Find a better solution for sharing this file
-pathFolderWork <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis" # FIXME: Send to powerPlant or need to run APSIM-X there?
+pathDrive_K <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis" # FIXME: Send to powerPlant or need to run APSIM-X there?
 
-write.xlsx(df,paste0(pathFolderWork,"/Observed.xlsx"), sheetName="OBS", row.names = FALSE, showNA=FALSE)
+write.xlsx(df,paste0(pathDrive_K,"/Observed.xlsx"), sheetName="OBS", row.names = FALSE, showNA=FALSE)
 ```
 
