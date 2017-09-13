@@ -10,18 +10,18 @@ library(readxl)
 library(lubridate)
 library(dplyr) # data analysis
 library(ggplot2)
-library(lubridate) # taking care of dates
+#library(lubridate) # taking care of dates
 library(xlsx)
 
 ```
 
 ```{r}
 
-labelNames <- read.table("C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats/labels.txt", header=TRUE)
+labelNames <- read.table("C:\\GithubRepos\\FodderBeetOats\\labels.txt", header=TRUE)
 
-pathMaster <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats" # where master observed data stays
+pathMaster <- "C:\\GithubRepos\\FodderBeetOats" # where master observed data stays
 
-pathObs <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats/Observed" # where child observed data stays
+pathObs <- "C:\\GithubRepos\\FodderBeetOats\\Observed" # where child observed data stays
 ```
 
 ## Which files where found?
@@ -38,7 +38,7 @@ for (i in 1:length(obs.files)) {
 # add a TRYCATCH here that continues the look in the case file does not comply with 
 # sheet name or columns name
   
-this.obs.file <- read_xlsx(paste0(pathObs,"/",obs.files[i]), sheet = "OBS", col_names = TRUE)  
+this.obs.file <- xlsx::read.xlsx(paste0(pathObs,"\\",obs.files[i]), sheetName = "OBS")  
 
 this.obs.file$SimulationName <- factor(this.obs.file$SimulationName)
 this.obs.file$Clock.Today <- ymd(this.obs.file$Clock.Today)
@@ -54,10 +54,17 @@ this.obs.file$Clock.Today <- ymd(this.obs.file$Clock.Today)
   
   # Two compulsory fields are "SimulationName" and "Clock.Today"
   obs.master <- merge(obs.master,this.obs.file, by=c("SimulationName","Clock.Today"), all=TRUE)
-  
+ 
+#
   }
 
 }
+
+# VarsToDelete <- grep("col_names.x","col_names.y", names(obs.master)) # find output variables
+# if (is.null(VarsToDelete) == FALSE)
+#   obs.master <- obs.master %>% select(obs.master,-VarsToDelete)
+
+#obs.master <- subset( obs.master, select = -col_names.y)
 
 summary(obs.master)
 ```
@@ -70,27 +77,30 @@ As single xlsx observed file
 #str(obs.master)
 #str(labelNames)
 
-#df1 <- merge(obs.master,labelNames, by="SimulationName")
+df1 <- merge(obs.master,labelNames, by="SimulationName")
 
-#df2 <- df1 %>%
- df <- obs.master %>%
+df2 <- df1%>%
+# df <- obs.master %>%
   mutate(Clock.Today=as.character(as.Date(Clock.Today, "%Y-%m-%d"))) %>%
  #  mutate(Clock.Today=as.Date(Clock.Today, "%Y-%m-%d")) %>%
   arrange(Clock.Today) %>%
-  as.data.frame()
+  as.data.frame() 
 
 # make NAs blank spaces FIXME: corrups format
 #df[is.na(df)] <- ""
 
 #colnames(df)[2] <- "Clock.Today()"
-
-summary(df)
+#df2 <- subset( df2, select = -col_names.x)
+#df2 <- subset( df2, select = -col_names.y)
+summary(df2)
 ```
 For the git repo in local
 ```{r}
-pathLocal <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"  
+pathLocal <- "C:\\GithubRepos\\FodderBeetOats\\"  
 
-write.xlsx(df,paste0(pathLocal,"/Observed.xlsx"), sheetName="OBS", row.names = FALSE, showNA=FALSE) 
+#write.xlsx(df2,paste0(pathLocal,"Observed.xlsx"), sheetName="OBS", row.names = FALSE, showNA=FALSE) 
+write.csv(df,paste0(pathLocal,"OBS.csv"), na="",row.names = FALSE,quote = FALSE)
+#write.table(df2,paste0(pathLocal,"OBS.txt"), na="",sep = ",",row.names = FALSE,quote = FALSE)
 ```
 
 For sharing with others via K drive
