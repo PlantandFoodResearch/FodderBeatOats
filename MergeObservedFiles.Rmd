@@ -99,7 +99,7 @@ For the git repo in local
 pathLocal <- "C:\\GithubRepos\\FodderBeetOats\\"  
 
 #write.xlsx(df2,paste0(pathLocal,"Observed.xlsx"), sheetName="OBS", row.names = FALSE, showNA=FALSE) 
-write.csv(df,paste0(pathLocal,"OBS.csv"), na="",row.names = FALSE,quote = FALSE)
+write.csv(df2,paste0(pathLocal,"OBS.csv"), na="",row.names = FALSE,quote = FALSE)
 #write.table(df2,paste0(pathLocal,"OBS.txt"), na="",sep = ",",row.names = FALSE,quote = FALSE)
 ```
 
