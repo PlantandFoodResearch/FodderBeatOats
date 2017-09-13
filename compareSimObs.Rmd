@@ -25,10 +25,11 @@ rootPath <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis"
 
 ```{r, echo=FALSE}
 # read simulated data
-simData <- read.csv(paste0(rootPath,"/SimulatedDataWorked.csv"), header = TRUE)
+simData <- read.csv(paste0(rootPath,"/SIM.csv"), header = TRUE)
 str(simData)
 ```
 
+## Tidy up simulated
 
 ```{r, echo=FALSE}
 
@@ -46,7 +47,7 @@ simData_work <- simData %>%
   tidyr::gather("VarName","SimValue",FodderBeet.Phenology.Stage:N_leaching) %>%
   mutate(VarName = factor(VarName)) %>%
   rowwise() %>%
-  mutate(SimValue = ifelse(grepl('.NConc', VarName),SimValue*100,SimValue))
+  mutate(SimValue = ifelse(grepl('.NConc', VarName),SimValue*100,SimValue)) 
 
 summary(simData_work)
 
@@ -59,26 +60,23 @@ unique(simData_work$VarName)
 ```{r, echo=FALSE, include=TRUE}
 str(simData_work)
 ```
-
+## Read observed
 ```{r, echo=FALSE, include=TRUE}
 # read observed data
-obsData <- read.csv(paste0(rootPath,"/ObservedDataWorked_Biomass.csv"), header = TRUE)
-summary(obsData)
-
-# alternative with all data
-pathDrive_K <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis" # FIXME: Send to powerPlant or need to run APSIM-X there?
-obsData <- read.xlsx(paste0(pathDrive_K,"/Observed.xlsx"),sheetName = "OBS", header=TRUE)
+obsData <- read.csv(paste0(rootPath,"/OBS.csv"), header = TRUE)
 
 summary(obsData)
-
 
 ```
 
+## Change data format
+
+- gather variable names pre-merging
 
 ```{r}
 obsData_av <- obsData %>%
   mutate(Clock.Today=ymd(Clock.Today)) %>%
-  tidyr::gather("VarName","ObsValue",Soil.Temperature.1:Soil.SoilWater.SW.8) %>%
+  tidyr::gather("VarName","ObsValue",FodderBeet.Leaf.LAI:Soil.Temperature.7) %>% # FIXME: find automated way of identifying variables and ignore factors when gathering
   mutate(VarName = factor(VarName)) %>%
   rename(SimName=SimulationName) %>%
   # FIXME: Do this in the initial script - correct names of array variables for merging
@@ -86,20 +84,10 @@ obsData_av <- obsData %>%
   mutate(VarName3 = ifelse(grepl('Soil.Temperature', VarName2),paste0(VarName2,"."),as.character(VarName2))) %>%
   mutate(VarName3=factor(VarName3)) %>%
   mutate(VarName = VarName3) %>%
-  dplyr::select(-VarName2, -VarName3) # FIXME: Do it nicely later - the OR syntax did not work
+  dplyr::select(-VarName2, -VarName3) %>% # FIXME: Do it nicely later - the OR syntax did not work
+  dplyr::select(-Nit, -Irr) # FIXME: done to avoid duplication of factor labels during merge - fix it
 
-
-
-unique(obsData_av$VarName)
-
-
-# substrRight <- function(x, n){
-#   substr(x, nchar(x)-n+1, nchar(x))
-# }
-# substrRight(colnames(df)[33],1)
-# 
-# colnames(df) <- gsub("\\.", "", colnames(df))
-
+print(paste0("Found ",length(unique(obsData_av$VarName))," variables"))
 
 ```
 
@@ -107,30 +95,12 @@ unique(obsData_av$VarName)
 str(simData_work)
 ```
 
-```{r}
-# Average observed data to fit APSIM-X
-
-# obsData_av <- obsData %>%
-#   mutate(Nit=factor(Nit)) %>%
-#   mutate(Clock.Today=ymd(Clock.Today)) %>%
-#   dplyr::select(-Plot,-Rep,-Code, -Irr,-Nit) %>%
-#   group_by(Clock.Today,SimulationName) %>%
-#   summarise_all(funs(mean)) %>%
-#   tidyr::gather("VarName","ObsValue",FodderBeet.Leaf.LAI:FodderBeet.AboveGround.Live.Wt) %>%
-#   mutate(VarName = factor(VarName)) %>%
-#   ungroup() %>%
-#   rename(SimName=SimulationName)
-# 
-# summary(obsData_av)
-```
-
-
-
+## Do the merge
 ```{r, echo=FALSE}
 mergedDF <- data.frame() # empty data frame to do stuff
 mergedDF <- merge(simData_work, obsData_av, by=c("Clock.Today","SimName","VarName"))
 
-# FIXME: Merging is not working, many variables left behind
+# FIXME: Merging is not working, many variables were dropped - !!!!! IMPORTANT !!!!!
 
 summary(mergedDF)
 ```
@@ -148,13 +118,13 @@ mergedDF %>%
   na.omit()%>%
   filter(CropOper.Script.CropSown!="Fallow") %>%
   ggplot(aes(x=ObsValue,y=SimValue)) +
-  geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=3) +
+  geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=1) +
   geom_abline(intercept = 0, slope = 1, size=1.5) +
   facet_wrap(CropOper.Script.CropSown~VarName, ncol=2, scales='free')+
   geom_smooth(method = "lm", se = TRUE,  aes(fill = Irr, linetype=Irr, colour=Irr), alpha=0.1) +
   coord_fixed(ratio = 1) +
   ylab("Simulated value") +
-  xlab("Measured value")
+  xlab("Observed value")
 
 
 ```
@@ -252,16 +222,19 @@ statsTable
 
 - Criteria: Are simulated values sensible in relation to real life experiences?
 
-```{r, fig.height = 8, echo=FALSE}
+```{r, fig.height = 15, echo=FALSE}
 
 #unique(simData_work$VarName)
 
+SowDateFodderBeet <- mdy("")
+SowDateOats <- mdy("")
+
 simData_work %>%
-  ungroup()%>%
+  ungroup() %>%
   filter(
            VarName == "Soil.SoilWater.Drainage"|
            VarName == "sum.Soil.SoilNitrogen.MineralisedN."|
-           VarName == "sum.Soil.SoilNitrogen.Denitrification."|
+           VarName == "sum.Soil.SoilNitrogen.Denitrification."| # FiXME: Prepare a list of variables
            VarName == "N_leaching") %>%
   group_by(VarName, Irr, Nit) %>%
   arrange(VarName, Irr, Nit,Clock.Today) %>% 

@@ -31,7 +31,7 @@ GetApsimNGTable <- function(dbLoc, table)
 # load address of db
 ```{r}
 # FIXME: APSIM will run in powerPlant in the future but we have to run locally at the moment
-db.address <- "C:/GitHubRepos/2017_FodderBeetOats/FodderBeatOats"
+db.address <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis/simFiles_FromAPSIM"
 db.name <- "/FodderBeetOats.db"
 db.full.path <- paste0(db.address,db.name)
 ```
@@ -120,7 +120,7 @@ myDb %>%
 ```{r}
 pathFolderWork <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis" # FIXME: Send to powerPlant or need to run APSIM-X there?
 
-write.csv(myDb, paste0(pathFolderWork,"/SimulatedDataWorked.csv"), row.names = FALSE) 
+write.csv(myDb, paste0(pathFolderWork,"/SIM.csv"), row.names = FALSE) 
 ```
 
 ```{r}

@@ -1,42 +1,63 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  word_document: default
+  html_notebook: default
 ---
 
 Inspired by Hamish's beautiful Python script
 
+AIM: 
+- Read pre-processed observed data
+- Save as APSIM-X format
 ```{r}
 library(readxl)
-library(lubridate)
+library(lubridate)# taking care of dates
 library(dplyr) # data analysis
 library(ggplot2)
-#library(lubridate) # taking care of dates
 library(xlsx)
 
 ```
 
+## File locations
+
 ```{r}
+# where child observed data in APSIM-X format is READ from common K: drive
+pathObs <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis/obsFiles_ForAPSIM" 
 
-labelNames <- read.table("C:\\GithubRepos\\FodderBeetOats\\labels.txt", header=TRUE)
+# where master observed data will be SAVED TO
+pathMaster <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis" 
 
-pathMaster <- "C:\\GithubRepos\\FodderBeetOats" # where master observed data stays
-
-pathObs <- "C:\\GithubRepos\\FodderBeetOats\\Observed" # where child observed data stays
 ```
+
+## Define name convention as per APSIM simulations
+
+- lookup take 
+
+```{r}
+labelNames <- read.table(paste0(pathMaster,"/labels.txt"), header=TRUE)
+labelNames
+```
+
+
 
 ## Which files where found?
 ```{r}
 obs.files <- list.files(pathObs,pattern="\\.xlsx$", full.names=FALSE) # if true gets path
-obs.files
+print(obs.files)
 ```
 
+##Read and compile files
+
+- Creates a single observed data file
 
 ```{r}
 
 for (i in 1:length(obs.files)) {
 
-# add a TRYCATCH here that continues the look in the case file does not comply with 
-# sheet name or columns name
+# FIXME: add a TRYCATCH here that continues the loop in the case file does not comply with standard, error message with problem files
+# FIXME: sheet name or columns name
+# FIXME: Set up name convention for files
   
 this.obs.file <- xlsx::read.xlsx(paste0(pathObs,"\\",obs.files[i]), sheetName = "OBS")  
 
@@ -55,59 +76,39 @@ this.obs.file$Clock.Today <- ymd(this.obs.file$Clock.Today)
   # Two compulsory fields are "SimulationName" and "Clock.Today"
   obs.master <- merge(obs.master,this.obs.file, by=c("SimulationName","Clock.Today"), all=TRUE)
  
-#
   }
 
 }
 
-# VarsToDelete <- grep("col_names.x","col_names.y", names(obs.master)) # find output variables
-# if (is.null(VarsToDelete) == FALSE)
-#   obs.master <- obs.master %>% select(obs.master,-VarsToDelete)
-
-#obs.master <- subset( obs.master, select = -col_names.y)
-
 summary(obs.master)
 ```
+
+```{r}
+str(obs.master)
+```
+
 ## Save
 
-As single xlsx observed file
+- As single  observed file
 
 ```{r}
 
-#str(obs.master)
-#str(labelNames)
-
 df1 <- merge(obs.master,labelNames, by="SimulationName")
 
-df2 <- df1%>%
-# df <- obs.master %>%
+# tidy up data
+df2 <- df1 %>%
   mutate(Clock.Today=as.character(as.Date(Clock.Today, "%Y-%m-%d"))) %>%
- #  mutate(Clock.Today=as.Date(Clock.Today, "%Y-%m-%d")) %>%
   arrange(Clock.Today) %>%
   as.data.frame() 
 
-# make NAs blank spaces FIXME: corrups format
-#df[is.na(df)] <- ""
-
-#colnames(df)[2] <- "Clock.Today()"
-#df2 <- subset( df2, select = -col_names.x)
-#df2 <- subset( df2, select = -col_names.y)
 summary(df2)
 ```
 For the git repo in local
 ```{r}
-pathLocal <- "C:\\GithubRepos\\FodderBeetOats\\"  
-
-#write.xlsx(df2,paste0(pathLocal,"Observed.xlsx"), sheetName="OBS", row.names = FALSE, showNA=FALSE) 
-write.csv(df2,paste0(pathLocal,"OBS.csv"), na="",row.names = FALSE,quote = FALSE)
-#write.table(df2,paste0(pathLocal,"OBS.txt"), na="",sep = ",",row.names = FALSE,quote = FALSE)
+# save in common K drive folder
+write.csv(df2,paste0(pathMaster,"/OBS.csv"), na ="", row.names = FALSE, quote = FALSE)
+write.table(df2,paste0(pathMaster,"/OBS.obs"), row.names = FALSE, quote = FALSE, na ="\t")
+print(paste0("Save file to: ",pathMaster))
 ```
 
-For sharing with others via K drive
-```{r}
-# FIXME: Find a better solution for sharing this file
-pathDrive_K <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis" # FIXME: Send to powerPlant or need to run APSIM-X there?
-
-write.xlsx(df,paste0(pathDrive_K,"/Observed.xlsx"), sheetName="OBS", row.names = FALSE, showNA=FALSE)
-```
 
