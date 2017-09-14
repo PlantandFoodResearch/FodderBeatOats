@@ -227,12 +227,27 @@ statsTable %>%
 
 - Criteria: Are simulated values sensible in relation to real life experiences?
 
+Get weather data
+```{r}
+#Set paths
+metFolder <- "C:\\GitHubRepos\\2017_FodderBeetOats\\FodderBeatOats\\"
+
+# Get file
+metFile <- read.table(paste0(metFolder,"lincolnPred.met"), skip = 6, header = TRUE, comment.char = "(", blank.lines.skip = TRUE)
+summary(metFile)
+
+# FIXME: Construct a Clock.Today (i.e. Date) column to allow adding the weather data to sensibility analysis (e.g. rainfall events)
+```
+
+
+
+
 ```{r, fig.height = 15, echo=FALSE}
 
 #unique(simData_work$VarName)
 
-SowDateFodderBeet <- mdy("")
-SowDateOats <- mdy("")
+SowDateFodderBeet <- ymd("2016-10-10")
+SowDateOats <- ymd("2017-07-05")
 
 simData_work %>%
   ungroup() %>%
@@ -245,8 +260,10 @@ simData_work %>%
   arrange(VarName, Irr, Nit,Clock.Today) %>% 
   mutate(SimValue=cumsum(SimValue)) %>%
   ggplot(aes(x=Clock.Today,y=SimValue)) +
-  geom_line(alpha=0.8, aes(colour=Irr,linetype=Nit)) +
-  facet_grid(VarName~.,  scales='free')
+  geom_line(alpha=1.0, aes(colour=Irr,linetype=Nit)) +
+  facet_grid(VarName~.,  scales='free') +
+  geom_vline(xintercept = as.numeric(SowDateFodderBeet), linetype=2) +
+  geom_vline(xintercept = as.numeric(SowDateOats), linetype=2)
 ```
 
 
