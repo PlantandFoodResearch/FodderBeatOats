@@ -1,6 +1,8 @@
 ---
 title: "FRNL CS 2.10"
-output: html_notebook
+output:
+  word_document: default
+  html_notebook: default
 ---
 
 # Evaluation of fodder beet + catch crop rotation (FRNL)
@@ -208,13 +210,16 @@ There's quite a bit o duplication in these (e.g. pBias and SB are very similar) 
 
 ```{r, fig.width=12, results='asis',results='asis', echo=FALSE}
 
+# FIXME: classify vvariables by type (e.g. biomass, N etc..) and separate stats and maps accordingly
+
 statsTable <- mergedDF %>%
   na.omit() %>%
   group_by(VarName) %>%
   doStats() %>%
   mutate(Accuracy=ifelse(r_rmse<25,"good","LOW")) 
 
-statsTable
+statsTable %>%
+  kable(digits=1)
 
 ```
 

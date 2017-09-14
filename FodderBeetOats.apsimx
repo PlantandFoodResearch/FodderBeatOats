@@ -8710,27 +8710,11 @@ The Ear composite biomass object includes the Live and dead pools of all organs 
   </Replacements>
   <DataStore>
     <Name>DataStore</Name>
-    <ExcelInput>
-      <Name>Observed</Name>
-      <IncludeInDocumentation>true</IncludeInDocumentation>
-      <FileName>Observed.xlsx</FileName>
-      <SheetNames>
-        <string>OBS</string>
-      </SheetNames>
-    </ExcelInput>
-    <ExcelInput>
-      <Name>ExcelInput</Name>
-      <IncludeInDocumentation>true</IncludeInDocumentation>
-      <FileName>LeafNo.xlsx</FileName>
-      <SheetNames>
-        <string>LeafNo</string>
-      </SheetNames>
-    </ExcelInput>
     <Input>
-      <Name>Input</Name>
+      <Name>OBS</Name>
       <IncludeInDocumentation>true</IncludeInDocumentation>
-      <ErrorMessage>The process cannot access the file 'C:\GithubRepos\FodderBeetOats\OBS.csv' because it is being used by another process.</ErrorMessage>
-      <FileName>OBS.csv</FileName>
+      <ErrorMessage>The specified file does not exist.</ErrorMessage>
+      <FileName>K:\Rainshelter\Fodderbeet 2016-2017\Analysis\OBS.csv</FileName>
     </Input>
     <IncludeInDocumentation>true</IncludeInDocumentation>
     <AutoExport>false</AutoExport>
@@ -12108,7 +12092,7 @@ namespace Models
           <LineThickness>Normal</LineThickness>
           <TableName>DailyReport</TableName>
           <XFieldName>Clock.Today</XFieldName>
-          <YFieldName>FodderBeet.StorageRoot.N</YFieldName>
+          <YFieldName>FodderBeet.StorageRoot.NConc</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -12198,7 +12182,7 @@ namespace Models
           <LineThickness>Normal</LineThickness>
           <TableName>OBS</TableName>
           <XFieldName>Clock.Today</XFieldName>
-          <YFieldName>FodderBeet.Petiole.Live.N</YFieldName>
+          <YFieldName>FodderBeet.Petiole.Nconc</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>

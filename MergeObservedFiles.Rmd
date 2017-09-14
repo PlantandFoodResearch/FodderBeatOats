@@ -64,6 +64,9 @@ this.obs.file <- xlsx::read.xlsx(paste0(pathObs,"\\",obs.files[i]), sheetName = 
 this.obs.file$SimulationName <- factor(this.obs.file$SimulationName)
 this.obs.file$Clock.Today <- ymd(this.obs.file$Clock.Today)
 
+
+#ymd_hms
+
 #print(head(this.obs.file))
 
   if(i==1) {
@@ -97,7 +100,7 @@ df1 <- merge(obs.master,labelNames, by="SimulationName")
 
 # tidy up data
 df2 <- df1 %>%
-  mutate(Clock.Today=as.character(as.Date(Clock.Today, "%Y-%m-%d"))) %>%
+  mutate(Clock.Today=as.character(as.Date(Clock.Today, "%Y-%m-%d"))) %>% # FIXME: problems in data format
   arrange(Clock.Today) %>%
   as.data.frame() 
 
@@ -107,7 +110,6 @@ For the git repo in local
 ```{r}
 # save in common K drive folder
 write.csv(df2,paste0(pathMaster,"/OBS.csv"), na ="", row.names = FALSE, quote = FALSE)
-write.table(df2,paste0(pathMaster,"/OBS.obs"), row.names = FALSE, quote = FALSE, na ="\t")
 print(paste0("Save file to: ",pathMaster))
 ```
 
