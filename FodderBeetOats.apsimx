@@ -8756,8 +8756,8 @@ The Ear composite biomass object includes the Live and dead pools of all organs 
     <Input>
       <Name>OBS</Name>
       <IncludeInDocumentation>true</IncludeInDocumentation>
-      <ErrorMessage>The process cannot access the file 'C:\GithubRepos\FodderBeetOats\OBS.csv' because it is being used by another process.</ErrorMessage>
-      <FileName>OBS.csv</FileName>
+      <ErrorMessage>The specified file does not exist.</ErrorMessage>
+      <FileName>K:\Rainshelter\Fodderbeet 2016-2017\Analysis\OBS.csv</FileName>
     </Input>
     <IncludeInDocumentation>true</IncludeInDocumentation>
     <AutoExport>false</AutoExport>
