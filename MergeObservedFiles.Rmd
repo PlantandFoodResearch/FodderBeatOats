@@ -88,6 +88,7 @@ summary(obs.master)
 
 ```{r}
 str(obs.master)
+summary(obs.master)
 ```
 
 ## Save
