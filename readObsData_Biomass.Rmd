@@ -1,0 +1,139 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+##AIM:
+Reads raw or pre-processes raw observed data and creates two outputs:
+
+(i) Observed data for report and analysis (i.e. all variables listed in a "Variables" column)
+(ii) An observed file for APSIM-X format (i.e. each variable is a column)
+
+Change units to match APSIM-X units of each variable
+
+```{r, warning = FALSE}
+library(lubridate)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(readxl)
+library(xlsx)
+```
+
+```{r}
+
+# dir address
+
+pathFolderRaw <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis/obsFiles_PreProc" # where to read from
+print(paste0("Read data from: ", pathFolderRaw))
+
+nameAddressOfFile <- paste0(pathFolderRaw, "/DataFrame_FodderBeetBiomass.xlsx")
+
+
+
+```
+
+```{r}
+pathFolderWork <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis/obsFiles_ForAPSIM"  # where to save to
+print(paste0("Save data to: ", pathFolderWork))
+```
+```{r}
+obsDataRaw <- read_xlsx(nameAddressOfFile, sheet = "DataFrame", col_names = TRUE)
+ 
+summary(obsDataRaw)
+```
+
+
+## Tidy up data
+```{r}
+
+# Biomass units from kg/ha to g/m2
+df_temp <-  obsDataRaw %>%
+  tidyr::gather("VarName","VarValue", FodderBeet.Leaf.Live.Wt:FodderBeet.Leaf.LAI) %>% 
+  mutate(VarName=factor(VarName)) %>%
+  mutate(VarValue = ifelse(grepl('.Wt', VarName),VarValue/10,VarValue)) %>% # 
+  tidyr::spread(VarName,VarValue)
+
+ # FIXME: get name right here
+ df_temp$FodderBeet.AboveGround.Live.Wt <- df_temp %>% select(ends_with(".Live.Wt")) %>% rowSums()
+
+# dates
+obsData <- df_temp %>% mutate(Clock.Today = ymd(Clock.Today)) 
+ 
+
+# Sort out factors
+factorindex <- c("Nit","Irr","Plot","Rep", "Code")
+obsData[,factorindex] <- as.data.frame(sapply(obsData[,factorindex],as.factor))
+#work well if using index <- c(2:3,4,5...)
+```
+
+## Check the data
+
+```{r}
+str(obsData)
+```
+
+
+```{r}
+head(obsData)
+```
+
+```{r}
+summary(obsData)
+```
+Graph
+
+```{r, fig.width = 12}
+obsData %>%
+  ggplot(aes(x=Clock.Today,y=(FodderBeet.Leaf.Live.Wt),colour=Irr, linetype=Nit,shape=Nit)) +
+  geom_point(size=2,alpha=0.5) +
+  geom_line() +
+  ylab("g/m2") +
+  facet_grid(.~Rep)
+```
+
+```{r}
+obsData %>%
+  ggplot(aes(x=Clock.Today,y=(FodderBeet.Leaf.NConc),colour=Irr, linetype=Nit,shape=Nit)) +
+  geom_point(size=2,alpha=0.5) +
+  geom_line() +
+  ylab("%") +
+  facet_grid(.~Rep)
+```
+## Compare N% and biomass in a organ
+```{r}
+obsData %>%
+  ggplot(aes(x=FodderBeet.Leaf.Live.Wt,y=FodderBeet.Leaf.NConc,colour=Irr, shape=Nit)) +
+  geom_point(size=2,alpha=0.5) +
+#  geom_smooth(aes(linetype=Nit)) +
+  ylab("N%") +
+  xlab("g DM/m2") +
+  facet_grid(.~Rep)
+```
+
+## Save observed data
+
+```{r}
+head(obsData)
+
+```
+
+- For APSIM-X
+```{r}
+# FIXME: Rob to add variables and fix units as needed 
+df <- obsData %>%
+ # mutate(Irr=factor(Irr),Nit=factor(Nit)) %>%
+  mutate(Clock.Today=as.Date(ymd(Clock.Today))) %>%
+  mutate(Clock.Today=as.character(as.Date(Clock.Today, "%Y-%m-%d"))) %>%
+  dplyr::select(-Plot,-Rep,-Nit,-Irr,-Code) %>%
+  group_by(Clock.Today,SimulationName) %>%
+  summarise_all(funs(mean)) %>%
+  mutate(SimulationName = factor(SimulationName))%>%
+  ungroup()%>%
+  as.data.frame()
+
+summary(df)
+
+write.xlsx(df,paste0(pathFolderWork,"/OBS_Biomass.xlsx"), sheetName="OBS", row.names = FALSE) 
+```
+
+
