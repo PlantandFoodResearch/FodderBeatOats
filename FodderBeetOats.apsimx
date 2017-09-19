@@ -11255,7 +11255,7 @@ namespace Models
           <LineThickness>Normal</LineThickness>
           <TableName>OBS</TableName>
           <XFieldName>Clock.Today</XFieldName>
-          <YFieldName>FodderBeet.Leaf.Live.N</YFieldName>
+          <YFieldName>FodderBeet.Leaf.N</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -11319,7 +11319,7 @@ namespace Models
           <LineThickness>Normal</LineThickness>
           <TableName>OBS</TableName>
           <XFieldName>Clock.Today</XFieldName>
-          <YFieldName>FodderBeet.StorageRoot.Live.N</YFieldName>
+          <YFieldName>FodderBeet.Leaf.N</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -11387,7 +11387,7 @@ namespace Models
           <LineThickness>Normal</LineThickness>
           <TableName>OBS</TableName>
           <XFieldName>Clock.Today</XFieldName>
-          <YFieldName>FodderBeet.Petiole.Live.N</YFieldName>
+          <YFieldName>FodderBeet.Petiole.N</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>

@@ -75,7 +75,11 @@ summary(df_temp1)
 ```{r}
  # FIXME: get name right here
  df_temp1$FodderBeet.AboveGround.Live.Wt <- df_temp1 %>% select(ends_with(".Live.Wt")) %>% rowSums()
-
+ df_temp1$FodderBeet.Leaf.N <- df_temp1$FodderBeet.Leaf.Live.Wt*df_temp1$FodderBeet.Leaf.NConc
+ df_temp1$FodderBeet.Petiole.N <- df_temp1$FodderBeet.Petiole.Live.Wt*df_temp1$FodderBeet.Petiole.NConc
+ df_temp1$FodderBeet.StorageRoot.N <- df_temp1$FodderBeet.StorageRoot.Live.Wt*df_temp1$FodderBeet.Storage.NConc
+ 
+ 
 # dates
 obsData <- df_temp1 %>% mutate(Clock.Today = ymd(Clock.Today)) 
  
