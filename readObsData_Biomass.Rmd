@@ -54,29 +54,36 @@ summary(obsDataRaw)
 
 
 # Biomass units from kg/ha to g/m2
-df_temp <-  obsDataRaw %>%
+df_temp1 <-  obsDataRaw %>%
   tidyr::gather("VarName","VarValue", FodderBeet.Leaf.Live.Wt:FodderBeet.Leaf.LAI) %>% 
   mutate(VarName=factor(VarName)) %>%
   mutate(VarValue = ifelse(grepl('.Wt', VarName),VarValue/10,VarValue)) %>% # 
   tidyr::spread(VarName,VarValue)
 
 # conc units from % to 0-1
-df_temp2 <-  df_temp %>%
-  tidyr::gather("VarName","VarValue", FodderBeet.Leaf.Live.Wt:FodderBeet.Leaf.LAI) %>% 
-  mutate(VarName=factor(VarName)) %>%
-  mutate(VarValue = ifelse(grepl('.NConc', VarName), VarValue/100,VarValue)) %>% # 
-  tidyr::spread(VarName,VarValue)
+#df_temp2 <-  df_temp %>%
+ # tidyr::gather("VarName","VarValue", FodderBeet.Leaf.Live.Wt:FodderBeet.Leaf.LAI) %>% 
+#  mutate(VarName=factor(VarName)) %>%
+ # mutate(VarValue = ifelse(grepl('.NConc', VarName), VarValue/100,VarValue)) %>% # 
+#  tidyr::spread(VarName,VarValue)
 
+ df_temp1$FodderBeet.Leaf.NConc <- df_temp1$FodderBeet.Leaf.NConc/100
+ df_temp1$FodderBeet.Petiole.NConc <-df_temp1$FodderBeet.Petiole.NConc/100
+ df_temp1$FodderBeet.StorageRoot.NConc <- df_temp1$FodderBeet.StorageRoot.NConc/100
+ df_temp1$FodderBeet.Senesced.NConc <- df_temp1$FodderBeet.Senesced.NConc/100
+
+
+summary(df_temp1)
  # FIXME: get name right here
- df_temp2$FodderBeet.AboveGround.Live.Wt <- df_temp2 %>% select(ends_with(".Live.Wt")) %>% rowSums()
+ df_temp1$FodderBeet.AboveGround.Live.Wt <- df_temp1 %>% select(ends_with(".Live.Wt")) %>% rowSums()
 
- df_temp2$FodderBeet.Leaf.Live.N <- df_temp2$FodderBeet.Leaf.Live.Wt*df_temp$FodderBeet.Leaf.NConc
- df_temp2$FodderBeet.Petiole.Live.N <- df_temp2$FodderBeet.Petiole.Live.Wt*df_temp$FodderBeet.Petiole.NConc
- df_temp2$FodderBeet.StorageRoot.Live.N <- df_temp2$FodderBeet.StorageRoot.Live.Wt*df_temp$FodderBeet.StorageRoot.NConc
+ df_temp1$FodderBeet.Leaf.Live.N <- df_temp1$FodderBeet.Leaf.Live.Wt*df_temp$FodderBeet.Leaf.NConc
+ df_temp1$FodderBeet.Petiole.Live.N <- df_temp1$FodderBeet.Petiole.Live.Wt*df_temp$FodderBeet.Petiole.NConc
+ df_temp1$FodderBeet.StorageRoot.Live.N <- df_temp1$FodderBeet.StorageRoot.Live.Wt*df_temp$FodderBeet.StorageRoot.NConc
 
  
 # dates
-obsData <- df_temp2 %>% mutate(Clock.Today = ymd(Clock.Today)) 
+obsData <- df_temp1 %>% mutate(Clock.Today = ymd(Clock.Today)) 
  
 
 # Sort out factors
