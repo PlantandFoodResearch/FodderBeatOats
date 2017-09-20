@@ -4150,14 +4150,14 @@ date of Experiment 4 is assumed here.]]></MemoText>
                 <double>45</double>
               </X>
               <Y>
-                <double>0.1</double>
+                <double>1</double>
                 <double>1</double>
                 <double>1</double>
                 <double>0.1</double>
               </Y>
             </XYPairs>
             <IncludeInDocumentation>true</IncludeInDocumentation>
-            <MaximumTemperatureWeighting>0.75</MaximumTemperatureWeighting>
+            <MaximumTemperatureWeighting>1</MaximumTemperatureWeighting>
           </WeightedTemperatureFunction>
           <LinearInterpolationFunction>
             <Name>FW</Name>
@@ -4555,12 +4555,12 @@ date of Experiment 4 is assumed here.]]></MemoText>
           <Constant>
             <Name>MinimumNConc</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FixedValue>0.025</FixedValue>
+            <FixedValue>0.02</FixedValue>
           </Constant>
           <Constant>
             <Name>CriticalNConc</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FixedValue>0.025</FixedValue>
+            <FixedValue>0.03</FixedValue>
           </Constant>
           <Constant>
             <Name>MaximumNConc</Name>
@@ -4629,23 +4629,13 @@ date of Experiment 4 is assumed here.]]></MemoText>
             <FixedValue>0</FixedValue>
           </Constant>
           <Constant>
-            <Name>DroughtInducedSenAcceleration</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FixedValue>1</FixedValue>
-          </Constant>
-          <Constant>
-            <Name>CellDivisionStress</Name>
+            <Name>CellDivisionStressConst</Name>
             <IncludeInDocumentation>true</IncludeInDocumentation>
             <FixedValue>1</FixedValue>
             <Units>0-1</Units>
           </Constant>
-          <Constant>
-            <Name>DroughtInducedLagAcceleration</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FixedValue>1</FixedValue>
-          </Constant>
           <LinearInterpolationFunction>
-            <Name>CellDivisionStressNconc</Name>
+            <Name>CellDivisionStress</Name>
             <XYPairs>
               <Name>XYPairs</Name>
               <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -4770,6 +4760,76 @@ date of Experiment 4 is assumed here.]]></MemoText>
             </Memo>
             <IncludeInDocumentation>true</IncludeInDocumentation>
           </MultiplyFunction>
+          <AddFunction>
+            <Name>DroughtInducedLagAcceleration</Name>
+            <Constant>
+              <Name>One</Name>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <FixedValue>1</FixedValue>
+            </Constant>
+            <MultiplyFunction>
+              <Name>Stress</Name>
+              <Constant>
+                <Name>StressResponseCoefficient</Name>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <FixedValue>1</FixedValue>
+              </Constant>
+              <LinearInterpolationFunction>
+                <Name>StressFactor</Name>
+                <XYPairs>
+                  <Name>XYPairs</Name>
+                  <IncludeInDocumentation>true</IncludeInDocumentation>
+                  <X>
+                    <double>0</double>
+                    <double>0.5</double>
+                  </X>
+                  <Y>
+                    <double>0.5</double>
+                    <double>0</double>
+                  </Y>
+                </XYPairs>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <XProperty>[FodderBeet].WaterSupplyDemandRatio</XProperty>
+              </LinearInterpolationFunction>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+            </MultiplyFunction>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+          </AddFunction>
+          <AddFunction>
+            <Name>DroughtInducedSenAcceleration</Name>
+            <Constant>
+              <Name>One</Name>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <FixedValue>1</FixedValue>
+            </Constant>
+            <MultiplyFunction>
+              <Name>Stress</Name>
+              <Constant>
+                <Name>StressResponseCoefficient</Name>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <FixedValue>1</FixedValue>
+              </Constant>
+              <LinearInterpolationFunction>
+                <Name>StressFactor</Name>
+                <XYPairs>
+                  <Name>XYPairs</Name>
+                  <IncludeInDocumentation>true</IncludeInDocumentation>
+                  <X>
+                    <double>0</double>
+                    <double>0.5</double>
+                  </X>
+                  <Y>
+                    <double>0.5</double>
+                    <double>0</double>
+                  </Y>
+                </XYPairs>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <XProperty>[FodderBeet].WaterSupplyDemandRatio</XProperty>
+              </LinearInterpolationFunction>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+            </MultiplyFunction>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+          </AddFunction>
           <IncludeInDocumentation>true</IncludeInDocumentation>
         </LeafCohortParameters>
         <MinimumFunction>
@@ -5115,6 +5175,193 @@ date of Experiment 4 is assumed here.]]></MemoText>
         <ZoneInitialDM />
       </Root>
       <GenericOrgan>
+        <Name>Petiole</Name>
+        <Constant>
+          <Name>StructuralFraction</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.95</FixedValue>
+        </Constant>
+        <Constant>
+          <Name>MaximumNConc</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.04</FixedValue>
+        </Constant>
+        <Constant>
+          <Name>MinimumNConc</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.01</FixedValue>
+        </Constant>
+        <PhaseBasedSwitch>
+          <Name>NitrogenDemandSwitch</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <Start>Germination</Start>
+          <End>Maturity</End>
+        </PhaseBasedSwitch>
+        <Constant>
+          <Name>NRetranslocationFactor</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.1</FixedValue>
+        </Constant>
+        <Constant>
+          <Name>DMRetranslocationFactor</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.05</FixedValue>
+        </Constant>
+        <Biomass>
+          <Name>Live</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+        </Biomass>
+        <Biomass>
+          <Name>Dead</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+        </Biomass>
+        <MaximumFunction>
+          <Name>DMDemandFunction</Name>
+          <Constant>
+            <Name>Constant1</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <FixedValue>0</FixedValue>
+          </Constant>
+          <MultiplyFunction>
+            <Name>MultiplyFunction</Name>
+            <Constant>
+              <Name>Constant</Name>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <FixedValue>0.01</FixedValue>
+            </Constant>
+            <SubtractFunction>
+              <Name>SubtractFunction</Name>
+              <VariableReference>
+                <Name>leafwt</Name>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <VariableName>[FodderBeet].Leaf.Live.Wt</VariableName>
+              </VariableReference>
+              <VariableReference>
+                <Name>Petiolewt</Name>
+                <IncludeInDocumentation>true</IncludeInDocumentation>
+                <VariableName>[FodderBeet].Leaf.Petiole.Wt</VariableName>
+              </VariableReference>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+            </SubtractFunction>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+          </MultiplyFunction>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+        </MaximumFunction>
+        <PartitionFractionDemandFunction>
+          <Name>DMDemandFunctionPart</Name>
+          <LinearInterpolationFunction>
+            <Name>PartitionFraction</Name>
+            <XYPairs>
+              <Name>XYPairs</Name>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <X>
+                <double>1</double>
+                <double>6</double>
+                <double>15</double>
+                <double>30</double>
+                <double>51</double>
+              </X>
+              <Y>
+                <double>0.1</double>
+                <double>0.15</double>
+                <double>0.24</double>
+                <double>0.15</double>
+                <double>0.1</double>
+              </Y>
+            </XYPairs>
+            <Memo>
+              <Name>Memo</Name>
+              <IncludeInDocumentation>true</IncludeInDocumentation>
+              <MemoText><![CDATA[Allocation determined by node number - partitioning coefficients have been determined using the sowing date October data]]></MemoText>
+            </Memo>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <XProperty>[Structure].LeafTipsAppeared</XProperty>
+          </LinearInterpolationFunction>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+        </PartitionFractionDemandFunction>
+        <VariableReference>
+          <Name>SenescenceRate</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <VariableName>[Leaf].FractionDied</VariableName>
+        </VariableReference>
+        <Constant>
+          <Name>DMReallocationFactor</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.8</FixedValue>
+        </Constant>
+        <Constant>
+          <Name>NReallocationFactor</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0.94</FixedValue>
+        </Constant>
+        <Constant>
+          <Name>InitialWtFunction</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0</FixedValue>
+          <Units>g/m^2</Units>
+        </Constant>
+        <Constant>
+          <Name>DetachmentRateFunction</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0</FixedValue>
+          <Units>/d</Units>
+        </Constant>
+        <Constant>
+          <Name>MaintenanceRespirationFunction</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>0</FixedValue>
+          <Units>0-1</Units>
+        </Constant>
+        <Constant>
+          <Name>DMConversionEfficiency</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <FixedValue>1</FixedValue>
+          <Units>0-1</Units>
+        </Constant>
+        <BiomassRemoval>
+          <Name>BiomassRemovalDefaults</Name>
+          <OrganBiomassRemovalType>
+            <Name>Harvest</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <FractionLiveToRemove>0.5</FractionLiveToRemove>
+            <FractionDeadToRemove>0</FractionDeadToRemove>
+            <FractionLiveToResidue>0.1</FractionLiveToResidue>
+            <FractionDeadToResidue>0</FractionDeadToResidue>
+          </OrganBiomassRemovalType>
+          <OrganBiomassRemovalType>
+            <Name>Cut</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <FractionLiveToRemove>0.8</FractionLiveToRemove>
+            <FractionDeadToRemove>0</FractionDeadToRemove>
+            <FractionLiveToResidue>0</FractionLiveToResidue>
+            <FractionDeadToResidue>0</FractionDeadToResidue>
+          </OrganBiomassRemovalType>
+          <OrganBiomassRemovalType>
+            <Name>Prune</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <FractionLiveToRemove>0</FractionLiveToRemove>
+            <FractionDeadToRemove>0</FractionDeadToRemove>
+            <FractionLiveToResidue>0.6</FractionLiveToResidue>
+            <FractionDeadToResidue>0</FractionDeadToResidue>
+          </OrganBiomassRemovalType>
+          <OrganBiomassRemovalType>
+            <Name>Graze</Name>
+            <IncludeInDocumentation>true</IncludeInDocumentation>
+            <FractionLiveToRemove>0.6</FractionLiveToRemove>
+            <FractionDeadToRemove>0</FractionDeadToRemove>
+            <FractionLiveToResidue>0.2</FractionLiveToResidue>
+            <FractionDeadToResidue>0</FractionDeadToResidue>
+          </OrganBiomassRemovalType>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+        </BiomassRemoval>
+        <VariableReference>
+          <Name>CriticalNConc</Name>
+          <IncludeInDocumentation>true</IncludeInDocumentation>
+          <VariableName>[Petiole].MinimumNConc.Value()</VariableName>
+        </VariableReference>
+        <IncludeInDocumentation>true</IncludeInDocumentation>
+      </GenericOrgan>
+      <GenericOrgan>
         <Name>StorageRoot</Name>
         <Constant>
           <Name>StructuralFraction</Name>
@@ -5272,193 +5519,6 @@ date of Experiment 4 is assumed here.]]></MemoText>
           <Name>CriticalNConc</Name>
           <IncludeInDocumentation>true</IncludeInDocumentation>
           <VariableName>[StorageRoot].MinimumNConc.Value()</VariableName>
-        </VariableReference>
-        <IncludeInDocumentation>true</IncludeInDocumentation>
-      </GenericOrgan>
-      <GenericOrgan>
-        <Name>Petiole</Name>
-        <Constant>
-          <Name>StructuralFraction</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.95</FixedValue>
-        </Constant>
-        <Constant>
-          <Name>MaximumNConc</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.04</FixedValue>
-        </Constant>
-        <Constant>
-          <Name>MinimumNConc</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.01</FixedValue>
-        </Constant>
-        <PhaseBasedSwitch>
-          <Name>NitrogenDemandSwitch</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <Start>Germination</Start>
-          <End>Maturity</End>
-        </PhaseBasedSwitch>
-        <Constant>
-          <Name>NRetranslocationFactor</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.1</FixedValue>
-        </Constant>
-        <Constant>
-          <Name>DMRetranslocationFactor</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.05</FixedValue>
-        </Constant>
-        <Biomass>
-          <Name>Live</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-        </Biomass>
-        <Biomass>
-          <Name>Dead</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-        </Biomass>
-        <MaximumFunction>
-          <Name>DMDemandFunction</Name>
-          <Constant>
-            <Name>Constant1</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FixedValue>0</FixedValue>
-          </Constant>
-          <MultiplyFunction>
-            <Name>MultiplyFunction</Name>
-            <Constant>
-              <Name>Constant</Name>
-              <IncludeInDocumentation>true</IncludeInDocumentation>
-              <FixedValue>0.015</FixedValue>
-            </Constant>
-            <SubtractFunction>
-              <Name>SubtractFunction</Name>
-              <VariableReference>
-                <Name>leafwt</Name>
-                <IncludeInDocumentation>true</IncludeInDocumentation>
-                <VariableName>[FodderBeet].Leaf.Live.Wt</VariableName>
-              </VariableReference>
-              <VariableReference>
-                <Name>Petiolewt</Name>
-                <IncludeInDocumentation>true</IncludeInDocumentation>
-                <VariableName>[FodderBeet].Leaf.Petiole.Wt</VariableName>
-              </VariableReference>
-              <IncludeInDocumentation>true</IncludeInDocumentation>
-            </SubtractFunction>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-          </MultiplyFunction>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-        </MaximumFunction>
-        <PartitionFractionDemandFunction>
-          <Name>DMDemandFunctionPart</Name>
-          <LinearInterpolationFunction>
-            <Name>PartitionFraction</Name>
-            <XYPairs>
-              <Name>XYPairs</Name>
-              <IncludeInDocumentation>true</IncludeInDocumentation>
-              <X>
-                <double>1</double>
-                <double>6</double>
-                <double>15</double>
-                <double>30</double>
-                <double>51</double>
-              </X>
-              <Y>
-                <double>0.1</double>
-                <double>0.15</double>
-                <double>0.24</double>
-                <double>0.15</double>
-                <double>0.1</double>
-              </Y>
-            </XYPairs>
-            <Memo>
-              <Name>Memo</Name>
-              <IncludeInDocumentation>true</IncludeInDocumentation>
-              <MemoText><![CDATA[Allocation determined by node number - partitioning coefficients have been determined using the sowing date October data]]></MemoText>
-            </Memo>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <XProperty>[Structure].LeafTipsAppeared</XProperty>
-          </LinearInterpolationFunction>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-        </PartitionFractionDemandFunction>
-        <VariableReference>
-          <Name>SenescenceRate</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <VariableName>[Leaf].FractionDied</VariableName>
-        </VariableReference>
-        <Constant>
-          <Name>DMReallocationFactor</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.8</FixedValue>
-        </Constant>
-        <Constant>
-          <Name>NReallocationFactor</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0.94</FixedValue>
-        </Constant>
-        <Constant>
-          <Name>InitialWtFunction</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0</FixedValue>
-          <Units>g/m^2</Units>
-        </Constant>
-        <Constant>
-          <Name>DetachmentRateFunction</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0</FixedValue>
-          <Units>/d</Units>
-        </Constant>
-        <Constant>
-          <Name>MaintenanceRespirationFunction</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>0</FixedValue>
-          <Units>0-1</Units>
-        </Constant>
-        <Constant>
-          <Name>DMConversionEfficiency</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <FixedValue>1</FixedValue>
-          <Units>0-1</Units>
-        </Constant>
-        <BiomassRemoval>
-          <Name>BiomassRemovalDefaults</Name>
-          <OrganBiomassRemovalType>
-            <Name>Harvest</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FractionLiveToRemove>0.5</FractionLiveToRemove>
-            <FractionDeadToRemove>0</FractionDeadToRemove>
-            <FractionLiveToResidue>0.1</FractionLiveToResidue>
-            <FractionDeadToResidue>0</FractionDeadToResidue>
-          </OrganBiomassRemovalType>
-          <OrganBiomassRemovalType>
-            <Name>Cut</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FractionLiveToRemove>0.8</FractionLiveToRemove>
-            <FractionDeadToRemove>0</FractionDeadToRemove>
-            <FractionLiveToResidue>0</FractionLiveToResidue>
-            <FractionDeadToResidue>0</FractionDeadToResidue>
-          </OrganBiomassRemovalType>
-          <OrganBiomassRemovalType>
-            <Name>Prune</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FractionLiveToRemove>0</FractionLiveToRemove>
-            <FractionDeadToRemove>0</FractionDeadToRemove>
-            <FractionLiveToResidue>0.6</FractionLiveToResidue>
-            <FractionDeadToResidue>0</FractionDeadToResidue>
-          </OrganBiomassRemovalType>
-          <OrganBiomassRemovalType>
-            <Name>Graze</Name>
-            <IncludeInDocumentation>true</IncludeInDocumentation>
-            <FractionLiveToRemove>0.6</FractionLiveToRemove>
-            <FractionDeadToRemove>0</FractionDeadToRemove>
-            <FractionLiveToResidue>0.2</FractionLiveToResidue>
-            <FractionDeadToResidue>0</FractionDeadToResidue>
-          </OrganBiomassRemovalType>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-        </BiomassRemoval>
-        <VariableReference>
-          <Name>CriticalNConc</Name>
-          <IncludeInDocumentation>true</IncludeInDocumentation>
-          <VariableName>[Petiole].MinimumNConc.Value()</VariableName>
         </VariableReference>
         <IncludeInDocumentation>true</IncludeInDocumentation>
       </GenericOrgan>
@@ -11319,7 +11379,7 @@ namespace Models
           <LineThickness>Normal</LineThickness>
           <TableName>OBS</TableName>
           <XFieldName>Clock.Today</XFieldName>
-          <YFieldName>FodderBeet.Leaf.N</YFieldName>
+          <YFieldName>FodderBeet.StorageRoot.N</YFieldName>
           <ShowInLegend>true</ShowInLegend>
           <IncludeSeriesNameInLegend>true</IncludeSeriesNameInLegend>
           <Cumulative>false</Cumulative>
@@ -11345,6 +11405,9 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
+          <string>0Nil: Obs</string>
+          <string>50Nil: Obs</string>
+          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -11550,6 +11613,9 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
+          <string>0Nil: Obs</string>
+          <string>50Nil: Obs</string>
+          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
@@ -11815,7 +11881,14 @@ namespace Models
           <Interval>NaN</Interval>
         </Axis>
         <LegendPosition>TopLeft</LegendPosition>
-        <DisabledSeries />
+        <DisabledSeries>
+          <string>0Nil: Pred</string>
+          <string>50Nil: Pred</string>
+          <string>300Nil: Pred</string>
+          <string>0Nil: obs</string>
+          <string>50Nil: obs</string>
+          <string>300Nil: obs</string>
+        </DisabledSeries>
       </Graph>
       <Graph>
         <Name>FB_Bulb_N</Name>
