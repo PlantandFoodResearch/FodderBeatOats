@@ -73,9 +73,13 @@ summary(df_temp1)
 
 - Create variables as per APSIM-X test neeeded
 ```{r}
- # Total biomass
+ # Total biomass FIXME: not nice to overwhite here ... find better way to do it
  df_temp1$FodderBeet.AboveGround.Live.Wt <- df_temp1 %>% select(ends_with(".Live.Wt")) %>% rowSums()
- 
+```
+
+## Create N variables
+
+```{r}
  # Total N by organ (FIXME: find simpler way of doing that)
  df_temp1$FodderBeet.Leaf.N <- df_temp1$FodderBeet.Leaf.Live.Wt*df_temp1$FodderBeet.Leaf.NConc
  df_temp1$FodderBeet.Petiole.N <- df_temp1$FodderBeet.Petiole.Live.Wt*df_temp1$FodderBeet.Petiole.NConc

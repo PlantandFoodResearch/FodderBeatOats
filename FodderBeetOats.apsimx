@@ -8756,7 +8756,7 @@ The Ear composite biomass object includes the Live and dead pools of all organs 
     <Input>
       <Name>OBS</Name>
       <IncludeInDocumentation>true</IncludeInDocumentation>
-      <ErrorMessage>The process cannot access the file 'C:\GithubRepos\FodderBeetOats\OBS.csv' because it is being used by another process.</ErrorMessage>
+      <ErrorMessage>The specified file does not exist.</ErrorMessage>
       <FileName>OBS.csv</FileName>
     </Input>
     <IncludeInDocumentation>true</IncludeInDocumentation>
@@ -9859,6 +9859,9 @@ namespace Models
             <string>sum([Soil].SoilNitrogen.Denitrification) </string>
             <string />
             <string>([Soil].SoilWater.LeachNO3 + [Soil].SoilWater.LeachNH4) as N_leaching</string>
+            <string />
+            <string>[Soil].SoilNitrogen.NO3</string>
+            <string>[Soil].SoilNitrogen.NH4</string>
           </VariableNames>
           <EventNames>
             <string>[Clock].DoReport</string>

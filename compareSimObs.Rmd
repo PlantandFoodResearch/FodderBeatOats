@@ -23,6 +23,7 @@ library(xlsx)
 
 ```{r, echo=FALSE}
 rootPath <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis"
+print(paste0("Working in ",rootPath))
 ```
 
 ```{r, echo=FALSE}
@@ -74,11 +75,12 @@ summary(obsData)
 ## Change data format
 
 - gather variable names pre-merging
+- FIXME: Quick fix for variable name consistency - sort this out at earlier stage
 
 ```{r}
 obsData_av <- obsData %>%
   mutate(Clock.Today=ymd(Clock.Today)) %>%
-  tidyr::gather("VarName","ObsValue",FodderBeet.Leaf.LAI:Soil.Temperature.7) %>% # FIXME: find automated way of identifying variables and ignore factors when gathering
+  tidyr::gather("VarName","ObsValue",FodderBeet.Leaf.LAI:Soil.SoilWater.SW.8) %>% # FIXME: find automated way of identifying variables and ignore factors when gathering
   mutate(VarName = factor(VarName)) %>%
   rename(SimName=SimulationName) %>%
   # FIXME: Do this in the initial script - correct names of array variables for merging
@@ -95,6 +97,9 @@ print(paste0("Found ",length(unique(obsData_av$VarName))," variables"))
 
 ```{r, echo=FALSE, include=TRUE}
 str(simData_work)
+```
+```{r}
+str(obsData_av)
 ```
 
 ## Do the merge
