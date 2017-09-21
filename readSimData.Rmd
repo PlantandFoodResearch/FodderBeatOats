@@ -82,9 +82,30 @@ df$Irr <- as.factor(df$Irr)
 df$CropOper.Script.CropSown <- factor(df$CropOper.Script.CropSown )
 
 # get rid of points in column names
-#colnames(df) <- gsub("\\.", "", colnames(df))
+oldNames <- colnames(df)
+
+oldNames
+```
+
+# FIX bug in names of variables
+
+- R change bad characters in APSIM (e.g. "(" ) to "."
+- Get rid of "." in the end of names to ensure aligment with observed data
+```{r}
+# functin to enquire string by position
+  substrRight <- function(x, n){
+    substr(x, nchar(x)-n+1, nchar(x))
+  }
+  
+#
+newNames <- ifelse(substrRight(oldNames,1)==".", 
+                   substr(oldNames, 1, nchar(oldNames)-1),
+                   oldNames)
+
+colnames(df) <- newNames
 
 colnames(df)
+
 ```
 
 # explore the df
@@ -98,8 +119,6 @@ head(df)
 
 ```{r}
 summary(df)
-
-
 ```
 
 
@@ -124,7 +143,6 @@ summary(myDb)
 
 ```{r}
 myDb %>%
-#  select_if(grepl("DM"), names(.))) %>% # FIXME: was trying to summ all biomass variables
   ggplot(aes(x=Clock.Today,y=(FodderBeet.Leaf.Live.Wt+Oats.Leaf.Live.Wt),colour=Irr, linetype=Nit)) +
   geom_line() +
   ylab("g/m2")
