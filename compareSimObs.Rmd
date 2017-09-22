@@ -40,22 +40,42 @@ str(simData)
 factorindex <- c("Nit","Irr", "CropOper.Script.CropSown", "SimName")
 simData[,factorindex] <- as.data.frame(sapply(simData[,factorindex],as.factor))
 
+
 # Tidy up sim data
-simData_work <- simData %>%
+simData_work_temp1 <- simData %>%
   mutate(Nit=factor(Nit)) %>%
   mutate(Clock.Today=as.Date(ymd_hms(Clock.Today))) %>%
   mutate(Irr = factor(Irr, levels=c("Nil", "Full"), labels=c("Dry","Irrig")))  %>%
   mutate() %>%
   dplyr::select(-Zone,-SimulationID) %>%
-  tidyr::gather("VarName","SimValue",FodderBeet.Phenology.Stage:N_leaching) %>%
+  tidyr::gather("VarName","SimValue",
+                FodderBeet.Phenology.Stage:Soil.SoilNitrogen.NH4.8) %>%
   mutate(VarName = factor(VarName)) %>%
   rowwise() %>%
   mutate(SimValue = ifelse(grepl('.NConc', VarName),SimValue*100,SimValue)) 
 
+summary(simData_work_temp1)
+
+#unique(simData_work$VarName)
+print(paste0("Found ",length(unique(simData_work_temp1$VarName))," variables"))
+
+
+
+```
+## Get class of variable
+
+- just to facet later and organise things
+```{r}
+# FIXME: Do a Smart selection by same pattern (grepl? + lookup)
+varClassLookup <- read.table(paste0(rootPath,"/VariableClassesLookup.txt"), header = TRUE)
+summary(varClassLookup)
+
+# get var classes
+simData_work <- merge(simData_work_temp1,varClassLookup, by="VarName")
+
 summary(simData_work)
 
-unique(simData_work$VarName)
-
+simData_work_temp1 <- NULL
 
 ```
 
@@ -75,7 +95,6 @@ summary(obsData)
 ## Change data format
 
 - gather variable names pre-merging
-- FIXME: Quick fix for variable name consistency - sort this out at earlier stage
 
 ```{r}
 obsData_av <- obsData %>%
@@ -83,12 +102,6 @@ obsData_av <- obsData %>%
   tidyr::gather("VarName","ObsValue",FodderBeet.Leaf.LAI:Soil.SoilWater.SW.8) %>% # FIXME: find automated way of identifying variables and ignore factors when gathering
   mutate(VarName = factor(VarName)) %>%
   rename(SimName=SimulationName) %>%
-  # FIXME: Do this in the initial script - correct names of array variables for merging
-  mutate(VarName2 = ifelse(grepl('Soil.SoilWater', VarName),paste0(VarName,"."),as.character(VarName))) %>%
-  mutate(VarName3 = ifelse(grepl('Soil.Temperature', VarName2),paste0(VarName2,"."),as.character(VarName2))) %>%
-  mutate(VarName3=factor(VarName3)) %>%
-  mutate(VarName = VarName3) %>%
-  dplyr::select(-VarName2, -VarName3) %>% # FIXME: Do it nicely later - the OR syntax did not work
   dplyr::select(-Nit, -Irr) # FIXME: done to avoid duplication of factor labels during merge - fix it
 
 print(paste0("Found ",length(unique(obsData_av$VarName))," variables"))
@@ -110,6 +123,7 @@ mergedDF <- merge(simData_work, obsData_av, by=c("Clock.Today","SimName","VarNam
 # FIXME: Merging is not working, many variables were dropped - !!!!! IMPORTANT !!!!!
 
 summary(mergedDF)
+print(paste0("Found ",length(unique(mergedDF$VarName))," variables"))
 ```
 
 # Model evaluation
@@ -119,20 +133,30 @@ summary(mergedDF)
 - Black line is x=y (1:1 line)
 - Colour lines are linear fits for dryland and irrigated crops
 
-```{r, fig.width=12, fig.height=22, echo=FALSE}
+```{r, fig.height=10, echo=FALSE}
 
-mergedDF %>%
+vc <- unique(mergedDF$VarClass)
+
+for(i in 1:length(vc)) {
+  
+  g <- mergedDF %>%
+  filter(VarClass == vc[i]) %>%
   na.omit()%>%
   filter(CropOper.Script.CropSown!="Fallow") %>%
   ggplot(aes(x=ObsValue,y=SimValue)) +
-  geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=1) +
+  geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=3) +
   geom_abline(intercept = 0, slope = 1, size=1.5) +
   facet_wrap(CropOper.Script.CropSown~VarName, ncol=2, scales='free')+
   geom_smooth(method = "lm", se = TRUE,  aes(fill = Irr, linetype=Irr, colour=Irr), alpha=0.1) +
-  coord_fixed(ratio = 1) +
+  coord_fixed() +
+ #   theme(aspect.ratio = 1) +
   ylab("Simulated value") +
-  xlab("Observed value")
-
+  xlab("Observed value") 
+  
+  
+  print(g)
+  
+}
 
 ```
 
