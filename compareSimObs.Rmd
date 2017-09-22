@@ -50,9 +50,8 @@ simData_work_temp1 <- simData %>%
   dplyr::select(-Zone,-SimulationID) %>%
   tidyr::gather("VarName","SimValue",
                 FodderBeet.Phenology.Stage:Soil.SoilNitrogen.NH4.8) %>%
-  mutate(VarName = factor(VarName)) %>%
-  rowwise() %>%
-  mutate(SimValue = ifelse(grepl('.NConc', VarName),SimValue*100,SimValue)) 
+  mutate(VarName = factor(VarName)) 
+
 
 summary(simData_work_temp1)
 
@@ -130,35 +129,6 @@ print(paste0("Found ",length(unique(mergedDF$VarName))," variables"))
 
 ## 1. Simulated x Observed graphs
 
-- Black line is x=y (1:1 line)
-- Colour lines are linear fits for dryland and irrigated crops
-
-```{r, fig.height=10, echo=FALSE}
-
-vc <- unique(mergedDF$VarClass)
-
-for(i in 1:length(vc)) {
-  
-  g <- mergedDF %>%
-  filter(VarClass == vc[i]) %>%
-  na.omit()%>%
-  filter(CropOper.Script.CropSown!="Fallow") %>%
-  ggplot(aes(x=ObsValue,y=SimValue)) +
-  geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=3) +
-  geom_abline(intercept = 0, slope = 1, size=1.5) +
-  facet_wrap(CropOper.Script.CropSown~VarName, ncol=2, scales='free')+
-  geom_smooth(method = "lm", se = TRUE,  aes(fill = Irr, linetype=Irr, colour=Irr), alpha=0.1) +
-  coord_fixed() +
- #   theme(aspect.ratio = 1) +
-  ylab("Simulated value") +
-  xlab("Observed value") 
-  
-  
-  print(g)
-  
-}
-
-```
 
 ## 2. Basic statistics
 
@@ -209,16 +179,17 @@ doStats <-  function (x) {
     library(dplyr)
     x %>% dplyr::summarise(
     n = n(),
-    meanObsValue = mean(ObsValue),
-    r2 = gauchStats(SimValue,ObsValue)[5],
-    rmse = rmse(SimValue,ObsValue),
+ #   meanObsValue = mean(ObsValue),
+ #   r2 = gauchStats(SimValue,ObsValue)[5],
+ #   rmse = rmse(SimValue,ObsValue),
+ #   pBias = pbias(SimValue,ObsValue),
     r_rmse = rmse(SimValue,ObsValue)/mean(ObsValue)*100, # big precision to enable cretrial of selection
-    nse = NSE(SimValue,ObsValue),
-    sb = gauchStats(SimValue,ObsValue)[1],
-    nu = gauchStats(SimValue,ObsValue)[2],
-    lc = gauchStats(SimValue,ObsValue)[3],
-    rsr = rsr(SimValue,ObsValue), # Ratio of RMSE to the standard deviation of the ObsValueervations
-    pBias = pbias(SimValue,ObsValue)) # Percent Bias between sim and ObsValue, with treatment of missing values.
+ #   nse = NSE(SimValue,ObsValue),
+ #   sb = gauchStats(SimValue,ObsValue)[1],
+ #   nu = gauchStats(SimValue,ObsValue)[2],
+    lc = gauchStats(SimValue,ObsValue)[3]
+ #   rsr = rsr(SimValue,ObsValue) # Ratio of RMSE to the standard deviation of the ObsValueervations
+    ) # Percent Bias between sim and ObsValue, with treatment of missing values.
 }
 ```
 
@@ -237,18 +208,67 @@ There's quite a bit o duplication in these (e.g. pBias and SB are very similar) 
 
 - For the moment, consider accurate if rRMSE is < 25%
 
+
+- Black line is x=y (1:1 line)
+- Colour lines are linear fits for dryland and irrigated crops
+
+```{r, fig.height=10, echo=FALSE}
+
+vc <- unique(mergedDF$VarClass)
+
+for(i in 1:length(vc)) {
+  
+  g <- mergedDF %>%
+  filter(VarClass == vc[i]) %>%
+  na.omit()%>%
+  filter(CropOper.Script.CropSown!="Fallow") %>%
+  ggplot(aes(x=ObsValue,y=SimValue)) +
+  geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=3) +
+  geom_abline(intercept = 0, slope = 1, size=1.5) +
+  facet_wrap(CropOper.Script.CropSown~VarName, ncol=2, scales='free')+
+  geom_smooth(method = "lm", se = TRUE,  aes(fill = Irr, linetype=Irr, colour=Irr), alpha=0.1) +
+  coord_fixed() +
+ #   theme(aspect.ratio = 1) +
+  ylab("Simulated value") +
+  xlab("Observed value")  +
+    expand_limits(x = 0, y = 0) +
+  theme(aspect.ratio=1)
+  
+  
+  print(g)
+  
+  statsTable <- mergedDF %>%
+    filter(VarClass == vc[i]) %>%
+  na.omit() %>%
+  group_by(VarName) %>%
+  doStats() %>%
+  mutate(Accuracy=ifelse(r_rmse<25,"GOOD","LOW")) 
+
+print(statsTable %>%
+  kable(digits=1))
+  
+}
+
+```
+
+
+
+
+
+
+
 ```{r, fig.width=12, results='asis',results='asis', echo=FALSE}
 
 # FIXME: classify vvariables by type (e.g. biomass, N etc..) and separate stats and maps accordingly
 
-statsTable <- mergedDF %>%
-  na.omit() %>%
-  group_by(VarName) %>%
-  doStats() %>%
-  mutate(Accuracy=ifelse(r_rmse<25,"good","LOW")) 
-
-statsTable %>%
-  kable(digits=1)
+# statsTable <- mergedDF %>%
+#   na.omit() %>%
+#   group_by(VarName) %>%
+#   doStats() %>%
+#   mutate(Accuracy=ifelse(r_rmse<25,"good","LOW")) 
+# 
+# statsTable %>%
+#   kable(digits=1)
 
 ```
 
@@ -271,7 +291,7 @@ summary(metFile)
 
 
 
-```{r, fig.height = 15, echo=FALSE}
+```{r, fig.height = 8, echo=FALSE}
 
 #unique(simData_work$VarName)
 
@@ -282,8 +302,8 @@ simData_work %>%
   ungroup() %>%
   filter(
            VarName == "Soil.SoilWater.Drainage"|
-           VarName == "sum.Soil.SoilNitrogen.MineralisedN."|
-           VarName == "sum.Soil.SoilNitrogen.Denitrification."| # FiXME: Prepare a list of variables
+           VarName == "sum.Soil.SoilNitrogen.MineralisedN"|
+           VarName == "sum.Soil.SoilNitrogen.Denitrification"| # FiXME: Prepare a list of variables
            VarName == "N_leaching") %>%
   group_by(VarName, Irr, Nit) %>%
   arrange(VarName, Irr, Nit,Clock.Today) %>% 
