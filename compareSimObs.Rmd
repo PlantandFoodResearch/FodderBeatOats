@@ -1,8 +1,9 @@
 ---
 title: "FRNL CS 2.10"
 output:
-  word_document: default
+  html_document: default
   html_notebook: default
+  word_document: default
 ---
 
 # Evaluation of fodder beet + catch crop rotation (FRNL)
@@ -23,9 +24,10 @@ library(xlsx)
 
 ```{r, echo=FALSE}
 rootPath <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis"
+print(paste0("Working in ",rootPath))
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include=FALSE}
 # read simulated data
 simData <- read.csv(paste0(rootPath,"/SIM.csv"), header = TRUE)
 str(simData)
@@ -33,37 +35,56 @@ str(simData)
 
 ## Tidy up simulated
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include=FALSE}
 
 # Define factors
 factorindex <- c("Nit","Irr", "CropOper.Script.CropSown", "SimName")
 simData[,factorindex] <- as.data.frame(sapply(simData[,factorindex],as.factor))
 
+
 # Tidy up sim data
-simData_work <- simData %>%
+simData_work_temp1 <- simData %>%
   mutate(Nit=factor(Nit)) %>%
   mutate(Clock.Today=as.Date(ymd_hms(Clock.Today))) %>%
   mutate(Irr = factor(Irr, levels=c("Nil", "Full"), labels=c("Dry","Irrig")))  %>%
   mutate() %>%
   dplyr::select(-Zone,-SimulationID) %>%
-  tidyr::gather("VarName","SimValue",FodderBeet.Phenology.Stage:N_leaching) %>%
-  mutate(VarName = factor(VarName)) %>%
-  rowwise() %>%
-  mutate(SimValue = ifelse(grepl('.NConc', VarName),SimValue*100,SimValue)) 
+  tidyr::gather("VarName","SimValue",
+                FodderBeet.Phenology.Stage:Soil.SoilNitrogen.NH4.8) %>%
+  mutate(VarName = factor(VarName)) 
+
+
+summary(simData_work_temp1)
+
+#unique(simData_work$VarName)
+print(paste0("Found ",length(unique(simData_work_temp1$VarName))," variables"))
+
+
+
+```
+## Get class of variable
+
+- just to facet later and organise things
+```{r, echo=FALSE, include=TRUE}
+# FIXME: Do a Smart selection by same pattern (grepl? + lookup)
+varClassLookup <- read.table(paste0(rootPath,"/VariableClassesLookup.txt"), header = TRUE)
+summary(varClassLookup)
+
+# get var classes
+simData_work <- merge(simData_work_temp1,varClassLookup, by="VarName")
 
 summary(simData_work)
 
-unique(simData_work$VarName)
-
+simData_work_temp1 <- NULL
 
 ```
 
 
-```{r, echo=FALSE, include=TRUE}
+```{r, echo=FALSE, include=FALSE}
 str(simData_work)
 ```
 ## Read observed
-```{r, echo=FALSE, include=TRUE}
+```{r, echo=FALSE, include=FALSE}
 # read observed data
 obsData <- read.csv(paste0(rootPath,"/OBS.csv"), header = TRUE)
 
@@ -75,61 +96,41 @@ summary(obsData)
 
 - gather variable names pre-merging
 
-```{r}
+```{r, echo=FALSE, include=TRUE}
 obsData_av <- obsData %>%
   mutate(Clock.Today=ymd(Clock.Today)) %>%
-  tidyr::gather("VarName","ObsValue",FodderBeet.Leaf.LAI:Soil.Temperature.7) %>% # FIXME: find automated way of identifying variables and ignore factors when gathering
+  tidyr::gather("VarName","ObsValue",FodderBeet.Leaf.LAI:Soil.SoilWater.SW.8) %>% # FIXME: find automated way of identifying variables and ignore factors when gathering
   mutate(VarName = factor(VarName)) %>%
   rename(SimName=SimulationName) %>%
-  # FIXME: Do this in the initial script - correct names of array variables for merging
-  mutate(VarName2 = ifelse(grepl('Soil.SoilWater', VarName),paste0(VarName,"."),as.character(VarName))) %>%
-  mutate(VarName3 = ifelse(grepl('Soil.Temperature', VarName2),paste0(VarName2,"."),as.character(VarName2))) %>%
-  mutate(VarName3=factor(VarName3)) %>%
-  mutate(VarName = VarName3) %>%
-  dplyr::select(-VarName2, -VarName3) %>% # FIXME: Do it nicely later - the OR syntax did not work
   dplyr::select(-Nit, -Irr) # FIXME: done to avoid duplication of factor labels during merge - fix it
 
 print(paste0("Found ",length(unique(obsData_av$VarName))," variables"))
 
 ```
 
-```{r, echo=FALSE, include=TRUE}
+```{r, echo=FALSE, include=FALSE}
 str(simData_work)
 ```
 
+```{r, echo=FALSE, include=FALSE}
+str(obsData_av)
+```
+
 ## Do the merge
-```{r, echo=FALSE}
+```{r, echo=FALSE, include=FALSE}
 mergedDF <- data.frame() # empty data frame to do stuff
 mergedDF <- merge(simData_work, obsData_av, by=c("Clock.Today","SimName","VarName"))
 
 # FIXME: Merging is not working, many variables were dropped - !!!!! IMPORTANT !!!!!
 
 summary(mergedDF)
+print(paste0("Found ",length(unique(mergedDF$VarName))," variables"))
 ```
 
 # Model evaluation
 
 ## 1. Simulated x Observed graphs
 
-- Black line is x=y (1:1 line)
-- Colour lines are linear fits for dryland and irrigated crops
-
-```{r, fig.width=12, fig.height=22, echo=FALSE}
-
-mergedDF %>%
-  na.omit()%>%
-  filter(CropOper.Script.CropSown!="Fallow") %>%
-  ggplot(aes(x=ObsValue,y=SimValue)) +
-  geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=1) +
-  geom_abline(intercept = 0, slope = 1, size=1.5) +
-  facet_wrap(CropOper.Script.CropSown~VarName, ncol=2, scales='free')+
-  geom_smooth(method = "lm", se = TRUE,  aes(fill = Irr, linetype=Irr, colour=Irr), alpha=0.1) +
-  coord_fixed(ratio = 1) +
-  ylab("Simulated value") +
-  xlab("Observed value")
-
-
-```
 
 ## 2. Basic statistics
 
@@ -173,23 +174,25 @@ gauchStats <- function(sim, meas) {
 
 
 
-```{r}
+```{r, echo = FALSE}
 # Embed gauch stats in another function 
+# uncoment/coment stat indexes as required
 
 doStats <-  function (x) {
     library(dplyr)
     x %>% dplyr::summarise(
     n = n(),
-    meanObsValue = mean(ObsValue),
+ #   meanObsValue = mean(ObsValue),
     r2 = gauchStats(SimValue,ObsValue)[5],
-    rmse = rmse(SimValue,ObsValue),
+ #   rmse = rmse(SimValue,ObsValue),
+ #   pBias = pbias(SimValue,ObsValue),
     r_rmse = rmse(SimValue,ObsValue)/mean(ObsValue)*100, # big precision to enable cretrial of selection
     nse = NSE(SimValue,ObsValue),
-    sb = gauchStats(SimValue,ObsValue)[1],
-    nu = gauchStats(SimValue,ObsValue)[2],
+ #   sb = gauchStats(SimValue,ObsValue)[1],
+ #   nu = gauchStats(SimValue,ObsValue)[2],
     lc = gauchStats(SimValue,ObsValue)[3],
-    rsr = rsr(SimValue,ObsValue), # Ratio of RMSE to the standard deviation of the ObsValueervations
-    pBias = pbias(SimValue,ObsValue)) # Percent Bias between sim and ObsValue, with treatment of missing values.
+    rsr = rsr(SimValue,ObsValue) # Ratio of RMSE to the standard deviation of the ObsValueervations
+    ) # Percent Bias between sim and ObsValue, with treatment of missing values.
 }
 ```
 
@@ -208,18 +211,69 @@ There's quite a bit o duplication in these (e.g. pBias and SB are very similar) 
 
 - For the moment, consider accurate if rRMSE is < 25%
 
+
+- Black line is x=y (1:1 line)
+- Colour lines are linear fits for dryland and irrigated crops
+
+```{r, fig.height=10, echo=FALSE}
+
+vc <- unique(mergedDF$VarClass)
+
+for(i in 1:length(vc)) {
+  
+  # do graphing
+  g <- mergedDF %>%
+  filter(VarClass == vc[i]) %>%
+  na.omit()%>%
+  filter(CropOper.Script.CropSown!="Fallow") %>%
+  ggplot(aes(x=ObsValue,y=SimValue)) +
+  geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=3) +
+  geom_abline(intercept = 0, slope = 1, size=1.5) +
+  facet_wrap(CropOper.Script.CropSown~VarName, ncol=2, scales='free')+
+  geom_smooth(method = "lm", se = TRUE,  aes(fill = Irr, linetype=Irr, colour=Irr), alpha=0.1) +
+  coord_fixed() +
+ #   theme(aspect.ratio = 1) +
+  ylab("Simulated value") +
+  xlab("Observed value")  +
+  expand_limits(x = 0, y = 0) +
+  theme(aspect.ratio=1)
+  
+  
+  print(g)
+  
+  # do stats
+  statsTable <- mergedDF %>%
+  filter(VarClass == vc[i]) %>%
+  na.omit() %>%
+  group_by(VarName) %>%
+  doStats() %>%
+  mutate(Accuracy=ifelse((r_rmse<25),"GOOD","LOW")) 
+
+print(statsTable %>%
+  kable(digits=1))
+  
+}
+
+```
+
+
+
+
+
+
+
 ```{r, fig.width=12, results='asis',results='asis', echo=FALSE}
 
 # FIXME: classify vvariables by type (e.g. biomass, N etc..) and separate stats and maps accordingly
 
-statsTable <- mergedDF %>%
-  na.omit() %>%
-  group_by(VarName) %>%
-  doStats() %>%
-  mutate(Accuracy=ifelse(r_rmse<25,"good","LOW")) 
-
-statsTable %>%
-  kable(digits=1)
+# statsTable <- mergedDF %>%
+#   na.omit() %>%
+#   group_by(VarName) %>%
+#   doStats() %>%
+#   mutate(Accuracy=ifelse(r_rmse<25,"good","LOW")) 
+# 
+# statsTable %>%
+#   kable(digits=1)
 
 ```
 
@@ -228,7 +282,7 @@ statsTable %>%
 - Criteria: Are simulated values sensible in relation to real life experiences?
 
 Get weather data
-```{r}
+```{r, echo = FALSE, include=FALSE}
 #Set paths
 metFolder <- "C:\\GitHubRepos\\2017_FodderBeetOats\\FodderBeatOats\\"
 
@@ -242,7 +296,7 @@ summary(metFile)
 
 
 
-```{r, fig.height = 15, echo=FALSE}
+```{r, fig.height = 8, echo=FALSE}
 
 #unique(simData_work$VarName)
 
@@ -253,8 +307,8 @@ simData_work %>%
   ungroup() %>%
   filter(
            VarName == "Soil.SoilWater.Drainage"|
-           VarName == "sum.Soil.SoilNitrogen.MineralisedN."|
-           VarName == "sum.Soil.SoilNitrogen.Denitrification."| # FiXME: Prepare a list of variables
+           VarName == "sum.Soil.SoilNitrogen.MineralisedN"|
+           VarName == "sum.Soil.SoilNitrogen.Denitrification"| # FiXME: Prepare a list of variables
            VarName == "N_leaching") %>%
   group_by(VarName, Irr, Nit) %>%
   arrange(VarName, Irr, Nit,Clock.Today) %>% 

@@ -3,18 +3,21 @@ title: "R Notebook"
 output: html_notebook
 ---
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message=FALSE}
 library(RSQLite) # taking care of databases
 library(lubridate) # taking care of dates
 library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(xlsx)
+library(tcltk2)
 ```
 
 ## Load simulated
 
 - this will read simulated data from ApsimX database file
+
+
 
 ```{r}
 # create function to read data (Justin's script from CSIRO)
@@ -30,10 +33,22 @@ GetApsimNGTable <- function(dbLoc, table)
 
 # load address of db
 ```{r}
+
 # FIXME: APSIM will run in powerPlant in the future but we have to run locally at the moment
 db.address <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis/simFiles_FromAPSIM"
 db.name <- "/FodderBeetOats.db"
 db.full.path <- paste0(db.address,db.name)
+```
+
+
+## Remind user check to updated sim file (by hand at the moment - FIXME)
+```{r}
+
+msg <- paste0("Update APSIM-X database results as ",db.full.path)
+
+res <- tkmessageBox(title = "Attention",
+  message = msg, 
+  icon = "info", type = "ok")
 ```
 
 # check what's inside db
@@ -67,9 +82,30 @@ df$Irr <- as.factor(df$Irr)
 df$CropOper.Script.CropSown <- factor(df$CropOper.Script.CropSown )
 
 # get rid of points in column names
-#colnames(df) <- gsub("\\.", "", colnames(df))
+oldNames <- colnames(df)
+
+oldNames
+```
+
+# FIX bug in names of variables
+
+- R change bad characters in APSIM (e.g. "(" ) to "."
+- Get rid of "." in the end of names to ensure aligment with observed data
+```{r}
+# functin to enquire string by position
+  substrRight <- function(x, n){
+    substr(x, nchar(x)-n+1, nchar(x))
+  }
+  
+#
+newNames <- ifelse(substrRight(oldNames,1)==".", 
+                   substr(oldNames, 1, nchar(oldNames)-1),
+                   oldNames)
+
+colnames(df) <- newNames
 
 colnames(df)
+
 ```
 
 # explore the df
@@ -107,7 +143,6 @@ summary(myDb)
 
 ```{r}
 myDb %>%
-#  select_if(grepl("DM"), names(.))) %>% # FIXME: was trying to summ all biomass variables
   ggplot(aes(x=Clock.Today,y=(FodderBeet.Leaf.Live.Wt+Oats.Leaf.Live.Wt),colour=Irr, linetype=Nit)) +
   geom_line() +
   ylab("g/m2")
