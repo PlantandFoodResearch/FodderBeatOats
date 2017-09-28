@@ -115,11 +115,13 @@ head(obsData_APSIM)
 ```{r}
  # Total N by organ (FIXME: find simpler way of doing that)
  obsData_APSIM$FodderBeet.Leaf.N <- obsData_APSIM$FodderBeet.Leaf.Live.Wt*obsData_APSIM$FodderBeet.Leaf.NConc
- obsData_APSIM$FodderBeet.Petiole.N <- df_temp1$FodderBeet.Petiole.Live.Wt*obsData_APSIM$FodderBeet.Petiole.NConc
- obsData_APSIM$FodderBeet.StorageRoot.N <- df_temp1$FodderBeet.StorageRoot.Live.Wt*obsData_APSIM$FodderBeet.StorageRoot.NConc
+
+ obsData_APSIM$FodderBeet.Petiole.N <- obsData_APSIM$FodderBeet.Petiole.Live.Wt*obsData_APSIM$FodderBeet.Petiole.NConc
+ 
+ obsData_APSIM$FodderBeet.StorageRoot.N <- obsData_APSIM$FodderBeet.StorageRoot.Live.Wt*obsData_APSIM$FodderBeet.StorageRoot.NConc
  
  # Total biomass FIXME: not nice to overwhite here ... find better way to do it
- # df_temp1$FodderBeet.AboveGround.Live.Wt <- df_temp1 %>% dplyr::select(ends_with(".Live.Wt")) %>% rowSums() # FIXME: Some bug here
+  obsData_APSIM$FodderBeet.AboveGround.Live.Wt <- obsData_APSIM %>% dplyr::select(ends_with(".Live.Wt")) %>% rowSums() # FIXME: Some bug here
  
  
 # Sort out factors
