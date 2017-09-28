@@ -8817,7 +8817,7 @@ The Ear composite biomass object includes the Live and dead pools of all organs 
       <Name>OBS</Name>
       <IncludeInDocumentation>true</IncludeInDocumentation>
       <ErrorMessage>The specified file does not exist.</ErrorMessage>
-      <FileName>OBS.csv</FileName>
+      <FileName>K:\Rainshelter\Fodderbeet 2016-2017\Analysis\OBS.csv</FileName>
     </Input>
     <IncludeInDocumentation>true</IncludeInDocumentation>
     <AutoExport>false</AutoExport>
@@ -10491,9 +10491,6 @@ namespace Models
         <string>0Nil: Pred</string>
         <string>50Nil: Pred</string>
         <string>300Nil: Pred</string>
-        <string>0Nil: OBS</string>
-        <string>50Nil: OBS</string>
-        <string>300Nil: OBS</string>
       </DisabledSeries>
     </Graph>
     <Graph>
@@ -11616,9 +11613,6 @@ namespace Models
           <string>0Nil: Pred</string>
           <string>50Nil: Pred</string>
           <string>300Nil: Pred</string>
-          <string>0Nil: Obs</string>
-          <string>50Nil: Obs</string>
-          <string>300Nil: Obs</string>
         </DisabledSeries>
       </Graph>
       <Graph>
