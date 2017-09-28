@@ -15,21 +15,16 @@ library(lubridate)
 library(ggplot2)
 library(dplyr)
 library(tidyr)
-#library(readxl)
+library(readxl)
 library(xlsx)
 ```
 
 ```{r}
-
 # dir address
-
 pathFolderRaw <- "K:/Rainshelter/Fodderbeet 2016-2017/Analysis/obsFiles_PreProc" # where to read from
 print(paste0("Read data from: ", pathFolderRaw))
 
 nameAddressOfFile <- paste0(pathFolderRaw, "/DataFrame_FodderBeetBiomass.xlsx")
-
-
-
 ```
 
 ```{r}
@@ -39,8 +34,9 @@ print(paste0("Save data to: ", pathFolderWork))
 
 
 ```{r}
-#obsDataRaw <- read_xlsx(nameAddressOfFile, sheet = "DataFrame", col_names = TRUE)
-obsDataRaw <- xlsx::read.xlsx(nameAddressOfFile, sheetIndex = 4, header = TRUE, startRow = 4 )
+obsDataRaw <- read_xlsx(nameAddressOfFile, sheet = "DataFrame", col_names = TRUE) # I find this synthax more transparent - without the risk of reading wrong sheet - eit
+
+#obsDataRaw <- xlsx::read.xlsx(nameAddressOfFile, sheetIndex = 4, header = TRUE, startRow = 4) # FIXME: why this synthax with less clear parameters?
 
 # remove NA rows 
 ind <- apply(obsDataRaw, 1, function(obsDataRaw) all(is.na(obsDataRaw)))
@@ -50,122 +46,105 @@ obsDataRaw <- obsDataRaw[ !ind, ]
 summary(obsDataRaw)
 ```
 
-
-## Tidy up data
-
-- get units right
+# Get units
 ```{r}
+dfTemp <- read_xlsx(nameAddressOfFile, sheet = "lookupVariables", col_names = TRUE)
+# obsDataRaw <- xlsx::read.xlsx(nameAddressOfFile, sheetIndex = 4, header = TRUE, startRow = 4 )
 
+# remove NA rows 
+ind <- apply(dfTemp, 1, function(dfTemp) all(is.na(dfTemp)))
+obsDataUnits <- dfTemp[ !ind, ]
+
+# for all cols to factors
+cols <- colnames(obsDataUnits)
+obsDataUnits[cols] <- lapply(obsDataUnits[cols], factor)
+
+dfTemp <- NULL
+ 
+head(obsDataUnits, nrow(obsDataUnits))
+```
+# Create consistent data
+
+- FIXME: Mei to tidy up
+```{r}
+obsDataConsist <- obsDataRaw %>%
+#  dplyr::select(-SimulationName, -Code) %>%
+  gather("VarNameAPSIM","VarValue",FodderBeet.Leaf.Live.Wt:FodderBeet.Leaf.LAI) %>%
+  mutate(VarNameAPSIM=factor(VarNameAPSIM)) %>%
+  merge(obsDataUnits, by.x="VarNameAPSIM",by.y="Name_APSIM")
+
+summary(obsDataConsist)
+
+
+
+
+```
+## Save consistent data
+```{r}
+# save consistent data
+write.csv(obsDataConsist, paste0("K:/Rainshelter/Fodderbeet 2016-2017/Analysis/consistentData/CONS_Biomass_FodderBeet.csv"), row.names = FALSE)
+```
+
+## Prepare data for APSIM
+
+- Select variables
+- Correct units 
+```{r}
 
 # Biomass units from kg/ha to g/m2 and N conc units from % to 0-1
-df_temp1 <-  obsDataRaw %>%
-  tidyr::gather("VarName","VarValue", FodderBeet.Leaf.Live.Wt:FodderBeet.Leaf.LAI) %>% 
-  mutate(VarName=factor(VarName)) %>%
-  mutate(VarValue = ifelse(grepl('.Wt', VarName),VarValue/10,VarValue)) %>% # 
-  mutate(VarValue = ifelse(grepl('.NConc', VarName), VarValue/100,VarValue)) %>%
-  tidyr::spread(VarName,VarValue)
+  obsData_APSIM <-  obsDataConsist %>%
+  dplyr::select(Clock.Today,SimulationName, VarNameAPSIM,VarValue) %>%
+  mutate(VarValue = ifelse(grepl('.Wt', VarNameAPSIM),VarValue/10,VarValue)) %>% 
+  mutate(VarValue = ifelse(grepl('.NConc', VarNameAPSIM), VarValue/100,VarValue)) %>% 
+  mutate(Clock.Today = ymd(Clock.Today)) %>%
+  mutate(SimulationName=factor(SimulationName)) %>%
+  # do averages for APSIM
+  group_by(Clock.Today,SimulationName,VarNameAPSIM) %>%
+  summarise(VarValue=as.numeric(mean(VarValue))) %>%
+  # spread vars as per apasim format
+  spread(VarNameAPSIM,VarValue) %>%
+  as.data.frame() # Format needed to save as excel
 
-summary(df_temp1)
-
+head(obsData_APSIM)
 ```
-
-## Create new variables
+## Add new variables 
 
 - Create variables as per APSIM-X test neeeded
-```{r}
- # Total biomass FIXME: not nice to overwhite here ... find better way to do it
- df_temp1$FodderBeet.AboveGround.Live.Wt <- df_temp1 %>% select(ends_with(".Live.Wt")) %>% rowSums()
-```
-
-## Create N variables
-
+- FIXME: This chunck is UNTIDY as is - let's fix it 
+- FIXME: Could be other script reading consistent data (?)
 ```{r}
  # Total N by organ (FIXME: find simpler way of doing that)
- df_temp1$FodderBeet.Leaf.N <- df_temp1$FodderBeet.Leaf.Live.Wt*df_temp1$FodderBeet.Leaf.NConc
- df_temp1$FodderBeet.Petiole.N <- df_temp1$FodderBeet.Petiole.Live.Wt*df_temp1$FodderBeet.Petiole.NConc
- df_temp1$FodderBeet.StorageRoot.N <- df_temp1$FodderBeet.StorageRoot.Live.Wt*df_temp1$FodderBeet.StorageRoot.NConc
+ obsData_APSIM$FodderBeet.Leaf.N <- obsData_APSIM$FodderBeet.Leaf.Live.Wt*obsData_APSIM$FodderBeet.Leaf.NConc
+ obsData_APSIM$FodderBeet.Petiole.N <- df_temp1$FodderBeet.Petiole.Live.Wt*obsData_APSIM$FodderBeet.Petiole.NConc
+ obsData_APSIM$FodderBeet.StorageRoot.N <- df_temp1$FodderBeet.StorageRoot.Live.Wt*obsData_APSIM$FodderBeet.StorageRoot.NConc
+ 
+ # Total biomass FIXME: not nice to overwhite here ... find better way to do it
+ # df_temp1$FodderBeet.AboveGround.Live.Wt <- df_temp1 %>% dplyr::select(ends_with(".Live.Wt")) %>% rowSums() # FIXME: Some bug here
  
  
-# dates
-obsData <- df_temp1 %>% mutate(Clock.Today = ymd(Clock.Today)) 
- 
-
 # Sort out factors
-factorindex <- c("Nit","Irr","Plot","Rep", "Code")
-obsData[,factorindex] <- as.data.frame(sapply(obsData[,factorindex],as.factor))
+# factorindex <- c("Nit","Irr","Plot","Rep")
+# obsData_APSIM[,factorindex] <- as.data.frame(sapply(obsData_APSIM[,factorindex],as.factor))
 #work well if using index <- c(2:3,4,5...)
 ```
 
 ## Check the data
 
 ```{r}
-str(obsData)
+str(obsData_APSIM)
 ```
 
 
 ```{r}
-head(obsData)
+head(obsData_APSIM)
 ```
 
 ```{r}
-summary(obsData)
+summary(obsData_APSIM)
 ```
 
-## Graph
-
-```{r, fig.width = 12}
-obsData %>%
-  ggplot(aes(x=Clock.Today,y=(FodderBeet.Leaf.Live.Wt),colour=Irr, linetype=Nit,shape=Nit)) +
-  geom_point(size=2,alpha=0.5) +
-  geom_line() +
-  ylab("g/m2") +
-  facet_grid(.~Rep)
-```
-
+## save for APSIM-X
 ```{r}
-obsData %>%
-  ggplot(aes(x=Clock.Today,y=(FodderBeet.Leaf.NConc),colour=Irr, linetype=Nit,shape=Nit)) +
-  geom_point(size=2,alpha=0.5) +
-  geom_line() +
-  ylab("Fractional") +
-  facet_grid(.~Rep)
+write.xlsx(obsData_APSIM,paste0(pathFolderWork,"/OBS_Biomass_FodderBeet.xlsx"), sheetName="OBS", row.names = FALSE)
 ```
-## Compare N% and biomass in a organ
-```{r}
-obsData %>%
-  ggplot(aes(x=FodderBeet.Leaf.Live.Wt,y=FodderBeet.Leaf.NConc,colour=Irr, shape=Nit)) +
-  geom_point(size=2,alpha=0.5) +
-#  geom_smooth(aes(linetype=Nit)) +
-  ylab("N%") +
-  xlab("g DM/m2") +
-  facet_grid(.~Rep)
-```
-
-## Save observed data
-
-```{r}
-head(obsData)
-
-```
-
-- For APSIM-X
-```{r}
-
-df <- obsData %>%
- # mutate(Irr=factor(Irr),Nit=factor(Nit)) %>%
-  mutate(Clock.Today=as.Date(ymd(Clock.Today))) %>%
-  mutate(Clock.Today=as.character(as.Date(Clock.Today, "%Y-%m-%d"))) %>%
-  dplyr::select(-Plot,-Rep,-Nit,-Irr,-Code) %>%
-  group_by(Clock.Today,SimulationName) %>%
-  summarise_all(funs(mean)) %>%
-  mutate(SimulationName = factor(SimulationName))%>%
-  ungroup()%>%
-  as.data.frame()
-
-
-summary(df)
-
-write.xlsx(df,paste0(pathFolderWork,"/OBS_Biomass.xlsx"), sheetName="OBS", row.names = FALSE) 
-```
-
 
