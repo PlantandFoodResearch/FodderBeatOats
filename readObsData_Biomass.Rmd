@@ -112,6 +112,7 @@ head(obsData_APSIM)
 - Create variables as per APSIM-X test neeeded
 - FIXME: This chunck is UNTIDY as is - let's fix it 
 - FIXME: Could be other script reading consistent data (?)
+- FIXME: Should this be done at the merge OBS step (for any OBS) and become easier to track? - think so
 ```{r}
  # Total N by organ (FIXME: find simpler way of doing that)
  obsData_APSIM$FodderBeet.Leaf.N <- obsData_APSIM$FodderBeet.Leaf.Live.Wt*obsData_APSIM$FodderBeet.Leaf.NConc
@@ -123,6 +124,8 @@ head(obsData_APSIM)
  # Total biomass FIXME: not nice to overwhite here ... find better way to do it
   obsData_APSIM$FodderBeet.AboveGround.Live.Wt <- obsData_APSIM %>% dplyr::select(ends_with(".Live.Wt")) %>% rowSums() # FIXME: Some bug here
  
+# Same for total N
+  obsData_APSIM$FodderBeet.AboveGround.N <- obsData_APSIM %>% dplyr::select(ends_with(".N")) %>% rowSums() # FIXME: Some bug here
  
 # Sort out factors
 # factorindex <- c("Nit","Irr","Plot","Rep")
@@ -148,5 +151,42 @@ summary(obsData_APSIM)
 ## save for APSIM-X
 ```{r}
 write.xlsx(obsData_APSIM,paste0(pathFolderWork,"/OBS_Biomass_FodderBeet.xlsx"), sheetName="OBS", row.names = FALSE)
+```
+
+##Graph for FRNL
+
+- move this somewhere else
+```{r}
+lb <- read.table("K:/Rainshelter/Fodderbeet 2016-2017/Analysis/labels.txt", header = TRUE)
+
+df <- merge(obsData_APSIM,lb, by = "SimulationName")
+
+df %>%
+  mutate(Irr=factor(Irr, levels=c("Nil","Full"),labels=c("Dryland","Irrigated"))) %>%
+  dplyr::select(Clock.Today,Nit, Irr,
+                FodderBeet.AboveGround.N) %>%
+  ggplot(aes(x=ymd(Clock.Today),
+             y=FodderBeet.AboveGround.N*10, colour=factor(Irr),linetype=factor(Nit)
+             )) +
+  geom_point(size=3, alpha=0.5,aes(shape=factor(Nit))) +
+  geom_smooth() +
+  ylab("Above ground nitrogen \n(kg N/ha)") +
+  xlab("Date") +
+  labs(shape="Nitrogen \nfertiliser (kg/ha)", colour="Irrigation") + 
+  guides(linetype=FALSE) + # remove legend
+  theme(text = element_text(size=16))
+#+ theme(legend.position="top")
+
+
+```
+
+```{r}
+df %>%
+  filter(Clock.Today==max(Clock.Today), Irr=="Full") %>%
+  group_by(SimulationName,Clock.Today,Irr,Nit) %>%
+  summarise_all(funs(mean)) %>%
+  ungroup() %>%
+  mutate(Nit=factor(Nit,levels=c("0","50","300"))) 
+
 ```
 

@@ -132,6 +132,6 @@ df2 %>%
   labs(shape="Nitrogen \nfertiliser (kg/ha)", colour="Irrigation") + 
   guides(linetype=FALSE) + # remove legend
   theme(text = element_text(size=16))
-#+ theme(legend.position="top")
+#+ theme(legend.position="top") 
 ```
 
