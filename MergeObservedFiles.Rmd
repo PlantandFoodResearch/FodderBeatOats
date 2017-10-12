@@ -114,4 +114,24 @@ write.csv(df2,paste0(pathMaster,"/OBS.csv"), na ="", row.names = FALSE, quote = 
 print(paste0("Save file to: ", pathMaster))
 ```
 
+# Graph for FRNL presentation
+
+FIXME: Move this elsewhere
+```{r}
+df2 %>%
+  mutate(Irr=factor(Irr, levels=c("Nil","Full"),labels=c("Dryland","Irrigated"))) %>%
+  dplyr::select(Clock.Today,Nit, Irr,
+                FodderBeet.AboveGround.Live.Wt) %>%
+  ggplot(aes(x=ymd(Clock.Today),
+             y=FodderBeet.AboveGround.Live.Wt*10/1000, colour=factor(Irr),linetype=factor(Nit)
+             )) +
+  geom_point(size=3, alpha=0.5,aes(shape=factor(Nit))) +
+  geom_smooth() +
+  ylab("Above ground biomass \n(t DM/ha)") +
+  xlab("Date") +
+  labs(shape="Nitrogen \nfertiliser (kg/ha)", colour="Irrigation") + 
+  guides(linetype=FALSE) + # remove legend
+  theme(text = element_text(size=16))
+#+ theme(legend.position="top") 
+```
 

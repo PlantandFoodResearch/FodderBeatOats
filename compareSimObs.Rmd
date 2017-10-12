@@ -215,7 +215,7 @@ There's quite a bit o duplication in these (e.g. pBias and SB are very similar) 
 - Black line is x=y (1:1 line)
 - Colour lines are linear fits for dryland and irrigated crops
 
-```{r, fig.height=10, echo=FALSE}
+```{r, fig.height=10,fig.width=12, echo=FALSE}
 
 vc <- unique(mergedDF$VarClass)
 
@@ -229,14 +229,15 @@ for(i in 1:length(vc)) {
   ggplot(aes(x=ObsValue,y=SimValue)) +
   geom_point(alpha=0.5, aes(colour=Irr,shape=Nit), size=3) +
   geom_abline(intercept = 0, slope = 1, size=1.5) +
-  facet_wrap(CropOper.Script.CropSown~VarName, ncol=2, scales='free')+
+  facet_wrap(CropOper.Script.CropSown~VarName, ncol=4, scales='free')+
   geom_smooth(method = "lm", se = TRUE,  aes(fill = Irr, linetype=Irr, colour=Irr), alpha=0.1) +
   coord_fixed() +
  #   theme(aspect.ratio = 1) +
   ylab("Simulated value") +
   xlab("Observed value")  +
   expand_limits(x = 0, y = 0) +
-  theme(aspect.ratio=1)
+  theme(aspect.ratio=1) +
+    theme(text = element_text(size=16))
   
   
   print(g)
@@ -258,9 +259,20 @@ print(statsTable %>%
 
 
 
+# Time series of soil
 
+```{r, fig.height=6, fig.width=12}
+mergedDF %>%
+  filter(VarClass == "Soil_Water") %>%
+  na.omit()%>%
+  filter(CropOper.Script.CropSown!="Fallow") %>%
+  ggplot(aes(colour=Irr,shape=Nit, linetype=Nit)) +
+  geom_line(aes(x=Clock.Today,y=SimValue)) +
+  geom_point(aes(x=Clock.Today,y=ObsValue), alpha=0.2) +
+  facet_wrap(CropOper.Script.CropSown~VarName, scales='free', ncol=4)+
+    theme(text = element_text(size=16))
 
-
+```
 
 ```{r, fig.width=12, results='asis',results='asis', echo=FALSE}
 
@@ -314,10 +326,11 @@ simData_work %>%
   arrange(VarName, Irr, Nit,Clock.Today) %>% 
   mutate(SimValue=cumsum(SimValue)) %>%
   ggplot(aes(x=Clock.Today,y=SimValue)) +
-  geom_line(alpha=1.0, aes(colour=Irr,linetype=Nit)) +
-  facet_grid(VarName~.,  scales='free') +
+  geom_line(alpha=1.0, aes(colour=Irr,linetype=Nit), size=1.5) +
+  facet_wrap(~VarName,  scales='free', ncol=2) +
   geom_vline(xintercept = as.numeric(SowDateFodderBeet), linetype=2) +
-  geom_vline(xintercept = as.numeric(SowDateOats), linetype=2)
+  geom_vline(xintercept = as.numeric(SowDateOats), linetype=2)+
+    theme(text = element_text(size=16))
 ```
 
 
